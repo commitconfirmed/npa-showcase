@@ -4,9 +4,12 @@ Network Programmability and Automation showcases, built on WSL2
 Instructions
 
 - Prep your windows machine with WSL2 in powershell as admin
+```
 wsl --install
+```
 
 - Install docker-ce (don't use docker desktop)
+```
 sudo apt-get remove docker docker-engine docker.io containerd runc
 
 sudo apt-get update
@@ -27,5 +30,10 @@ sudo add-apt-repository \
 
 sudo apt-get update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+```
 
+- Start docker
+```
+sudo service docker start
+```
 
