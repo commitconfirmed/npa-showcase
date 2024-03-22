@@ -37,3 +37,10 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 sudo service docker start
 ```
 
+- Install Containerlab
+```
+echo "deb [trusted=yes] https://apt.fury.io/netdevops/ /" | \
+sudo tee -a /etc/apt/sources.list.d/netdevops.list
+
+sudo apt update && sudo apt install containerlab
+```
