@@ -53,4 +53,4 @@ git config --global user.email "em@ai.l"
 git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager-core.exe"
 ```
 
-- Test
+- Test with wsl
