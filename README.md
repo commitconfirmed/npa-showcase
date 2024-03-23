@@ -45,10 +45,12 @@ sudo tee -a /etc/apt/sources.list.d/netdevops.list
 sudo apt update && sudo apt install containerlab
 ```
 
-- Setup GIT
+- Install GIT on windows, and ensure you include GCM and linux file endings only
+- Setup GIT and GCM link on your WSL box
 ```
 git config --global user.name "user"
 git config --global user.email "em@ai.l"
+git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager-core.exe"
 ```
 
 - Test
