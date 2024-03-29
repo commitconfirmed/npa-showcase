@@ -30,4 +30,6 @@ COPY app /app
 
 EXPOSE 22
 
+USER root
+
 CMD ["/usr/sbin/sshd", "-D"]
