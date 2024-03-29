@@ -14,9 +14,8 @@ RUN pip3 install –upgrade pip3; \
 pip3 install ansible
 
 # Configure SSH server (TBD from Volume)
-RUN useradd -rm -d /home/ansible -s /bin/bash -g root -G sudo -u 1000 ansible && \
+RUN groupadd -r ansible && useradd -rm -d /home/ansible -s /bin/bash -g ansible -G sudo -u 1000 ansible && \
 echo 'ansible:test' | chpasswd && \
-echo 'root:test' | chpasswd
 
 RUN mkdir /var/run/sshd && \
 sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
@@ -26,7 +25,7 @@ echo "export VISIBLE=now" >> /etc/profile
 USER ansible
 
 WORKDIR /app
-COPY app /app
+COPY --chown=ansible:ansible app /app
 
 EXPOSE 22
 
