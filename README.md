@@ -49,7 +49,7 @@ sudo apt update && sudo apt install containerlab
 - Setup GIT and GH CLI on your WSL box
 ```
 git config --global user.name "user"
-git config --global user.email "em@ai.l"
+git config --global user.email "user@dev.null"
 
 sudo apt install gh
 gh auth login
