@@ -15,7 +15,7 @@ pip3 install ansible
 
 # Configure SSH server (TBD from Volume)
 RUN groupadd -r ansible && useradd -rm -d /home/ansible -s /bin/bash -g ansible -G sudo -u 1000 ansible && \
-echo 'ansible:test' | chpasswd && \
+echo 'ansible:test' | chpasswd &&
 
 RUN mkdir /var/run/sshd && \
 sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
