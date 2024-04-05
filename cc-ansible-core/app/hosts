@@ -1,3 +1,2 @@
-[sros_routers]
-srl01        ansible_ssh_host=172.17.0.3
-srl02        ansible_ssh_host=172.17.0.4
+[ceos_routers]
+ceos01        ansible_ssh_host=172.17.0.4

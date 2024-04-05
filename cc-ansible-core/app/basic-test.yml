@@ -1,0 +1,18 @@
+---
+- hosts: ceos_routers
+  gather_facts: no
+  connection: local
+
+  roles:
+  - arista.eos
+
+  tasks:
+   - name: Test connectivity
+     eos_command:
+       commands:
+         - show version
+     register: version_details
+
+   - name: Display result
+     debug:
+       var: version_details
