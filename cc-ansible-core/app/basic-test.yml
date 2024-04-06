@@ -3,6 +3,14 @@
   gather_facts: false
 
   tasks:
+  - name: Scan SSH key
+    shell: "ssh-keyscan {{inventory_hostname}}, `grep ssh-ed25519`"
+    register: ssh_key
+    ignore_errors: yes
+
+  - name: Import SSH key
+
+  
   - name: Test connectivity
     eos_command:
       commands:

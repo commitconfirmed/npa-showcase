@@ -1,0 +1,20 @@
+- name: Store known hosts of 'all' the hosts in the inventory file
+  hosts: localhost
+  connection: local
+
+  vars:
+    ssh_known_hosts: "{{ groups['all'] }}"
+
+  tasks:
+  - name: Scan SSH key
+    shell: "ssh-keyscan {{ssh_known_hosts}}, `grep ssh-ed25519`"
+    with_items: "{{ssh_known_hosts}}"
+    register: ssh_key
+    ignore_errors: yes
+
+  - name: Import Keys
+    known_hosts:
+      name: "{{ item.item }}"
+      key: "{{ item.stdout }}"
+      path: /home/ansible/.ssh/known_hosts
+    with_items: "{{ ssh_known_host_results.results }}"
