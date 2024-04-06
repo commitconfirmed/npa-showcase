@@ -3,15 +3,7 @@
   gather_facts: false
 
   tasks:
-  - name: Scan SSH key
-    shell: "ssh-keyscan {{inventory_hostname}}, `grep ssh-ed25519`"
-    register: ssh_key
-    ignore_errors: yes
-
-  - name: Import SSH key
-
-  
-  - name: Test connectivity
+  - name: Verify you can connect to your device(s) and get output
     eos_command:
       commands:
         - show version  
@@ -19,4 +11,4 @@
 
   - name: Display result
     debug:
-      var: version_details
+      var: version_details.stdout_lines

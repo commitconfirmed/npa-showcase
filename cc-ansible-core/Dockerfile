@@ -15,7 +15,7 @@ RUN pip3 install -upgrade pip3; \
 pip3 install ansible; \
 pip3 install ansible-pylibssh
 
-# Configure SSH server (TBD from Volume)
+# Configure SSH server (TBD from Volume / secured)
 RUN groupadd -r ansible && useradd -rm -d /home/ansible -s /bin/bash -g ansible -G sudo -u 1000 ansible && \
 echo 'ansible:test' | chpasswd
 
@@ -26,7 +26,7 @@ echo "export VISIBLE=now" >> /etc/profile
 
 USER ansible
 
-# Create empty known_hosts file for SSH key importing by ansible playbook
+# Create empty known_hosts file for SSH key importing by ansible playbook import-ssh.yml
 RUN mkdir ~/.ssh && \
 touch ~/.ssh/known_hosts
 

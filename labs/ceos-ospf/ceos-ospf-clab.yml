@@ -1,0 +1,17 @@
+# A Basic OSPF Lab
+name: ceos-ospf
+
+mgmt:
+  network: bridge
+
+topology:
+  nodes:
+    ceos-r1:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+    ceos-r2:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+
+  links:
+    - endpoints: ["ceos-r1:eth1", "ceos-r2:eth1"]

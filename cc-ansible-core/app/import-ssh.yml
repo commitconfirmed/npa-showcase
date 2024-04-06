@@ -1,18 +1,19 @@
-- name: Store known hosts of 'all' the hosts in the inventory file
+---
+- name: Extract SSH keys from all hosts in your inventory and Import them
   hosts: localhost
   connection: local
 
   vars:
-    ssh_known_hosts: "{{groups['all'] | map('extract', hostvars, ['ansible_host']) | join(',')}}"
+    ssh_hosts: "{{groups['all'] | map('extract', hostvars, ['ansible_host']) | join(',')}}"
 
   tasks:
-  - name: Scan SSH key
-    shell: "ssh-keyscan -H {{ssh_known_hosts}}"
-    with_items: "{{ssh_known_hosts}}"
+  - name: Get SSH Key
+    shell: "ssh-keyscan -H {{ssh_hosts}}"
+    with_items: "{{ssh_hosts}}"
     register: ssh_key
     ignore_errors: yes
 
-  - name: Import Keys
+  - name: Import Keys into known_hosts
     known_hosts:
       name: "{{ item.item }}"
       key: "{{ item.stdout }}"
