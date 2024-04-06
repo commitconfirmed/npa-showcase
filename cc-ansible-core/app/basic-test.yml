@@ -1,18 +1,18 @@
 ---
-- hosts: ceos_routers
-  gather_facts: no
+- hosts: lab
+  gather_facts: false
   connection: local
-
-  roles:
-  - arista.eos
+  pre_tasks:
+  - include_vars: "authentication.yml"
 
   tasks:
   - name: Test connectivity
     eos_command:
       commands:
         - show version
+      provider: "{{arista_credentials}}"  
     register: version_details
-    
+
   - name: Display result
     debug:
       var: version_details
