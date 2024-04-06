@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y; \
 apt-get install -y gcc python3; \
 apt-get install -y python3-pip; \
-apt-get install -y iputils-ping openssh-server; \
+apt-get install -y iputils-ping openssh-server vim; \
 apt-get clean all
 
 # Install Ansible
