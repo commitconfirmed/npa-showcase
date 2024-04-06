@@ -4,7 +4,7 @@
   connection: local
 
   vars:
-    ssh_hosts: "{{groups['all']}}"
+    ssh_hosts: "{{groups['all'] | map('extract', hostvars, ['ansible_host'])}}"
 
   tasks:
   - name: Get SSH Key

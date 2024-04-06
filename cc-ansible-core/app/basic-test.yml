@@ -6,7 +6,8 @@
   - name: Verify you can connect to your device(s) and get output
     eos_command:
       commands:
-        - show version  
+        - show hostname
+        - show ip interfaces management 0  
     register: version_details
 
   - name: Display result
