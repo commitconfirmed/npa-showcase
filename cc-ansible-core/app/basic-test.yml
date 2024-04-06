@@ -7,12 +7,12 @@
   - arista.eos
 
   tasks:
-   - name: Test connectivity
-     eos_command:
-       commands:
-         - show version
-     register: version_details
-
-   - name: Display result
-     debug:
-       var: version_details
+  - name: Test connectivity
+    eos_command:
+      commands:
+        - show version
+    register: version_details
+    
+  - name: Display result
+    debug:
+      var: version_details
