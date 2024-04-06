@@ -26,6 +26,10 @@ echo "export VISIBLE=now" >> /etc/profile
 
 USER ansible
 
+# Create empty known_hosts file for SSH key importing by ansible playbook
+RUN mkdir ~/.ssh && \
+touch ~/.ssh/known_hosts
+
 WORKDIR /app
 COPY --chown=ansible:ansible app /app
 

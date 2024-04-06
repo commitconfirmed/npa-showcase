@@ -3,7 +3,7 @@
   connection: local
 
   vars:
-    ssh_known_hosts: "{{ groups['all'] }}"
+    ssh_known_hosts: "{{groups['all'] | map('extract', hostvars, ['ansible_host']) | join(',')}}"
 
   tasks:
   - name: Scan SSH key
@@ -17,4 +17,4 @@
       name: "{{ item.item }}"
       key: "{{ item.stdout }}"
       path: /home/ansible/.ssh/known_hosts
-    with_items: "{{ ssh_known_host_results.results }}"
+    with_items: "{{ ssh_key.results }}"
