@@ -7,7 +7,7 @@
 
   tasks:
   - name: Scan SSH key
-    shell: "ssh-keyscan {{ssh_known_hosts}}, `grep ssh-ed25519`"
+    shell: "ssh-keyscan -H {{ssh_known_hosts}}"
     with_items: "{{ssh_known_hosts}}"
     register: ssh_key
     ignore_errors: yes
