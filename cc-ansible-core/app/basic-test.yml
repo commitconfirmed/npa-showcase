@@ -1,5 +1,5 @@
 ---
-- hosts: lab
+- hosts: eos
   gather_facts: false
 
   tasks:

@@ -6,12 +6,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y; \
 apt-get install -y gcc python3; \
 apt-get install -y python3-pip; \
-apt-get install -y iputils-ping openssh-server vim; \
+apt-get install -y iputils-ping openssh-server; \
+apt-get install -y vim; \
 apt-get clean all
 
-# Install Ansible
+# Install Ansible and SSH library (not included by default??)
 RUN pip3 install -upgrade pip3; \
-pip3 install ansible
+pip3 install ansible; \
+pip3 install ansible-pylibssh
 
 # Configure SSH server (TBD from Volume)
 RUN groupadd -r ansible && useradd -rm -d /home/ansible -s /bin/bash -g ansible -G sudo -u 1000 ansible && \
