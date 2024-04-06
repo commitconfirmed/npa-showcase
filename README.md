@@ -1,14 +1,18 @@
 # npa-showcase
 Network Programmability and Automation showcases, built on WSL2
 
-Instructions
+Design
+
+I've used containerlab only the build the Network containers with basic management config and connecting relevant interfaces. The rest of the device configuration will be done with Ansible playbooks to more closely mimic what you would actually do in a live network with real hardware.
+
+Setup Instructions
 
 - Prep your windows machine with WSL2 in powershell as admin
 ```
 wsl --install
 ```
 
-- Install docker-ce (don't use docker desktop)
+- Install docker-ce (don't use docker desktop as per the containerlab recommendations)
 ```
 sudo apt-get remove docker docker-engine docker.io containerd runc
 
@@ -45,7 +49,7 @@ sudo tee -a /etc/apt/sources.list.d/netdevops.list
 sudo apt update && sudo apt install containerlab
 ```
 
-- (optional) Install VSCode and GIT on windows, and ensure you include GCM and linux file endings only
+- (optional) Install VSCode and GIT on windows, ensure you include GCM and linux file endings only
 - Setup GIT and GH CLI on your WSL box
 ```
 git config --global user.name "user"
@@ -57,5 +61,8 @@ gh auth status
 gh auth setup-git
 ```
 
-- Test with wsl
-test
+- Check you can clone / pull a repo, and optionally edit and push changes on your WSL VM machine. If you're using VS code as your IDE to modify files and perform commits then you only need to "git pull" on your WSL VM to get your changes
+git clone x
+git pull 
+git push 
+git commit 
