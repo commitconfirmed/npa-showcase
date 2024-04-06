@@ -2,6 +2,6 @@
 arista_credentials:
   transport: 'eapi'
   validate_certs: false
-  host: "{{ansible_ssh_host}}"
+  host: "{{ansible_host}}"
   username: "{{ansible_user}}"
   password: "{{ansible_ssh_pass}}"

@@ -1,16 +1,12 @@
 ---
 - hosts: lab
   gather_facts: false
-  connection: local
-  pre_tasks:
-  - include_vars: "authentication.yml"
 
   tasks:
   - name: Test connectivity
     eos_command:
       commands:
-        - show version
-      provider: "{{arista_credentials}}"  
+        - show version  
     register: version_details
 
   - name: Display result
