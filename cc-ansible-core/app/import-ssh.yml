@@ -4,11 +4,11 @@
   connection: local
 
   vars:
-    ssh_hosts: "{{groups['all'] | map('extract', hostvars, ['ansible_host']) | join(',')}}"
+    ssh_hosts: "{{groups['all']}}"
 
   tasks:
   - name: Get SSH Key
-    shell: "ssh-keyscan -H {{ssh_hosts}}"
+    shell: "ssh-keyscan -H {{item}}"
     with_items: "{{ssh_hosts}}"
     register: ssh_key
     ignore_errors: yes

@@ -37,4 +37,8 @@ EXPOSE 22
 
 USER root
 
+# Statically add hosts for now for Ansible for use, eventually we can setup a DNS server
+RUN echo "172.17.0.3 ceos-r1" >> /etc/hosts && \
+echo "172.17.0.4 ceos-r2" >> /etc/hosts
+
 CMD ["/usr/sbin/sshd", "-D"]
