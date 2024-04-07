@@ -2,7 +2,7 @@
 name: ceos-ospf
 
 mgmt:
-  network: bridge
+  network: mgmt
 
 topology:
   nodes:
