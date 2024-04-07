@@ -9,16 +9,12 @@
   eos_config:
     lines:
       - "router ospf 1"
-  tags:
-    - ospf
 
 - name: OSPF Process - Router ID
   eos_config:
     lines: 
       - "router-id {{ router_id }}"
     parents: router ospf 1
-  tags:
-    - ospf
 
 - name: OSPF Interfaces
   eos_config:
@@ -27,8 +23,6 @@
     parents: interface {{ item.if }}
   when: item.ospf is defined
   loop: "{{ interfaces }}"
-  tags:
-    - ospf
 
 - name: OSPF Interfaces - Passive
   eos_config:
@@ -39,5 +33,3 @@
     - item.ospf is defined
     - item.ospf.passive is defined
   loop: "{{ interfaces }}"
-  tags:
-    - ospf

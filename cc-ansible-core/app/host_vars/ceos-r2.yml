@@ -8,7 +8,6 @@ interfaces:
   - if: "Loopback0"
     desc: "Loopback"
     enabled: true
-    routed: true
     ipv4: "10.255.2.1/32"
     ipv6: "2001:db8:c2::1/128"
     ospf:
