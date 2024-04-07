@@ -25,10 +25,8 @@ interfaces:
     ipv6: "2001:db8:101::c1e1/64"
     ospf:
       area: "0.0.0.0"
-      passive: true
     ospfv3:
       area: "0.0.0.0"
-      passive: true
 
 # Routing
 router_id: 10.255.1.1
