@@ -1,0 +1,27 @@
+# Configure interfaces
+---
+- name: Interfaces - Status & Desc
+  eos_interfaces:
+    config:
+      - name: "{{ item.if }}"
+        description: "{{ item.desc }}"
+        enabled: "{{ item.enabled }}"
+  loop: "{{ interfaces }}"
+
+- name: Interfaces - IPv4
+  eos_l3_interfaces:
+    config:
+      - name: "{{ item.if }}"
+        ipv4:
+        - address: "{{ item.ipv4 }}"
+  when: item.ipv4 is defined
+  loop: "{{ interfaces }}"
+
+- name: Interfaces - IPv6
+  eos_l3_interfaces:
+    config:
+      - name: "{{ item.if }}"
+        ipv6:
+        - address: "{{ item.ipv6 }}"
+  when: item.ipv6 is defined
+  loop: "{{ interfaces }}"

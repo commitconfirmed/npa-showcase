@@ -1,6 +1,0 @@
----
-- hosts: eos
-  gather_facts: false
-
-  roles:
-   - eos_system

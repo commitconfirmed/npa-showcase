@@ -1,0 +1,43 @@
+# OSPF Routing
+---
+- name: Enable IPv4 routing
+  eos_config:
+    lines:
+      - "ip routing"
+
+- name: OSPF Process
+  eos_config:
+    lines:
+      - "router ospf 1"
+  tags:
+    - ospf
+
+- name: OSPF Process - Router ID
+  eos_config:
+    lines: 
+      - "router-id {{ router_id }}"
+    parents: router ospf 1
+  tags:
+    - ospf
+
+- name: OSPF Interfaces
+  eos_config:
+    lines:
+      - ip ospf area {{ item.ospf.area }}
+    parents: interface {{ item.eos_if }}
+  when: item.ospf is defined
+  loop: "{{ interfaces }}"
+  tags:
+    - ospf
+
+- name: OSPF Interfaces - Passive
+  eos_config:
+    lines:
+      - passive-interface {{ item.eos_if }}
+    parents: router ospf 1
+  when: 
+    - item.ospf is defined
+    - item.ospf.passive is defined
+  loop: "{{ interfaces }}"
+  tags:
+    - ospf

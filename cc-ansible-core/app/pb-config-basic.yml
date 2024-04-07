@@ -1,0 +1,8 @@
+---
+- hosts: eos
+  gather_facts: false
+
+  roles:
+   - eos_system
+   - eos_interfaces
+   - eos_routing

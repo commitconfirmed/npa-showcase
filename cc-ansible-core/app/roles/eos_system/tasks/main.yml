@@ -1,8 +1,8 @@
 ---
-- name: Update login banner
+- name: Replace login banner
   eos_banner:
     banner: login
     text: |
       {{motd}}
-      {{inventory_hostname}}
+                  - {{inventory_hostname}} -
     state: present

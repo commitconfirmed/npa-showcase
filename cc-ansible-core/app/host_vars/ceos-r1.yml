@@ -1,0 +1,34 @@
+---
+# Specific Device configuration
+#
+# Interfaces, IPs, Routing, etc.
+
+# Interfaces (Management already done by Containerlab)
+interfaces:
+  - if: "Loopback0"
+    desc: "Loopback"
+    enabled: true
+    routed: true
+    ipv4: "10.255.1.1/32"
+    ipv6: "2001:db8:c1::1/128"
+    ospf:
+      area: "0.0.0.0"
+      passive: true
+    ospfv3:
+      area: "0.0.0.0"
+      passive: true
+  - if: "Ethernet1"
+    desc: "ceos-r1:Ethernet1 --> ceos-r2:Ethernet1"
+    enabled: true
+    routed: true
+    ipv4: "10.101.255.2/31"
+    ipv6: "2001:db8:101::c1e1/64"
+    ospf:
+      area: "0.0.0.0"
+      passive: true
+    ospfv3:
+      area: "0.0.0.0"
+      passive: true
+
+# Routing
+router_id: 10.255.1.1
