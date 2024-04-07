@@ -8,8 +8,8 @@ interfaces:
   - if: "Loopback0"
     desc: "Loopback"
     enabled: true
-    ipv4: "10.255.1.1/32"
-    ipv6: "2001:db8:c1::1/128"
+    ipv4: "10.255.2.1/32"
+    ipv6: "2001:db8:c2::1/128"
     ospf:
       area: "0.0.0.0"
       passive: true
@@ -17,25 +17,25 @@ interfaces:
       area: "0.0.0.0"
       passive: true
   - if: "Ethernet1"
-    desc: "ceos-r1:Ethernet1 --> ceos-r2:Ethernet1"
+    desc: "ceos-r4:Ethernet1 --> ceos-r3:Ethernet1"
     enabled: true
     routed: true
-    ipv4: "10.101.255.2/31"
-    ipv6: "2001:db8:101::c1e1/64"
+    ipv4: "10.101.255.9/31"
+    ipv6: "2001:db8:101::c4e1/64"
     ospf:
       area: "0.0.0.0"
     ospfv3:
       area: "0.0.0.0"
   - if: "Ethernet2"
-    desc: "ceos-r1:Ethernet2 --> ceos-r3:Ethernet2"
+    desc: "ceos-r4:Ethernet2 --> ceos-r2:Ethernet2"
     enabled: true
     routed: true
-    ipv4: "10.101.255.4/31"
-    ipv6: "2001:db8:101::c1e2/64"
+    ipv4: "10.101.255.7/31"
+    ipv6: "2001:db8:101::c4e2/64"
     ospf:
       area: "0.0.0.0"
     ospfv3:
       area: "0.0.0.0"
 
 # Routing
-router_id: 10.255.1.1
+router_id: 10.255.4.1
