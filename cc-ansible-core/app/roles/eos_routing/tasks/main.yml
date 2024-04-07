@@ -1,7 +1,7 @@
 # Inlcude types of routing
 ---
 - name: OSPF
-  include: ospf.yml
+  include_tasks: ospf.yml
   tags: ospf
 
 #- name: OSPFv3

@@ -24,7 +24,7 @@
   eos_config:
     lines:
       - ip ospf area {{ item.ospf.area }}
-    parents: interface {{ item.eos_if }}
+    parents: interface {{ item.if }}
   when: item.ospf is defined
   loop: "{{ interfaces }}"
   tags:
@@ -33,7 +33,7 @@
 - name: OSPF Interfaces - Passive
   eos_config:
     lines:
-      - passive-interface {{ item.eos_if }}
+      - passive-interface {{ item.if }}
     parents: router ospf 1
   when: 
     - item.ospf is defined
