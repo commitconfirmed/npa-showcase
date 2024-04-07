@@ -21,7 +21,7 @@ interfaces:
     enabled: true
     routed: true
     ipv4: "10.101.255.2/31"
-    ipv6: "2001:db8:101::c1e1/64"
+    ipv6: "2001:db8:c1c2::c1c2/64"
     ospf:
       area: "0.0.0.0"
     ospfv3:
@@ -31,7 +31,7 @@ interfaces:
     enabled: true
     routed: true
     ipv4: "10.101.255.4/31"
-    ipv6: "2001:db8:101::c1e2/64"
+    ipv6: "2001:db8:c1c3::c1c3/64"
     ospf:
       area: "0.0.0.0"
     ospfv3:
