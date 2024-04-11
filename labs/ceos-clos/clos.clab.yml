@@ -1,0 +1,43 @@
+# A Basic OSPF Lab
+name: ceos-ospf
+
+mgmt:
+  network: management
+  ipv4-subnet: 172.20.0.0/24
+
+topology:
+  nodes:
+    ceos-spine1:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+      mgmt-ipv4: 172.20.0.201
+    ceos-spine2:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+      mgmt-ipv4: 172.20.0.202
+    ceos-leaf1:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+      mgmt-ipv4: 172.20.0.211
+    ceos-leaf2:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+      mgmt-ipv4: 172.20.0.212
+    ceos-leaf3:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+      mgmt-ipv4: 172.20.0.221
+    ceos-leaf4:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+      mgmt-ipv4: 172.20.0.222
+
+  links:
+    - endpoints: ["ceos-spine1:eth1", "ceos-leaf1:eth1"]
+    - endpoints: ["ceos-spine1:eth1", "ceos-leaf2:eth1"]
+    - endpoints: ["ceos-spine1:eth1", "ceos-leaf3:eth1"]
+    - endpoints: ["ceos-spine1:eth1", "ceos-leaf4:eth1"]
+    - endpoints: ["ceos-spine2:eth1", "ceos-leaf1:eth2"]
+    - endpoints: ["ceos-spine2:eth1", "ceos-leaf2:eth2"]
+    - endpoints: ["ceos-spine2:eth1", "ceos-leaf3:eth2"]
+    - endpoints: ["ceos-spine2:eth1", "ceos-leaf4:eth2"]

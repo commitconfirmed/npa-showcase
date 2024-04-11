@@ -1,0 +1,35 @@
+---
+# Specific Device configuration
+#
+# Interfaces, IPs, Routing, etc.
+
+# Interfaces (Management already done by Containerlab)
+interfaces:
+  - if: "Loopback0"
+    desc: "Loopback"
+    enabled: true
+    ipv4: "10.255.1.1/32"
+    ipv6: "2001:db8:c1::1/128"
+  - if: "Ethernet1"
+    desc: "ceos-leaf1:Ethernet1 --> ceos-spine1:Ethernet1"
+    enabled: true
+    routed: true
+    ipv4: "10.101.255.2/31"
+    ipv6: "2001:db8:c1c2::c1c2/64"
+  - if: "Ethernet2"
+    desc: "ceos-leaf1:Ethernet2 --> ceos-spine2:Ethernet1"
+    enabled: true
+    routed: true
+    ipv4: "10.101.255.4/31"
+    ipv6: "2001:db8:c1c3::c1c3/64"
+
+# Routing
+router_id: 10.255.1.1
+bgp:
+  local_as: 65011
+  neighbors:
+    ipv4:
+      - peer: 10.100.103.254
+        remote_as: 65001
+        ebgp: true
+
