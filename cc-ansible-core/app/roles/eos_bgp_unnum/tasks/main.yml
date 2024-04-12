@@ -1,0 +1,39 @@
+# Unnumbered BGP routing
+---
+- name: Enable IPv4+6 routing
+  eos_config:
+    lines:
+      - "ip routing"
+      - "ip routing ipv6 interface"
+      - "ipv6 unicast-routing"
+
+- name: Configure BGP 
+  eos_bgp:
+    config:
+      as_number: "{{ bgp['local_as'] }}"
+      log_neighbor_changes: True
+      router_id: "{{ router_id }}"
+  when: 
+    - bgp is defined
+
+# Define peer group settings
+# TBD: Convert this to eos_bgp
+- name: Configure peer group
+  eos_config:
+    lines:
+      - "neighbor {{bgp['peer_group']}} peer group"
+      - "neighbor {{bgp['peer_group']}} allowas-in 1"
+      - "neighbor {{bgp['peer_group']}} send-community"
+  when: 
+    - bgp.peer_group is defined
+
+# Doesn't look like interface based neighbors are supuported in eos_bgp module yet so need to use eos_config
+# https://docs.ansible.com/ansible/latest/collections/arista/eos/eos_bgp_global_module.html
+- name: Configure BGP Unnumbered neighbors
+  eos_config:
+    lines:
+      - "neighbor interface {{item.if}} peer-group {{item.peer_group}} remote-as {{item.remote_as}}"
+  when: 
+    - bgp.neighbors is defined
+  loop: "{{ bgp.neighbors.unnumbered }}"
+

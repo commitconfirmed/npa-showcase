@@ -1,0 +1,9 @@
+# Configure a 2 tier clos
+---
+- hosts: eos
+  gather_facts: false
+
+  roles:
+   - eos_system
+   - eos_interfaces
+   - eos_bgp_unnum

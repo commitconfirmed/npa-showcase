@@ -1,5 +1,5 @@
-# A Basic OSPF Lab
-name: ceos-ospf
+# A Basic 2 tier CLOS Lab
+name: ceos-clos
 
 mgmt:
   network: management
@@ -34,10 +34,10 @@ topology:
 
   links:
     - endpoints: ["ceos-spine1:eth1", "ceos-leaf1:eth1"]
-    - endpoints: ["ceos-spine1:eth1", "ceos-leaf2:eth1"]
-    - endpoints: ["ceos-spine1:eth1", "ceos-leaf3:eth1"]
-    - endpoints: ["ceos-spine1:eth1", "ceos-leaf4:eth1"]
+    - endpoints: ["ceos-spine1:eth2", "ceos-leaf2:eth1"]
+    - endpoints: ["ceos-spine1:eth3", "ceos-leaf3:eth1"]
+    - endpoints: ["ceos-spine1:eth4", "ceos-leaf4:eth1"]
     - endpoints: ["ceos-spine2:eth1", "ceos-leaf1:eth2"]
-    - endpoints: ["ceos-spine2:eth1", "ceos-leaf2:eth2"]
-    - endpoints: ["ceos-spine2:eth1", "ceos-leaf3:eth2"]
-    - endpoints: ["ceos-spine2:eth1", "ceos-leaf4:eth2"]
+    - endpoints: ["ceos-spine2:eth2", "ceos-leaf2:eth2"]
+    - endpoints: ["ceos-spine2:eth3", "ceos-leaf3:eth2"]
+    - endpoints: ["ceos-spine2:eth4", "ceos-leaf4:eth2"]

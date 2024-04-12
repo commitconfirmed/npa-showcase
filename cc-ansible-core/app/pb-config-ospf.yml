@@ -5,4 +5,4 @@
   roles:
    - eos_system
    - eos_interfaces
-   - eos_routing
+   - eos_ospf

@@ -10,6 +10,16 @@
     - item.routed is defined
   loop: "{{ interfaces }}"
 
+- name: Enable IPv6
+  eos_config:
+    lines:
+      - "ipv6 enable"
+    parents:
+      - interface {{ item.if }}
+  when:
+    - item.v6 is defined
+  loop: "{{ interfaces }}"
+
 - name: Interfaces - Status & Desc
   eos_interfaces:
     config:
