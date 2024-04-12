@@ -10,7 +10,7 @@
 - name: Configure BGP 
   eos_bgp:
     config:
-      as_number: "{{ bgp['local_as'] }}"
+      bgp_as: "{{ bgp['local_as'] }}"
       log_neighbor_changes: True
       router_id: "{{ router_id }}"
   when: 
@@ -24,6 +24,8 @@
       - "neighbor {{bgp['peer_group']}} peer group"
       - "neighbor {{bgp['peer_group']}} allowas-in 1"
       - "neighbor {{bgp['peer_group']}} send-community"
+    parents:
+      - "router bgp {{bgp['local_as']}}"
   when: 
     - bgp.peer_group is defined
 
@@ -33,6 +35,8 @@
   eos_config:
     lines:
       - "neighbor interface {{item.if}} peer-group {{item.peer_group}} remote-as {{item.remote_as}}"
+    parents:
+      - "router bgp {{bgp['local_as']}}"
   when: 
     - bgp.neighbors is defined
   loop: "{{ bgp.neighbors.unnumbered }}"
