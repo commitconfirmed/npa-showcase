@@ -18,7 +18,7 @@
 
 # Define peer group settings
 # TBD: Convert this to eos_bgp
-- name: Configure peer group
+- name: Configure peer group and activate
   eos_config:
     lines:
       - "neighbor {{bgp['peer_group']}} peer group"
@@ -26,6 +26,21 @@
       - "neighbor {{bgp['peer_group']}} send-community"
     parents:
       - "router bgp {{bgp['local_as']}}"
+  when: 
+    - bgp.peer_group is defined
+
+- name: Configure peer group and activate
+  eos_bgp_address_family:
+    config:
+      as_number: "{{ bgp['local_as']}}"
+      address_family:
+        - afi: "ipv4"
+          network: 
+            - address: "{{ router_id }}/32" # Convert to direct reference to loopback0 address
+          neighbor:
+            - peer: "{{ bgp['peer_group'] }}"
+              activate: True
+              next_hop_address_family: "ipv6"
   when: 
     - bgp.peer_group is defined
 
