@@ -8,39 +8,33 @@
       - "ipv6 unicast-routing"
 
 - name: Configure BGP 
-  eos_bgp:
+  arista.eos.eos_bgp_global:
     config:
-      bgp_as: "{{ bgp['local_as'] }}"
+      as_number: "{{ bgp['local_as'] }}"
       log_neighbor_changes: True
       router_id: "{{ router_id }}"
+      neighbor:
+        - neighbor_address: {{ bgp['peer_group'] }}
+          peer_group: {{ bgp['peer_group'] }}
+          send_community:
+            - set: true
+          allowas_in:
+            - count: 1
   when: 
     - bgp is defined
 
-# Define peer group settings
-# TBD: Convert this to eos_bgp
-- name: Configure peer group and activate
-  eos_config:
-    lines:
-      - "neighbor {{bgp['peer_group']}} peer group"
-      - "neighbor {{bgp['peer_group']}} allowas-in 1"
-      - "neighbor {{bgp['peer_group']}} send-community"
-    parents:
-      - "router bgp {{bgp['local_as']}}"
-  when: 
-    - bgp.peer_group is defined
-
-- name: Configure peer group and activate
-  eos_bgp_address_family:
+- name: Configure Address Families
+  arista.eos.eos_bgp_address_family:
     config:
       as_number: "{{ bgp['local_as']}}"
       address_family:
         - afi: "ipv4"
           network: 
-            - address: "{{ router_id }}/32" # Convert to direct reference to loopback0 address
+            - address: "{{ router_id }}/32" # TBD: Convert to direct reference to loopback0 address
           neighbor:
             - peer: "{{ bgp['peer_group'] }}"
               activate: True
-              next_hop_address_family: "ipv6"
+              # next_hop_address_family: "ipv6" # ipv6 originate doesn't seem to be supported
   when: 
     - bgp.peer_group is defined
 
@@ -56,3 +50,10 @@
     - bgp.neighbors is defined
   loop: "{{ bgp.neighbors.unnumbered }}"
 
+# Can't get ipv6 originate working in eos_bgp_address_family either
+- name: Configure ipv6 originate
+  eos_config:
+    lines:
+      - "neighbor {{ bgp['peer_group'] }} next-hop address-family ipv6 originate"
+    parents:
+      - "router bgp {{bgp['local_as']}} address-family ipv4"
