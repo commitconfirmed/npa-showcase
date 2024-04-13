@@ -11,11 +11,10 @@
   arista.eos.eos_bgp_global:
     config:
       as_number: "{{ bgp['local_as'] }}"
-      log_neighbor_changes: True
       router_id: "{{ router_id }}"
       neighbor:
-        - neighbor_address: {{ bgp['peer_group'] }}
-          peer_group: {{ bgp['peer_group'] }}
+        - neighbor_address: "{{ bgp['peer_group'] }}"
+          peer_group: "{{ bgp['peer_group'] }}"
           send_community:
             - set: true
           allowas_in:
@@ -54,6 +53,7 @@
 - name: Configure ipv6 originate
   eos_config:
     lines:
+      - "address-family ipv4"
       - "neighbor {{ bgp['peer_group'] }} next-hop address-family ipv6 originate"
     parents:
-      - "router bgp {{bgp['local_as']}} address-family ipv4"
+      - "router bgp {{bgp['local_as']}}"
