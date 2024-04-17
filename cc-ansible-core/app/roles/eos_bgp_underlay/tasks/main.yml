@@ -32,7 +32,7 @@
             match:
               ip:
                 address:
-                  prefix-list: "LOOPBACK"
+                  prefix_list: "LOOPBACK"
           - action: "deny"
             sequence: 65535
 
@@ -60,10 +60,10 @@
       - "neighbor interface {{ item.if }} peer-group {{ bgp['underlay_pg_id'] }} remote-as {{ bgp['remote_as'] }}"
     parents:
       - "router bgp {{ bgp['local_as'] }}"
+  loop: "{{ bgp.neighbors.underlay }}"
   when: 
     - bgp.neighbors.underlay is defined
-    - bgp.leaf
-  loop: "{{ bgp.neighbors.underlay }}"
+    - bgp.leaf is defined
 
 - name: Configure BGP listen (Spine)
   arista.eos.eos_bgp_global:
@@ -78,7 +78,7 @@
               peer_filter: "{{ bgp.neighbors.underlay['peer_filter']}}"          
   when: 
     - bgp.neighbors.underlay is defined
-    - bgp.spine
+    - bgp.spine is defined
 
 - name: Configure Address Families (Leaf + Spine)
   arista.eos.eos_bgp_address_family:
