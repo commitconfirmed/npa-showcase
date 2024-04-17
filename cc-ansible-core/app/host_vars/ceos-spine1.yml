@@ -24,7 +24,7 @@ interfaces:
 # Routing
 router_id: 10.0.0.11
 bgp:
-  spine: true
+  type: "spine"
   local_as: 65000
   underlay_pg_id: "PG_UNDERLAY"
   overlay_pg_id: "PG_OVERLAY"

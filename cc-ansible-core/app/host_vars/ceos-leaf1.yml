@@ -28,7 +28,7 @@ interfaces:
 # Routing
 router_id: 10.0.0.21
 bgp:
-  leaf: true
+  type: "leaf"
   local_as: 65101
   remote_as: 65000
   underlay_pg_id: "PG_UNDERLAY"
