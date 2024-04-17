@@ -28,7 +28,7 @@ bgp:
   local_as: 65000
   underlay_pg_id: "PG_UNDERLAY"
   overlay_pg_id: "PG_OVERLAY"
-  neighbors:
+  listen:
     underlay:
       listen_range: fe80::/10
       peer_filter: "LEAF_PF"

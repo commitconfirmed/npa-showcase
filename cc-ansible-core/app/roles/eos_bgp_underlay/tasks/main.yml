@@ -63,7 +63,6 @@
   loop: "{{ bgp.neighbors.underlay }}"
   when: 
     - bgp.neighbors.underlay is defined
-    - bgp.type == "leaf"
 
 - name: Configure BGP listen (Spine)
   arista.eos.eos_bgp_global:
@@ -77,8 +76,7 @@
               name: "{{ bgp['underlay_pg_id']}}"
               peer_filter: "{{ bgp.neighbors.underlay['peer_filter']}}"          
   when: 
-    - bgp.neighbors.underlay is defined
-    - bgp.type == "spine"
+    - bgp.listen.underlay is defined
 
 - name: Configure Address Families (Leaf + Spine)
   arista.eos.eos_bgp_address_family:
