@@ -6,7 +6,7 @@
 # Interfaces (Management already done by Containerlab)
 interfaces:
   - if: "Loopback0"
-    desc: "Loopback"
+    desc: "Underlay Loopback"
     enabled: true
     ipv4: "10.0.0.11/32"
     ipv6: "2001:db8:b1::1/128"
@@ -24,15 +24,16 @@ interfaces:
 # Routing
 router_id: 10.0.0.11
 bgp:
+  spine: true
   local_as: 65000
-  peer_group: "LEAF"
+  underlay_pg_id: "PG_UNDERLAY"
+  overlay_pg_id: "PG_OVERLAY"
   neighbors:
-    unnumbered:
-      - if: "Et1"
-        peer_group: "LEAF"
-        remote_as: 65101
-      - if: "Et2"
-        peer_group: "LEAF"
-        remote_as: 65102
+    underlay:
+      listen_range: fe80::/10
+      peer_filter: "LEAF_PF"
+    overlay:
+      listen_range: 10.0.0.0/24
+      peer_filter: "LEAF_PF"
         
 

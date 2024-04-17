@@ -1,0 +1,105 @@
+# Unnumbered BGP underlay for leafs and spines
+---
+- name: Enable IPv4+6 routing
+  arista.eos.eos_config:
+    lines:
+      - "ip routing"
+      - "ip routing ipv6 interface"
+      - "ipv6 unicast-routing"
+
+# So much yml for 1 line of config... :)
+- name: Configure Loopback prefix-list (Leaf + Spine)
+  arista.eos.eos_prefix_lists:
+    config:
+      - afi: "ipv4"
+        prefix_lists:
+          - name: "LOOPBACK"
+            entries:
+              - sequence: 10
+                action: "permit"
+                address: "10.0.0.0/23"
+                match:
+                  masklen: 32
+                  operator: "eq"
+
+- name: Configure Loopback route-map (Leaf + Spine)
+  arista.eos.eos_route_maps:
+    config:
+      - route_map: "LOOPBACK"
+        entries:
+          - action: "permit"
+            sequence: 10
+            match:
+              ip:
+                address:
+                  prefix-list: "LOOPBACK"
+          - action: "deny"
+            sequence: 65535
+
+- name: Configure BGP (Leaf + Spine)
+  arista.eos.eos_bgp_global:
+    config:
+      as_number: "{{ bgp['local_as'] }}"
+      router_id: "{{ router_id }}"
+      redistribute:
+        - protocol: "connected"
+          route_map: "LOOPBACK"
+      neighbor:
+        - neighbor_address: "{{ bgp['underlay_pg_id'] }}"
+          peer_group: "{{ bgp['underlay_pg_id'] }}"
+          send_community:
+            set: true
+  when: 
+    - bgp.underlay_pg_id is defined
+
+# Doesn't look like interface based neighbors are supuported in eos_bgp module yet so need to use eos_config
+# https://docs.ansible.com/ansible/latest/collections/arista/eos/eos_bgp_global_module.html
+- name: Configure BGP Unnumbered neighbors (Leaf)
+  arista.eos.eos_config:
+    lines:
+      - "neighbor interface {{ item.if }} peer-group {{ bgp['underlay_pg_id'] }} remote-as {{ bgp['remote_as'] }}"
+    parents:
+      - "router bgp {{ bgp['local_as'] }}"
+  when: 
+    - bgp.neighbors.underlay is defined
+    - bgp.leaf
+  loop: "{{ bgp.neighbors.underlay }}"
+
+- name: Configure BGP listen (Spine)
+  arista.eos.eos_bgp_global:
+    config:
+      as_number: "{{ bgp['local_as'] }}"
+      bgp_params:
+        listen:
+          range: 
+            address: "{{ bgp.neighbors.underlay['listen_range']}}"
+            peer_group:
+              name: "{{ bgp['underlay_pg_id']}}"
+              peer_filter: "{{ bgp.neighbors.underlay['peer_filter']}}"          
+  when: 
+    - bgp.neighbors.underlay is defined
+    - bgp.spine
+
+- name: Configure Address Families (Leaf + Spine)
+  arista.eos.eos_bgp_address_family:
+    config:
+      as_number: "{{ bgp['local_as']}}"
+      address_family:
+        - afi: "ipv4"
+          neighbor:
+            - peer: "{{ bgp['underlay_pg_id'] }}"
+              activate: True
+              # next_hop_address_family: "ipv6" # ipv6 w/ originate doesn't seem to be supported
+  when: 
+    - bgp.neighbors.underlay is defined
+
+# Can't get ipv6 originate working in eos_bgp_address_family either
+- name: Configure ipv6 originate (Leaf + Spine)
+  arista.eos.eos_config:
+    lines:
+      - "neighbor {{ bgp['underlay_pg_id'] }} next-hop address-family ipv6 originate"
+    parents:
+      - "router bgp {{bgp['local_as']}}"
+      - "address-family ipv4"
+  when:
+    - bgp.neighbors.underlay is defined

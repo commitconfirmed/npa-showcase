@@ -6,10 +6,14 @@
 # Interfaces (Management already done by Containerlab)
 interfaces:
   - if: "Loopback0"
-    desc: "Loopback"
+    desc: "Underlay Loopback"
     enabled: true
     ipv4: "10.0.0.21/32"
     ipv6: "2001:db8:c1::1/128"
+  - if: "Loopback1"
+    desc: "VTEP Loopback"
+    enabled: true
+    ipv4: "10.0.1.21/32"
   - if: "Ethernet1"
     desc: "ceos-leaf1:Ethernet1 --> ceos-spine1:Ethernet1"
     enabled: true
@@ -24,15 +28,17 @@ interfaces:
 # Routing
 router_id: 10.0.0.21
 bgp:
+  leaf: true
   local_as: 65101
-  peer_group: "SPINE"
+  remote_as: 65000
+  underlay_pg_id: "PG_UNDERLAY"
+  overlay_pg_id: "PG_OVERLAY"
   neighbors:
-    unnumbered:
+    underlay:
       - if: "Et1"
-        peer_group: "SPINE"
-        remote_as: 65000
       - if: "Et2"
-        peer_group: "SPINE"
-        remote_as: 65000
+    overlay:
+      - ip: "10.0.0.11"
+      - ip: "10.0.0.12"
         
 

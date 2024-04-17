@@ -6,4 +6,4 @@
   roles:
    - eos_system
    - eos_interfaces
-   - eos_bgp_unnum
+   - eos_bgp_underlay
