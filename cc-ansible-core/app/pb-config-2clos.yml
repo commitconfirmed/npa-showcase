@@ -7,3 +7,4 @@
    - eos_system
    - eos_interfaces
    - eos_bgp_underlay
+   - eos_bgp_overlay

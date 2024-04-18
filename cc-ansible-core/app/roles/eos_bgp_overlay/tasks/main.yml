@@ -1,0 +1,69 @@
+# EVPN BGP overlay for leafs and spines
+
+# Attempting this using eos_config only to
+# see if I prefer it to the other eos modules
+---
+
+- name: Remove ipv4-unicast
+  arista.eos.eos_config:
+    lines:
+      - "no bgp default ipv4-unicast"
+    parents:
+      - "router bgp {{bgp['local_as']}}"
+  when:
+    - bgp.overlay_pg_id is defined
+
+- name: Configure EVPN BGP peer group settings (Leaf)
+  arista.eos.eos_config:
+    lines:
+      - "neighbor {{bgp['overlay_pg_id']}} peer group"
+      - "neighbor {{bgp['overlay_pg_id']}} remote-as {{bgp['remote_as']}}"
+      - "neighbor {{bgp['overlay_pg_id']}} update-source Loopback0"
+      - "neighbor {{bgp['overlay_pg_id']}} ebgp-multihop 3"
+      - "neighbor {{bgp['overlay_pg_id']}} send-community"
+    parents:
+      - "router bgp {{bgp['local_as']}}"
+  when:
+    - bgp.type == "leaf"
+
+- name: Configure EVPN BGP peer group settings (Spine)
+  arista.eos.eos_config:
+    lines:
+      - "neighbor {{bgp['overlay_pg_id']}} peer group"
+      - "neighbor {{bgp['overlay_pg_id']}} next-hop-unchanged"
+      - "neighbor {{bgp['overlay_pg_id']}} update-source Loopback0"
+      - "neighbor {{bgp['overlay_pg_id']}} ebgp-multihop 3"
+      - "neighbor {{bgp['overlay_pg_id']}} send-community"
+    parents:
+      - "router bgp {{bgp['local_as']}}"
+  when:
+    - bgp.type == "spine"
+
+- name: Configure EVPN BGP neighbors (Leaf)
+  arista.eos.eos_config:
+    lines:
+      - "neighbor interface {{ item.ip }} peer-group {{ bgp['overlay_pg_id'] }}"
+    parents:
+      - "router bgp {{ bgp['local_as'] }}"
+  loop: "{{ bgp.neighbors.overlay }}"
+  when: 
+    - bgp.type == "leaf"
+
+- name: Configure EVPN BGP listen (Spine)
+  arista.eos.eos_config:
+    lines:
+      - "bgp listen range {{ bgp.listen.overlay['listen_range'] }} peer-group {{ bgp['overlay_pg_id']}} peer-filter {{ bgp.listen.overlay['peer_filter']}}"
+    parents:
+      - "router bgp {{bgp['local_as']}}"
+  when:
+    - bgp.listen.overlay is defined
+
+- name: Configure EVPN address family (Leaf + Spine)
+  arista.eos.eos_config:
+    lines:
+      - "neighbor {{ bgp['overlay_pg_id'] }} activate"
+    parents:
+      - "router bgp {{bgp['local_as']}}"
+      - "address-family evpn"
+  when:
+    - bgp.overlay_pg_id is defined

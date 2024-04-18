@@ -45,11 +45,11 @@
     lines:
       - "10 match as-range 65100-65200 result accept"
     parents:
-      - "peer filter {{ bgp.listen.underlay['peer_filter'] }}"
+      - "peer-filter {{ bgp.listen.underlay['peer_filter'] }}"
   when:
     - bgp.listen.underlay is defined
 
-- name: Configure BGP (Leaf + Spine)
+- name: Configure BGP peer group (Leaf + Spine)
   arista.eos.eos_bgp_global:
     config:
       as_number: "{{ bgp['local_as'] }}"
@@ -113,7 +113,7 @@
               activate: True
               # next_hop_address_family: "ipv6" # ipv6 w/ originate doesn't seem to be supported
   when: 
-    - bgp.neighbors.underlay is defined
+    - bgp.underlay_pg_id is defined
 
 # Can't get ipv6 originate working in eos_bgp_address_family either
 - name: Configure ipv6 originate (Leaf + Spine)
@@ -124,4 +124,4 @@
       - "router bgp {{bgp['local_as']}}"
       - "address-family ipv4"
   when:
-    - bgp.neighbors.underlay is defined
+    - bgp.underlay_pg_id is defined
