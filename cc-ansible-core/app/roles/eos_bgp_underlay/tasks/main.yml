@@ -1,4 +1,8 @@
 # Unnumbered BGP underlay for leafs and spines
+
+# Doing this I've learnt that Arista supplied 
+# modules are quite buggy and cumbersome
+# will stick with eos_config in future modules...
 ---
 - name: Enable IPv4+6 routing
   arista.eos.eos_config:
@@ -36,6 +40,15 @@
           - action: "deny"
             sequence: 65535
 
+- name: Configure BGP Peer Filter (Spine)
+  arista.eos.eos_config:
+    lines:
+      - "10 match as-range 65100-65200 result accept"
+    parents:
+      - "peer filter {{ bgp.listen.underlay['peer_filter'] }}"
+  when:
+    - bgp.listen.underlay is defined
+
 - name: Configure BGP (Leaf + Spine)
   arista.eos.eos_bgp_global:
     config:
@@ -64,18 +77,29 @@
   when: 
     - bgp.neighbors.underlay is defined
 
+# Doesn't work, see https://github.com/ansible-collections/arista.eos/issues/477
+#- name: Configure BGP listen (Spine)
+#  arista.eos.eos_bgp_global:
+#    config:
+#      as_number: "{{ bgp['local_as'] }}"
+#      bgp_params:
+#        listen:
+#          limit: 10
+#          range: 
+#            address: "{{ bgp.listen.underlay['listen_range'] }}"
+#            peer_group:
+#              name: "{{ bgp['underlay_pg_id']}}"
+#              peer_filter: "{{ bgp.listen.underlay['peer_filter']}}"          
+#  when: 
+#    - bgp.listen.underlay is defined
+
 - name: Configure BGP listen (Spine)
-  arista.eos.eos_bgp_global:
-    config:
-      as_number: "{{ bgp['local_as'] }}"
-      bgp_params:
-        listen:
-          range: 
-            address: "{{ bgp.neighbors.underlay['listen_range']}}"
-            peer_group:
-              name: "{{ bgp['underlay_pg_id']}}"
-              peer_filter: "{{ bgp.neighbors.underlay['peer_filter']}}"          
-  when: 
+  arista.eos.eos_config:
+    lines:
+      - "bgp listen range {{ bgp.listen.underlay['listen_range'] }} peer-group {{ bgp['underlay_pg_id']}} peer-filter {{ bgp.listen.underlay['peer_filter']}}"
+    parents:
+      - "router bgp {{bgp['local_as']}}"
+  when:
     - bgp.listen.underlay is defined
 
 - name: Configure Address Families (Leaf + Spine)
