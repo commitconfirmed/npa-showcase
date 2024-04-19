@@ -1,0 +1,26 @@
+vrf instance TENANT-A-100
+vrf instance TENANT-A-101
+
+ip route vrf TENANT-A-101 0/0 192.168.101.1
+
+int eth1
+   description '[net] leaf2.site1'
+   channel-group 1 mode active
+
+int eth2
+   description '[net] leaf3.site1'
+   channel-group 1 mode active
+
+int po1
+   description '[net] leaf2/3.site1'
+
+int po1.100
+   encapsulation dot1q vlan 100
+   vrf TENANT-A-100
+   ip address 192.168.100.12/24
+
+int po1.101
+   encapsulation dot1q vlan 101
+   vrf TENANT-A-101
+   ip address 192.168.101.12/24
+
