@@ -42,7 +42,7 @@
 - name: Configure EVPN BGP neighbors (Leaf)
   arista.eos.eos_config:
     lines:
-      - "neighbor interface {{ item.ip }} peer-group {{ bgp['overlay_pg_id'] }}"
+      - "neighbor {{ item.ip }} peer group {{ bgp['overlay_pg_id'] }}"
     parents:
       - "router bgp {{ bgp['local_as'] }}"
   loop: "{{ bgp.neighbors.overlay }}"

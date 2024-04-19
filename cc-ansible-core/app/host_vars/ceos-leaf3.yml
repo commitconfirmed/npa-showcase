@@ -1,0 +1,44 @@
+---
+# Specific Device configuration
+#
+# Interfaces, IPs, Routing, etc.
+
+# Interfaces (Management already done by Containerlab)
+interfaces:
+  - if: "Loopback0"
+    desc: "Underlay Loopback"
+    enabled: true
+    ipv4: "10.0.0.23/32"
+    ipv6: "2001:db8:c3::1/128"
+  - if: "Loopback1"
+    desc: "VTEP Loopback"
+    enabled: true
+    ipv4: "10.0.1.23/32"
+  - if: "Ethernet1"
+    desc: "ceos-leaf1:Ethernet1 --> ceos-spine1:Ethernet3"
+    enabled: true
+    routed: true
+    v6: true
+  - if: "Ethernet2"
+    desc: "ceos-leaf1:Ethernet2 --> ceos-spine2:Ethernet3"
+    enabled: true
+    routed: true
+    v6: true
+
+# Routing
+router_id: 10.0.0.23
+bgp:
+  type: "leaf"
+  local_as: 65103
+  remote_as: 65000
+  underlay_pg_id: "PG_UNDERLAY"
+  overlay_pg_id: "PG_OVERLAY"
+  neighbors:
+    underlay:
+      - if: "Et1"
+      - if: "Et2"
+    overlay:
+      - ip: "10.0.0.11"
+      - ip: "10.0.0.12"
+        
+

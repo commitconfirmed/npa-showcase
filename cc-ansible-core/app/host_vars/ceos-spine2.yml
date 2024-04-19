@@ -8,31 +8,31 @@ interfaces:
   - if: "Loopback0"
     desc: "Underlay Loopback"
     enabled: true
-    ipv4: "10.0.0.11/32"
-    ipv6: "2001:db8:b1::1/128"
+    ipv4: "10.0.0.12/32"
+    ipv6: "2001:db8:b2::1/128"
   - if: "Ethernet1"
-    desc: "ceos-spine1:Ethernet1 --> ceos-leaf1:Ethernet1"
+    desc: "ceos-spine1:Ethernet1 --> ceos-leaf1:Ethernet2"
     enabled: true
     routed: true
     v6: true
   - if: "Ethernet2"
-    desc: "ceos-spine1:Ethernet2 --> ceos-leaf2:Ethernet1"
+    desc: "ceos-spine1:Ethernet2 --> ceos-leaf2:Ethernet2"
     enabled: true
     routed: true
     v6: true
   - if: "Ethernet3"
-    desc: "ceos-spine1:Ethernet3 --> ceos-leaf3:Ethernet1"
+    desc: "ceos-spine1:Ethernet3 --> ceos-leaf3:Ethernet2"
     enabled: true
     routed: true
     v6: true
   - if: "Ethernet4"
-    desc: "ceos-spine1:Ethernet4 --> ceos-leaf4:Ethernet1"
+    desc: "ceos-spine1:Ethernet4 --> ceos-leaf4:Ethernet2"
     enabled: true
     routed: true
     v6: true
 
 # Routing
-router_id: 10.0.0.11
+router_id: 10.0.0.12
 bgp:
   type: "spine"
   local_as: 65000
