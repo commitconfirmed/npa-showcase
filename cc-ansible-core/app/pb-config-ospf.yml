@@ -1,3 +1,4 @@
+# Configure a basic OSPF network, execute with inventory/ospf.ini
 ---
 - hosts: eos
   gather_facts: false

@@ -1,3 +1,8 @@
+# Import containerlab containers SSH fingerprints into known_hosts
+# You can also just change your ssh settings to ignore unknown hosts 
+# but I'm trying to be a little bit secure even if it is a local lab
+# 
+# You will always need to run this first before any other playbook
 ---
 - name: Extract SSH keys from all hosts in your inventory and Import them
   hosts: localhost

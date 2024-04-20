@@ -1,13 +1,21 @@
 # npa-showcase
 Network Programmability and Automation showcases, built on WSL2
 
-Design
+### Design
 
 I've used containerlab only the build the Network containers with basic management config and connecting relevant interfaces. The rest of the device configuration will be done with Ansible playbooks to more closely mimic what you would actually do in a live network with real hardware.
 
-Setup Instructions
+This repo is a constant work in progress so things will likely be broken from time to time as I tinker and learn, it is best if you want to play around yourself to clone this repo and change the origin or just browse and copy the bits you want.
 
-- Prep your windows machine with WSL2 in powershell as admin
+https://stackoverflow.com/questions/18200248/cloning-a-repo-from-someone-elses-github-and-pushing-it-to-a-repo-on-my-github
+
+### Specs
+
+Tested on a Dell XPS 15 9530 with 32Gb of RAM running on Windows 11
+
+### Setup Instructions
+
+- Prep your windows machine with WSL2 in powershell as admin (just using the default Ubuntu that comes with WSL)
 ```
 wsl --install
 ```
@@ -61,8 +69,11 @@ gh auth status
 gh auth setup-git
 ```
 
-- Check you can clone / pull a repo, and optionally edit and push changes on your WSL VM machine. If you're using VS code as your IDE to modify files and perform commits then you only need to "git pull" on your WSL VM to get your changes
+- Check you can clone / pull this repo, and optionally edit and push changes on your WSL VM machine. If you're using VS code as your IDE to modify files and perform commits then you only need to "git pull" on your WSL VM to get your changes. Would recommend cloning and changing the origin as I'm constantly breaking things 
+
+```
 git clone x
 git pull 
 git push 
 git commit 
+```
