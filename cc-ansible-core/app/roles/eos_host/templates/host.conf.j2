@@ -1,12 +1,16 @@
-{% for int, desc in nodes[inventory_hostname].interfaces.items() %}
-interface {{int}}
-   description "{{inventory_hostname}} --> {{desc}}"
-   channel-group 1 mode active
+{% for host in nodes %]
+ {% for key, value in host.interfaces.items() %}
+ interface {{key}}
+    description "{{inventory_hostname}} --> {{value}}"
+    channel-group 1 mode active
+ {% endfor %}
 {% endfor %}
 
-{% for name, ip, id in nodes[inventory_hostname].vrfs.items() %}
-vrf instance {{name}}
-interface po1.{{id}}
- encapsulation dot1q vlan {{id}}
- ip address {{ip}}
+{% for dict in nodes[inventory_hostname].vrfs %}
+ {% for key, value in dict.items()}
+ vrf instance {{name}}
+ interface po1.{{id}}
+    encapsulation dot1q vlan {{id}}
+    ip address {{ip}}
+ {% endfor %}
 {% endfor %}
