@@ -1,4 +1,4 @@
 ---
 - name: Configure host using J2 config
   arista.eos.eos_config:
-    config: "../templates/host.conf.j2"
+    src: "../templates/host.conf.j2"

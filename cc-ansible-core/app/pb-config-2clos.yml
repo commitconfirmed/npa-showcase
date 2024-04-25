@@ -12,24 +12,24 @@
 - hosts: hosts
   gather_facts: false
 
-  # We put host variables in the playbook itself as we will use host roles in other playbooks/labs
-  # that will have different setups. Unfortunately we use inventory_hostname to pull from the nodes
-  # dictionary so we can't use hyphen/dashes in our inventory (surely theres a better way...) 
+  # We put host variables in the playbook itself as we will use 
+  # host roles in other playbooks/labs that will have different setups.  
   vars:
     nodes:
       - name: "ceos_host1"
       - name: "ceos_host2"
-    ceos_host1:
-      vrfs:
-        - name: "TENANT-A-100"
-          ip: "192.168.100.12/24"
-          id: 100
-        - name: "TENANT-A-101"
-          ip: "192.168.101.12/24"
-          id: 101
-      interfaces:
-        Ethernet1: "ceos-leaf1:eth5"
-        Ethernet2: "ceos-leaf2:eth5"
+    configs:
+      ceos_host1:
+        vrfs:
+          - name: "TENANT-A-100"
+            ip: "192.168.100.12/24"
+            id: 100
+          - name: "TENANT-A-101"
+            ip: "192.168.101.12/24"
+            id: 101
+        interfaces:
+          Ethernet1: "ceos-leaf1:eth5"
+          Ethernet2: "ceos-leaf2:eth5"
 
   roles:
    - eos_host
