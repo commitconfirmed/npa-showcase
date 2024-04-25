@@ -1,21 +1,24 @@
 # Configure a 2 tier clos
 ---
-#- hosts: eos
-#  gather_facts: false
+- hosts: eos
+  gather_facts: false
 
-#  roles:
-#   - eos_system
-#   - eos_interfaces
-#   - eos_bgp_underlay
-#   - eos_bgp_overlay
+  roles:
+   - eos_system
+   - eos_interfaces
+   - eos_bgp_underlay
+   - eos_bgp_overlay
 
 - hosts: hosts
   gather_facts: false
-
+  roles:
+    - role: eos_host
+      tags: hosts
   # We put host variables in the playbook itself as we will use 
   # host roles in other playbooks/labs that will have different setups.  
   vars:
     nodes:
+    # Need this to refer to the hosts as using inventory_host doens't work due to dashes
       - name: "ceos_host1"
       - name: "ceos_host2"
     configs:
@@ -31,6 +34,5 @@
           Ethernet1: "ceos-leaf1:eth5"
           Ethernet2: "ceos-leaf2:eth5"
 
-  roles:
-   - eos_host
+
   
