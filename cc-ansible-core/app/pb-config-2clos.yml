@@ -12,27 +12,49 @@
 - hosts: hosts
   gather_facts: false
   roles:
+    - role: eos_system
+      tags: [ hosts, system ]
     - role: eos_host
       tags: hosts
+
+# Uniquely pass vars to each host in the playbook instead of using host_vars as
+# different playbook setups will use different IPs, VLANs etc for the same host
+- hosts: ceos-host1
+  gather_facts: false
+    - role: eos_host
+      tags: hosts
+  vars:
+    vrfs:
+      - name: "TENANT-A-100"
+        ip: "192.168.100.12/24"
+        id: 100
+      - name: "TENANT-A-101"
+        ip: "192.168.101.12/24"
+        id: 101
+    interfaces:
+      Ethernet1: "ceos-leaf1:eth5"
+      Ethernet2: "ceos-leaf2:eth5"
+
+
   # We put host variables in the playbook itself as we will use 
   # host roles in other playbooks/labs that will have different setups.  
-  vars:
-    nodes:
-    # Need this to refer to the hosts as using inventory_host doens't work due to dashes
-      - name: "ceos_host1"
-      - name: "ceos_host2"
-    configs:
-      ceos_host1:
-        vrfs:
-          - name: "TENANT-A-100"
-            ip: "192.168.100.12/24"
-            id: 100
-          - name: "TENANT-A-101"
-            ip: "192.168.101.12/24"
-            id: 101
-        interfaces:
-          Ethernet1: "ceos-leaf1:eth5"
-          Ethernet2: "ceos-leaf2:eth5"
+#  vars:
+#    nodes:
+#    # Need this to refer to the hosts as using inventory_host doens't work due to dashes
+#      - name: "ceos-host1"
+#      - name: "ceos-host2"
+#    configs:
+#      ceos_host1:
+#        vrfs:
+#          - name: "TENANT-A-100"
+#            ip: "192.168.100.12/24"
+#            id: 100
+#          - name: "TENANT-A-101"
+#            ip: "192.168.101.12/24"
+#            id: 101
+#        interfaces:
+#          Ethernet1: "ceos-leaf1:eth5"
+#          Ethernet2: "ceos-leaf2:eth5"
 
 
   
