@@ -41,4 +41,17 @@ bgp:
       - ip: "10.0.0.11"
       - ip: "10.0.0.12"
         
+# VXLAN
+
+vxlan:
+  mac_address: "001c.7301.1eaf"
+  vr: True
+  range_start: 1
+  range_end: 128
+  common:
+    lacp_id: 5
+    host_if: "Ethernet5"
+    desc: "ceos-leaf1:eth5 --> ceos-host1:eth1"
+    evpn_id: "0050:0900:1eaf:1200:0000"
+    evpn_rt: "50:09:00:1e:af:12"
 

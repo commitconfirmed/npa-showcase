@@ -12,6 +12,8 @@
       tags: [ routers, underlay ]
     - role: eos_bgp_overlay
       tags: [ routers, overlay ]
+    - role: eos_vxlan
+      tags: [ routers, vxlan ] 
 
 - hosts: hosts
   gather_facts: false
@@ -20,8 +22,26 @@
       tags: [ hosts, system ]
 
 # Uniquely pass vars to each host in the playbook instead of using host_vars as
-# different playbook setups will use different IPs, VLANs etc for the same host
+# different playbook setups will use different IPs, VLANs, etc. for the same host.
+# Using a networking container for this instead of alpine to test LACP to the leaves
 - hosts: ceos-host1
+  gather_facts: false
+  roles:
+    - role: eos_host
+      tags: hosts
+  vars:
+    vrfs:
+      - name: "TENANT-A-100"
+        ip: "192.168.100.11/24"
+        id: 100
+      - name: "TENANT-A-101"
+        ip: "192.168.101.11/24"
+        id: 101
+    interfaces:
+      Ethernet1: "ceos-leaf1:eth5"
+      Ethernet2: "ceos-leaf2:eth5"
+
+- hosts: ceos-host2
   gather_facts: false
   roles:
     - role: eos_host
@@ -35,8 +55,7 @@
         ip: "192.168.101.12/24"
         id: 101
     interfaces:
-      Ethernet1: "ceos-leaf1:eth5"
-      Ethernet2: "ceos-leaf2:eth5"
-
+      Ethernet1: "ceos-leaf3:eth5"
+      Ethernet2: "ceos-leaf4:eth5"
 
   
