@@ -1,0 +1,9 @@
+# Configure a basic OSPF network, execute with inventory/frr-ospf.ini
+---
+- hosts: frr
+  gather_facts: false
+
+  roles:
+   - frr_system
+   - frr_interfaces
+   - frr_ospf

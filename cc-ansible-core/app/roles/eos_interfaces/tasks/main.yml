@@ -33,8 +33,8 @@
     config:
       - name: "{{ item.if }}"
         ipv4:
-        - address: "{{ item.ipv4 }}"
-  when: item.ipv4 is defined
+        - address: "{{ item.v4addr }}{{ item.v4subn }}"
+  when: item.v4addr is defined
   loop: "{{ interfaces }}"
 
 - name: Interfaces - IPv6

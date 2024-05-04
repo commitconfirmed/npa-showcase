@@ -1,6 +1,6 @@
 # Configure a 2 tier clos
 ---
-- hosts: eos
+- hosts: routers
   gather_facts: false
 
   roles:

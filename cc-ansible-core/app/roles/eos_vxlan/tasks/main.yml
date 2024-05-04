@@ -1,56 +1,9 @@
-# EVPN-VXLAN configuration for host communications
+# Separate base VXLAN config from tenants
 ---
+- name: VXLAN
+  include_tasks: vxlan.yml
+  tags: [ routers, vxlan, base ]
 
-- name: Set lacp port-id ranges
-  arista.eos.eos_config:
-    lines:
-      - "lacp port-id range {{ vxlan['range_start'] }} {{ vxlan['range_end'] }}"
-  when:
-    - vxlan is defined
-
-- name: Configure virtual-router
-  arista.eos.eos_config:
-    lines:
-      - "ip virtual-router mac-address {{ vxlan['mac_address'] }}"
-  when:
-    - vxlan.vr is defined
-
-- name: Create Vxlan interface
-  arista.eos.eos_config:
-    lines:
-      - "vxlan source-interface Loopback1"
-    parents: 
-      - "interface vx1"
-  when:
-    - vxlan is defined
-
-- name: Create Host Port-Channel interface
-  arista.eos.eos_config:
-    lines:
-      - "description 'LACP to host'"
-      - "switchport"
-      - "switchport mode trunk"
-      - "lacp system-id {{ vxlan.mac_address }}"
-    parents: 
-      - "interface Port-Channel{{ vxlan.common.lacp_id }}"
-  # Seeing if I can use eos_config twice in the same name
-  arista.eos.eos_config:
-    lines:
-      - "identifier {{ vxlan.common.evpn_id }}"
-      - "route-target import {{ vxlan.common.evpn_rt }}"
-    parents: 
-      - "interface Port-Channel{{ vxlan.common.lacp_id }}"
-      - "evpn ethernet-segment"
-  when:
-    - vxlan.common is defined
-
-- name: Create Host interface
-  arista.eos.eos_config:
-    lines:
-      - "description '{{ vxlan.common.desc }}'"
-      - "no shutdown"
-      - "switchport"
-      - "switchport mode trunk"
-      - "channel-group {{ vxlan.common.lacp_id }} mode active"
-    parents: 
-      - "interface {{ vxlan.common.host_if }}"
+- name: Tenants
+  include_tasks: tenants.yml
+  tags: [ routers, vxlan, tenants ]

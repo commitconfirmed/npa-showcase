@@ -1,0 +1,92 @@
+# Configure VXLAN Tenants
+---
+
+- name: Create Tenant L3 config
+  arista.eos.eos_config:
+    lines:
+      - "vrf instance {{ item.id }}"
+      - "ip routing vrf {{ item.id }}"
+  arista.eos.eos_config:
+    lines:
+      - "name {{ item.id }}|{{ item.l3_vlan.id }}"
+    parents: 
+      - "vlan {{ item.l3_vlan.id }}"
+  arista.eos.eos_config:
+    lines:
+      - "description '[{{ item.id }}] Loopback'"
+      - "vrf {{ item.id }}"
+      - "ip address {{ item.l3_vlan.loop_ip }}/32"
+    parents: 
+      - "interface Loopback{{ item.l3_vlan.id }}"
+    arista.eos.eos_config:
+    lines:
+      - "description '[{{ item.id }}] Gateway'"
+      - "vrf {{ item.id }}"
+      - "ip address virtual {{ item.l3_vlan.gw_ip }}/32"
+    parents: 
+      - "interface Vlan{{ item.l3_vlan.id }}"
+    arista.eos.eos_config:
+    lines:
+      - "ip address virtual source-nat vrf {{ item.id }} address {{ item.l3_vlan.loop_ip }}"
+    arista.eos.eos_config:
+    lines:
+      - "switchport trunk allowed vlan add {{ item.l3_vlan.id }}"
+    parents: 
+      - "interface {{ item.host_if }}"
+    arista.eos.eos_config:
+    lines:
+      - "rd {{ interfaces['Loopback0'].v4addr }}:{{ item.l3_vlan.id }}"
+      - "route-target both {{ item.l3_vlan.id }}:{{ item.l3_vlan.id }}"
+      - "route-target export 666:{{ item.l3_vlan.id }}"
+      - "redistribute learned"
+      - "vlan {{ item.l3_vlan.id }}"
+    parents: 
+      - "router bgp {{ bgp.local_as }}"
+      - "vlan-aware-bundle {{ item.id }}"
+    arista.eos.eos_config:
+    lines:
+      - "rd {{ interfaces['Loopback0'].v4addr }}:{{ item.l3_vlan.vni }}"
+      - "route-target import evpn {{ item.l3_vlan.vni }}:{{ item.l3_vlan.vni }}"
+      - "route-target export evpn {{ item.l3_vlan.vni }}:{{ item.l3_vlan.vni }}"
+      - "redistribute connected"
+    parents: 
+      - "router bgp {{ bgp.local_as }}"
+      - "vrf {{ item.id }}"
+  when:
+    - vxlan.tenants is defined
+  loop:
+    - "{{ vxlan.tenants }}"
+
+# Trying out nested loops
+- name: Create Tenant L2 config
+  arista.eos.eos_config:
+    lines:
+      - "name {{ outer_item.id }}|{{ item }}"
+    parents: 
+      - "vlan {{ item }}"
+    loop: "{{ outer_item.l2_vlans }}"
+  arista.eos.eos_config:
+    lines:
+      - "switchport trunk allowed vlan add {{ item }}"
+    parents: 
+      - "interface {{ outer_item.host_if }}"
+    loop: "{{ outer_item.l2_vlans }}"
+    arista.eos.eos_config:
+    lines:
+      - "vxlan vlan add {{ item }} vni {{ item }}"
+    parents: 
+      - "interface Vxlan1"
+    loop: "{{ outer_item.l2_vlans }}"
+    arista.eos.eos_config:
+    lines:
+      - "vlan {{ item }}"
+    parents: 
+      - "router bgp {{ bgp.local_as }}"
+      - "vlan-aware-bundle {{ outer_item.id }}"
+    loop: "{{ outer_item.l2_vlans }}"
+  when:
+    - vxlan.tenants is defined
+  loop:
+    - "{{ vxlan.tenants }}"
+  loop_control:
+    loop_var: outer_item
