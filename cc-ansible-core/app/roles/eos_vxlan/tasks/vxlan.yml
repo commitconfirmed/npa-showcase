@@ -33,7 +33,8 @@
       - "lacp system-id {{ vxlan.mac_address }}"
     parents: 
       - "interface Port-Channel{{ vxlan.common.lacp_id }}"
-  # Seeing if I can use eos_config twice in the same name
+
+- name: Create Port-channel evpn
   arista.eos.eos_config:
     lines:
       - "identifier {{ vxlan.common.evpn_id }}"

@@ -6,4 +6,10 @@
 
 - name: Tenants
   include_tasks: tenants.yml
+  loop: 
+   - "{{vxlan.tenants}}"
+  loop_control:
+    loop_var: outer_item
+  when:
+   - vxlan.tenants is defined
   tags: [ routers, vxlan, tenants ]
