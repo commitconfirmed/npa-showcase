@@ -33,6 +33,8 @@
       - "lacp system-id {{ vxlan.mac_address }}"
     parents: 
       - "interface Port-Channel{{ vxlan.common.lacp_id }}"
+  when:
+    - vxlan is defined
 
 - name: Create Port-channel evpn
   arista.eos.eos_config:
