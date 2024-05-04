@@ -8,14 +8,12 @@ interfaces:
   - if: "Loopback0"
     desc: "Underlay Loopback"
     enabled: true
-    v4addr: "10.0.0.21"
-    v4subn: "/32"
+    ipv4: "10.0.0.21/32"
     ipv6: "2001:db8:c1::1/128"
   - if: "Loopback1"
     desc: "VTEP Loopback"
     enabled: true
-    v4addr: "10.0.1.21"
-    v4subn: "/32"
+    ipv4: "10.0.1.21/32"
   - if: "Ethernet1"
     desc: "ceos-leaf1:Ethernet1 --> ceos-spine1:Ethernet1"
     enabled: true
