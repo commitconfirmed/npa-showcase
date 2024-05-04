@@ -1,6 +1,10 @@
 # Configure VXLAN Tenants
 ---
 
+- name: Debug
+    debug:
+      msg: "{{ outer_item }}"
+
 - name: Create Tenant L3 config
   arista.eos.eos_config:
     lines:
@@ -24,28 +28,28 @@
       - "interface Loopback{{ outer_item.l3_vlan.id }}"
 
 - name: Create Tenant L3 config 3
-    arista.eos.eos_config:
+  arista.eos.eos_config:
     lines:
       - "description '[{{ outer_item.id }}] Gateway'"
       - "vrf {{ outer_item.id }}"
-      - "ip address virtual {{ outer_item.l3_vlan.gw_ip }}/32"
+      - "ip address virtual {{ outer_item.l3_vlan.gw_ip }}"
     parents: 
       - "interface Vlan{{ outer_item.l3_vlan.id }}"
 
 - name: Create Tenant L3 config 4
-    arista.eos.eos_config:
+  arista.eos.eos_config:
     lines:
       - "ip address virtual source-nat vrf {{ outer_item.id }} address {{ outer_item.l3_vlan.loop_ip }}"
 
 - name: Create Tenant L3 config 5
-    arista.eos.eos_config:
+  arista.eos.eos_config:
     lines:
       - "switchport trunk allowed vlan add {{ outer_item.l3_vlan.id }}"
     parents: 
       - "interface {{ outer_item.host_if }}"
 
 - name: Create Tenant L3 config 6
-    arista.eos.eos_config:
+  arista.eos.eos_config:
     lines:
       - "rd {{ router_id }}:{{ outer_item.l3_vlan.id }}"
       - "route-target both {{ outer_item.l3_vlan.id }}:{{ outer_item.l3_vlan.id }}"
@@ -57,7 +61,7 @@
       - "vlan-aware-bundle {{ outer_item.id }}"
 
 - name: Create Tenant L3 config 7
-    arista.eos.eos_config:
+  arista.eos.eos_config:
     lines:
       - "rd {{ router_id }}:{{ outer_item.l3_vlan.vni }}"
       - "route-target import evpn {{ outer_item.l3_vlan.vni }}:{{ outer_item.l3_vlan.vni }}"
@@ -85,7 +89,7 @@
     loop: "{{ outer_item.l2_vlans }}"
 
 - name: Create Tenant L2 config 3
-    arista.eos.eos_config:
+  arista.eos.eos_config:
     lines:
       - "vxlan vlan add {{ item }} vni {{ item }}"
     parents: 
@@ -93,7 +97,7 @@
     loop: "{{ outer_item.l2_vlans }}"
 
 - name: Create Tenant L2 config 4
-    arista.eos.eos_config:
+  arista.eos.eos_config:
     lines:
       - "vlan {{ item }}"
     parents: 

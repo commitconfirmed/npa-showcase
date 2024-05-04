@@ -6,8 +6,8 @@
 
 - name: Tenants
   include_tasks: tenants.yml
-  loop: 
-   - "{{vxlan.tenants}}"
+  with_items: 
+   - "{{ vxlan.tenants }}"
   loop_control:
     loop_var: outer_item
   when:
