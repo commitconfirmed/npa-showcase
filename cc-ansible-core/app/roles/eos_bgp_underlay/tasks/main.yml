@@ -10,6 +10,8 @@
       - "ip routing"
       - "ip routing ipv6 interface"
       - "ipv6 unicast-routing"
+      - "switchport default mode routed"
+      - "spanning-tree mode none"
 
 # So much yml for 1 line of config... :)
 - name: Configure Loopback prefix-list (Leaf + Spine)

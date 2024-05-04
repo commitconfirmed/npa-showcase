@@ -1,4 +1,7 @@
 #jinja2: trim_blocks:True
+switchport default mode routed
+spanning-tree mode none
+ip routing
 interface Port-Channel1
    description "LACP to Leafs"
 {% for key, value in interfaces.items() %}
@@ -12,6 +15,7 @@ interface Port-Channel1.{{ vrf.id }}
    encapsulation dot1q vlan {{ vrf.id }}
    vrf {{ vrf.name }}
    ip address {{ vrf.ip }}
+ip routing vrf {{ vrf.name }}
 ip route vrf {{ vrf.name }} 0.0.0.0/0 {{ vrf.gw }}
 {% endfor %}
 

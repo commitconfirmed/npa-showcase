@@ -41,4 +41,33 @@ bgp:
       - ip: "10.0.0.11"
       - ip: "10.0.0.12"
         
+# VXLAN
 
+vxlan:
+  mac_address: "001c.7301.1eaf"
+  vr: True
+  range_start: 129
+  range_end: 256
+  common:
+    lacp_id: 5
+    host_if: "Ethernet5"
+    desc: "ceos-leaf2:eth5 --> ceos-host1:eth2"
+    evpn_id: "0050:0900:1eaf:1200:0000"
+    evpn_rt: "50:09:00:1e:af:12"
+  tenants:
+    - id: "TENANT-A"
+      host_if: "Ethernet5"
+      l2_vlans: [101, 102]
+      l3_vlan:
+        id: 100
+        loop_ip: "172.16.100.12"
+        gw_ip: "192.168.100.1/24"
+        vni: 1000
+    - id: "TENANT-B"
+      host_if: "Ethernet5"
+      l2_vlans: [201, 202]
+      l3_vlan:
+        id: 200
+        loop_ip: "172.16.200.12"
+        gw_ip: "192.168.200.1/24"
+        vni: 2000
