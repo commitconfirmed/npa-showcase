@@ -32,10 +32,11 @@
     parents: 
       - "interface Vlan{{ outer_item.l3_vlan.id }}"
 
-- name: Create Tenant L2 config 4
+- name: Create Tenant L3 config 4
   arista.eos.eos_config:
     lines:
       - "vxlan vlan add {{ outer_item.l3_vlan.id }} vni {{ outer_item.l3_vlan.id }}"
+      - "vxlan vrf add {{ outer_item.id }} vni {{ outer_item.l3_vlan.vni }}"
     parents: 
       - "interface Vxlan1"
 

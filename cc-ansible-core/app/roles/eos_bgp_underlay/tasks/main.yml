@@ -51,21 +51,35 @@
   when:
     - bgp.listen.underlay is defined
 
+# Causing errors on replays, moving to eos_config
+#- name: Configure BGP peer group (Leaf + Spine)
+#  arista.eos.eos_bgp_global:
+#    config:
+#      as_number: "{{ bgp['local_as'] }}"
+#      router_id: "{{ router_id }}"
+#      redistribute:
+#        - protocol: "connected"
+#          route_map: "LOOPBACK"
+#      neighbor:
+#        - neighbor_address: "{{ bgp['underlay_pg_id'] }}"
+#          peer_group: "{{ bgp['underlay_pg_id'] }}"
+#          send_community:
+#            set: true
+#  when: 
+#    - bgp.underlay_pg_id is defined
+
 - name: Configure BGP peer group (Leaf + Spine)
-  arista.eos.eos_bgp_global:
-    config:
-      as_number: "{{ bgp['local_as'] }}"
-      router_id: "{{ router_id }}"
-      redistribute:
-        - protocol: "connected"
-          route_map: "LOOPBACK"
-      neighbor:
-        - neighbor_address: "{{ bgp['underlay_pg_id'] }}"
-          peer_group: "{{ bgp['underlay_pg_id'] }}"
-          send_community:
-            set: true
+  arista.eos.eos_config:
+    lines:
+      - "router-id {{ router_id }}"
+      - "redistribute connected route-map LOOPBACK"
+      - "neighbor {{ bgp.underlay_pg_id }} peer group"
+      - "neighbor PG_UNDERLAY send-community"
+    parents:
+      - "router bgp {{ bgp.local_as }}"
+  loop: "{{ bgp.neighbors.underlay }}"
   when: 
-    - bgp.underlay_pg_id is defined
+    - bgp.neighbors.underlay is defined
 
 # Doesn't look like interface based neighbors are supuported in eos_bgp module yet so need to use eos_config
 # https://docs.ansible.com/ansible/latest/collections/arista/eos/eos_bgp_global_module.html
