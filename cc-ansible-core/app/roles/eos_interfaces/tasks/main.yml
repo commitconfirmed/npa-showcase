@@ -34,7 +34,7 @@
       - name: "{{ item.if }}"
         ipv4:
         - address: "{{ item.ipv4 }}"
-  when: item.v4addr is defined
+  when: item.ipv4 is defined
   loop: "{{ interfaces }}"
 
 - name: Interfaces - IPv6

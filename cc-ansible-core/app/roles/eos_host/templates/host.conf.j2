@@ -10,7 +10,8 @@ interface {{ key }}
 vrf instance {{ vrf.name }}
 interface Port-Channel1.{{ vrf.id }}
    encapsulation dot1q vlan {{ vrf.id }}
-   ip address {{ vrf.ip }}
    vrf {{ vrf.name }}
+   ip address {{ vrf.ip }}
+ip route vrf {{ vrf.name }} 0.0.0.0/0 {{ vrf.gw }}
 {% endfor %}
 
