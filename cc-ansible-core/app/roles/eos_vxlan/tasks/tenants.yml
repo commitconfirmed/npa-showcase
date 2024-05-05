@@ -17,7 +17,7 @@
 - name: Create Tenant L3 config 2
   arista.eos.eos_config:
     lines:
-      - "description '[{{ outer_item.id }}] Loopback'"
+      - "description [{{ outer_item.id }}] Loopback"
       - "vrf {{ outer_item.id }}"
       - "ip address {{ outer_item.l3_vlan.loop_ip }}/32"
     parents: 
@@ -26,7 +26,7 @@
 - name: Create Tenant L3 config 3
   arista.eos.eos_config:
     lines:
-      - "description '[{{ outer_item.id }}] Gateway'"
+      - "description [{{ outer_item.id }}] Gateway"
       - "vrf {{ outer_item.id }}"
       - "ip address virtual {{ outer_item.l3_vlan.gw_ip }}"
     parents: 
@@ -36,7 +36,7 @@
   arista.eos.eos_config:
     lines:
       - "vxlan vlan add {{ outer_item.l3_vlan.id }} vni {{ outer_item.l3_vlan.id }}"
-      - "vxlan vrf add {{ outer_item.id }} vni {{ outer_item.l3_vlan.vni }}"
+      - "vxlan vrf {{ outer_item.id }} vni {{ outer_item.l3_vlan.vni }}"
     parents: 
       - "interface Vxlan1"
 

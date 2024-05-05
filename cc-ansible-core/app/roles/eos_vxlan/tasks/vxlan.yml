@@ -27,7 +27,7 @@
 - name: Create Host Port-Channel interface
   arista.eos.eos_config:
     lines:
-      - "description 'LACP to host'"
+      - "description LACP to host"
       - "switchport"
       - "switchport mode trunk"
       - "lacp system-id {{ vxlan.mac_address }}"
@@ -50,7 +50,7 @@
 - name: Create Host interface
   arista.eos.eos_config:
     lines:
-      - "description '{{ vxlan.common.desc }}'"
+      - "description {{ vxlan.common.desc }}"
       - "no shutdown"
       - "switchport"
       - "switchport mode trunk"

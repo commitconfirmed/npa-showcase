@@ -38,7 +38,6 @@
       - name: "TENANT-A-101"
         ip: "192.168.101.11/24"
         id: 101
-        gw: "192.168.101.1"
     interfaces:
       Ethernet1: "ceos-leaf1:eth5"
       Ethernet2: "ceos-leaf2:eth5"
@@ -57,7 +56,6 @@
       - name: "TENANT-A-101"
         ip: "192.168.101.12/24"
         id: 101
-        gw: "192.168.101.1"
     interfaces:
       Ethernet1: "ceos-leaf3:eth5"
       Ethernet2: "ceos-leaf4:eth5"
