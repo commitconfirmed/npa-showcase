@@ -16,7 +16,7 @@ interface Port-Channel1.{{ vrf.id }}
    vrf {{ vrf.name }}
    ip address {{ vrf.ip }}
 ip routing vrf {{ vrf.name }}
-  {% if vrf.gw %}
+  {% if vrf.gw is defined %}
 ip route vrf {{ vrf.name }} 0.0.0.0/0 {{ vrf.gw }}
   {% endif %}
 {% endfor %}

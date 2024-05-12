@@ -77,9 +77,8 @@
       - "neighbor PG_UNDERLAY send-community"
     parents:
       - "router bgp {{ bgp.local_as }}"
-  loop: "{{ bgp.neighbors.underlay }}"
   when: 
-    - bgp.neighbors.underlay is defined
+    - bgp.underlay_pg_id is defined
 
 # Doesn't look like interface based neighbors are supuported in eos_bgp module yet so need to use eos_config
 # https://docs.ansible.com/ansible/latest/collections/arista/eos/eos_bgp_global_module.html

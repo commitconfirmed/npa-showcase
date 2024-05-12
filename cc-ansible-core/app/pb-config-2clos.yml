@@ -38,6 +38,7 @@
       - name: "TENANT-A-101"
         ip: "192.168.101.11/24"
         id: 101
+        gw: False
     interfaces:
       Ethernet1: "ceos-leaf1:eth5"
       Ethernet2: "ceos-leaf2:eth5"

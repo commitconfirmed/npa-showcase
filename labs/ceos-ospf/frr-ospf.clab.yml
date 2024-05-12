@@ -22,7 +22,7 @@ topology:
     ceos-r4:
       kind: arista_ceos
       image: ceos:4.28.10.1M
-      mgmt-ipv4: 172.20.0.191
+      mgmt-ipv4: 172.20.0.191'}
 
   links:
     - endpoints: ["ceos-r1:eth1", "ceos-r2:eth1"]

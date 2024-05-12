@@ -1,5 +1,5 @@
 # npa-showcase
-Network Programmability and Automation showcases, built on WSL2
+Network Programmability and Automation labs, built on WSL2
 
 ### Design
 
@@ -69,11 +69,20 @@ gh auth status
 gh auth setup-git
 ```
 
-- Check you can clone / pull this repo, and optionally edit and push changes on your WSL VM machine. If you're using VS code as your IDE to modify files and perform commits then you only need to "git pull" on your WSL VM to get your changes. Would recommend cloning and changing the origin as I'm constantly breaking things 
+- Check you can clone / pull this repo, and optionally edit and push changes on your WSL VM machine. If you're using VS code as your IDE to modify files and perform commits then you only need to "git pull" on your WSL VM to get your changes. Would recommend cloning and changing the origin if you want to tinker
 
 ```
 git clone x
 git pull 
-git push 
-git commit 
 ```
+
+- To save a bit of time with deployment, grab and store the container images from the networking vendor(s) you wish to use. 
+
++Arista+
+```
+- Grab cEOS64-lab-4.28.10.1M.tar from https://www.arista.com/en/support/software-download (Signup required)
+- Copy file onto your WSL2 host
+docker import cEOS64-lab-4.28.10.1M.tar ceos:4.28.10.1M
+```
+
+- Follow the README's in the labs folder to see more details about a specific lab and how to build it
