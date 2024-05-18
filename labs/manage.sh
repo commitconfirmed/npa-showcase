@@ -1,7 +1,8 @@
 #!/bin/bash
 #
-# Main shell script to manage lab builds, rebuilds and cleanup so I don't have to repeat commands
-# This is called from the shell scripts in the labs/xyz directories
+# Main shell script to manage lab builds, rebuilds and cleanup so I don't have
+# to repeat commands. This is called from the shell scripts in the labs/xyz
+# directories
 
 verbose='false'
 action=''
@@ -29,7 +30,7 @@ case "${action}" in
     if [[ -z "${inventory}" || -z "${playbook}" ]]; then
       err "-i "${inventory}" or -p "${playbook}" flags are not defined in setup script"
     else
-      sudo docker build -t cc-ansible ../../cc-ansible-core/.
+      sudo docker build -t cc-ansible ../../cc-ansible-core/. # Extra ../ as we call this from /labs dir
       sudo docker image rm $(sudo docker image list -qf dangling=true)
       sudo docker run -d --name lab_ansible cc-ansible
       sudo docker network connect management $(sudo docker ps -qaf name=lab_ansible)
