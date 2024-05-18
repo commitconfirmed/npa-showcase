@@ -15,9 +15,7 @@ while getopts 'aip:v' flag; do
     p) playbook="${OPTARG}" ;;
     v) verbose='true' ;;
     *) 
-      err "Unexpected option ${flag} \n echo $usage" 
-      exit 1
-      ;;
+      err "Unexpected option ${flag} \n echo $usage" ;;
   esac
 done
 
@@ -26,7 +24,6 @@ case "${action}" in
   build)
     if [[-z "$(inventory)" or -z "$(playbook)"]]; then
       err "-i "$(inventory)" or -p "$(playbook)" flags is not defined in setup script"
-      exit 1
     else
       sudo docker build -t cc-ansible ../cc-ansible-core/.
       sudo docker image rm $(sudo docker image list -qf dangling=true)
@@ -40,9 +37,7 @@ case "${action}" in
     sudo docker rm $(sudo docker ps -qaf name=lab_ansible)
     ;;
   *) 
-    err "Unexpected action: ${action} used" 
-    exit 1
-    ;;
+    err "Unexpected action: ${action} used" ;;
 esac
 
 err() {
