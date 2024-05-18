@@ -26,10 +26,10 @@ done
 # Perform relevant lab action
 case "${action}" in
   build)
-    if [[-z "${inventory}" or -z "${playbook}"]]; then
+    if [[ -z "${inventory}" || -z "${playbook}" ]]; then
       err "-i "${inventory}" or -p "${playbook}" flags are not defined in setup script"
     else
-      sudo docker build -t cc-ansible ../cc-ansible-core/.
+      sudo docker build -t cc-ansible ../../cc-ansible-core/.
       sudo docker image rm $(sudo docker image list -qf dangling=true)
       sudo docker run -d --name lab_ansible cc-ansible
       sudo docker network connect management $(sudo docker ps -qaf name=lab_ansible)
