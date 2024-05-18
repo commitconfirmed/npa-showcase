@@ -14,7 +14,10 @@ while getopts 'aip:v' flag; do
     i) inventory="${OPTARG}" ;;
     p) playbook="${OPTARG}" ;;
     v) verbose='true' ;;
-    *) error "Unexpected option ${flag} \n echo $usage" ;;
+    *) 
+      err "Unexpected option ${flag} \n echo $usage" 
+      exit 1
+      ;;
   esac
 done
 
@@ -22,7 +25,8 @@ done
 case "${action}" in
   build)
     if [[-z "$(inventory)" or -z "$(playbook)"]]; then
-      error "-i "$(inventory)" or -p "$(playbook)" flags is not defined in setup script"
+      err "-i "$(inventory)" or -p "$(playbook)" flags is not defined in setup script"
+      exit 1
     else
       sudo docker build -t cc-ansible ../cc-ansible-core/.
       sudo docker image rm $(sudo docker image list -qf dangling=true)
@@ -37,3 +41,7 @@ case "${action}" in
     ;;
   *) error "Unexpected action: ${action} used" ;;
 esac
+
+err() {
+  echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
+}
