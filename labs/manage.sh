@@ -24,7 +24,7 @@ while getopts 'a:i:p:v' flag; do
 done
 
 # Perform relevant lab action
-case "{$action}" in
+case "${action}" in
   build)
     if [[-z "${inventory}" or -z "${playbook}"]]; then
       err "-i "${inventory}" or -p "${playbook}" flags are not defined in setup script"
@@ -41,6 +41,6 @@ case "{$action}" in
     sudo docker rm $(sudo docker ps -qaf name=lab_ansible)
     ;;
   *) 
-    err "Unexpected action: ${action} used" ;;
+    err "Unexpected action: "${action}" used" ;;
 esac
 
