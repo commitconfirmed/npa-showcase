@@ -39,7 +39,10 @@ case "${action}" in
     sudo docker stop $(sudo docker ps -qaf name=lab_ansible)
     sudo docker rm $(sudo docker ps -qaf name=lab_ansible)
     ;;
-  *) error "Unexpected action: ${action} used" ;;
+  *) 
+    err "Unexpected action: ${action} used" 
+    exit 1
+    ;;
 esac
 
 err() {
