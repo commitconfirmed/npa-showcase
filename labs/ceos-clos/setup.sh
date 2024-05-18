@@ -1,8 +1,4 @@
 #!/bin/bash
-# Stop, Remove, rebuild & run your Ansible container quickly after making changes
-# Probably better to do in compose but I'm lazy ;)
+# Build the lab and run ../manage.sh with the relevant playbook / inventory
 sudo containerlab deploy 
-sudo docker build -t cc-ansible ../cc-ansible-core/.
-sudo docker image rm $(sudo docker image list -qf dangling=true)
-sudo docker run -d --name lab_ansible cc-ansible
-sudo docker network connect management $(sudo docker ps -qaf name=lab_ansible)
+source ../manage.sh -a build -i clos.ini -p pb-import-ssh.yml

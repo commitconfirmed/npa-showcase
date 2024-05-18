@@ -13,7 +13,7 @@ WSL2 (or a Linux VM) with docker-ce & containerlab
 
 Memory: ~14Gb
 
-### Usage (TBD)
+### Usage
 
 - Run the setup.sh script to build the lab
 - Run the verify.sh script to see some basic validation that the lab is working
