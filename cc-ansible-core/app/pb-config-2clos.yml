@@ -24,6 +24,10 @@
 # Uniquely pass vars to each host in the playbook instead of using host_vars as
 # different playbook setups will use different IPs, VLANs, etc. for the same host.
 # Using a networking container for this instead of alpine to test LACP to the leaves
+
+
+# Legacy host config I tried using EOS hosts, but they took up too much memory
+# So I moved to basic Alpine linux containers with LACP and dot1q enabled
 - hosts: ceos-host1
   gather_facts: false
   roles:

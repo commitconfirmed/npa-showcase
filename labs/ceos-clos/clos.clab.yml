@@ -31,14 +31,23 @@ topology:
       kind: arista_ceos
       image: ceos:4.28.10.1M
       mgmt-ipv4: 172.20.0.222
-    ceos-host1:
-      kind: arista_ceos
-      image: ceos:4.28.10.1M
+    host1:
+      kind: linux
+      images: alpine:latest
       mgmt-ipv4: 172.20.0.111
-    ceos-host2:
-      kind: arista_ceos
-      image: ceos:4.28.10.1M
-      mgmt-ipv4: 172.20.0.112
+    host2:
+      kind: linux
+      images: alpine:latest
+      mgmt-ipv4: 172.20.0.112  
+# Trying Alpine hosts instead
+#    ceos-host1:
+#      kind: arista_ceos
+#      image: ceos:4.28.10.1M
+#      mgmt-ipv4: 172.20.0.111
+#    ceos-host2:
+#      kind: arista_ceos
+#      image: ceos:4.28.10.1M
+#      mgmt-ipv4: 172.20.0.112
 
   links:
     - endpoints: ["ceos-spine1:eth1", "ceos-leaf1:eth1"]
