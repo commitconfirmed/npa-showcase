@@ -10,7 +10,7 @@ apt-get install -y vim; \
 apt-get clean all
 
 # Configure SSH server (TODO: secure user/pass creation)
-RUN groupadd -r ansible && useradd -rm -d /home/admin -s /bin/bash -g admin -G sudo -u 1000 admin && \
+RUN groupadd -r admin && useradd -rm -d /home/admin -s /bin/bash -g admin -G sudo -u 1000 admin && \
 echo 'admin:admin' | chpasswd
 
 RUN mkdir /var/run/sshd && \
