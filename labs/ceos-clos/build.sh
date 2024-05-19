@@ -5,4 +5,5 @@
 sudo containerlab deploy
 echo "Sleeping for 10 seconds..."
 sleep 10 # Give a little bit of time for everything to come up
-bash ../manage.sh -a build -i clos.ini -p pb-import-ssh.yml
+bash ../manage.sh -a build 
+bash ../manage.sh -a deploy -i clos.ini -p pb-import-ssh.yml

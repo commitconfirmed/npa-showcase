@@ -27,19 +27,23 @@ done
 # Perform relevant lab action
 case "${action}" in
   build)
-    if [[ -z "${inventory}" || -z "${playbook}" ]]; then
-      err "-i "${inventory}" or -p "${playbook}" flags are not defined in setup script"
-    else
-      sudo docker build -t cc-ansible ../../cc-ansible-core/. # Extra ../ as we call this from /labs dir
-      sudo docker image rm $(sudo docker image list -qf dangling=true)
-      sudo docker run -d --name lab_ansible cc-ansible
-      sudo docker network connect management $(sudo docker ps -qaf name=lab_ansible)
-      sudo docker exec -tu ansible -w /app lab_ansible ansible-playbook -i inventory/"${inventory}" "${playbook}" 
-    fi
+    # I should really just call the build.sh script in the cc-ansible-core dir...
+    # But I will likely use this to deploy multiple servers depending on the lab
+    # in the future (i.e. Batfish, Grafana, Netbox, etc.) with extra flags (TODO)
+    sudo docker build -t cc-ansible ../../cc-ansible-core/. # Extra ../ as we call this from /labs dir
+    sudo docker image rm $(sudo docker image list -qf dangling=true)
+    sudo docker run --net management --ip 172.20.0.10 -d --name cc-server-ansible cc-ansible 
     ;;
   cleanup)
-    sudo docker stop $(sudo docker ps -qaf name=lab_ansible)
-    sudo docker rm $(sudo docker ps -qaf name=lab_ansible)
+    sudo docker stop $(sudo docker ps -qaf name=cc-server-ansible)
+    sudo docker rm $(sudo docker ps -qaf name=cc-server-ansible)
+    ;;
+  deploy)
+    if [[ -z "${inventory}" || -z "${playbook}" ]]; then
+      err "-i "${inventory}" or -p "${playbook}" flags are not defined in deploy script"
+    else
+      sudo docker exec -tu ansible -w /app cc-server-ansible ansible-playbook -i inventory/"${inventory}" "${playbook}" 
+    fi
     ;;
   *) 
     err "Unexpected action: "${action}" used" ;;

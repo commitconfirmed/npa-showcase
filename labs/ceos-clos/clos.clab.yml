@@ -33,13 +33,13 @@ topology:
       mgmt-ipv4: 172.20.0.222
     host1:
       kind: linux
-      images: alpine:latest
+      images: cc-host:latest
       mgmt-ipv4: 172.20.0.111
     host2:
       kind: linux
-      images: alpine:latest
+      images: cc-host:latest
       mgmt-ipv4: 172.20.0.112  
-# Trying Alpine hosts instead
+# Trying Ubuntu hosts instead
 #    ceos-host1:
 #      kind: arista_ceos
 #      image: ceos:4.28.10.1M
@@ -58,7 +58,7 @@ topology:
     - endpoints: ["ceos-spine2:eth2", "ceos-leaf2:eth2"]
     - endpoints: ["ceos-spine2:eth3", "ceos-leaf3:eth2"]
     - endpoints: ["ceos-spine2:eth4", "ceos-leaf4:eth2"]
-    - endpoints: ["ceos-host1:eth1", "ceos-leaf1:eth5"]
-    - endpoints: ["ceos-host1:eth2", "ceos-leaf2:eth5"]
-    - endpoints: ["ceos-host2:eth1", "ceos-leaf3:eth5"]
-    - endpoints: ["ceos-host2:eth2", "ceos-leaf4:eth5"]
+    - endpoints: ["cc-host1:eth1", "ceos-leaf1:eth5"]
+    - endpoints: ["cc-host1:eth2", "ceos-leaf2:eth5"]
+    - endpoints: ["cc-host2:eth1", "ceos-leaf3:eth5"]
+    - endpoints: ["cc-host2:eth2", "ceos-leaf4:eth5"]
