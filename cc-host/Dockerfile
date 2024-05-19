@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install SSH, bonding and basic network verification tools
 RUN apt-get update -y; \
-apt-get install -y ifenslave iproute2; \
+apt-get install -y kmod ifenslave iproute2; \
 apt-get install -y iputils-ping openssh-server; \
 apt-get install -y vim; \
 apt-get clean all
