@@ -7,6 +7,10 @@ mgmt:
 
 topology:
   nodes:
+    ceos-ixp:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+      mgmt-ipv4: 172.20.0.200
     ceos-peer1:
       kind: arista_ceos
       image: ceos:4.28.10.1M
@@ -33,13 +37,11 @@ topology:
       exec:
         - "ip addr add 192.168.0.252/24 brd 192.168.0.255 dev eth2"
         - "ip link set dev eth2 up"
-    ixp-net:
-      kind: bridge
 
   links:
-    - endpoints: ["ceos-peer1:eth1", "ixp-net:port1"]
-    - endpoints: ["ceos-peer2:eth1", "ixp-net:port2"]
-    - endpoints: ["ceos-peer3:eth1", "ixp-net:port3"]
-    - endpoints: ["bird-rs1:eth2", "ixp-net:port4"]
-    - endpoints: ["bird-rs2:eth2", "ixp-net:port5"]
+    - endpoints: ["bird-rs1:eth2", "ceos-ixp:eth1"]
+    - endpoints: ["bird-rs2:eth2", "ceos-ixp:eth2"]
+    - endpoints: ["ceos-peer1:eth1", "ceos-ixp:eth3"]
+    - endpoints: ["ceos-peer2:eth1", "ceos-ixp:eth4"]
+    - endpoints: ["ceos-peer3:eth1", "ceos-ixp:eth5"]
     - endpoints: ["ceos-peer1:eth2", "ceos-peer2:eth2"]

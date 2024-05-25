@@ -2,7 +2,6 @@
 #
 # Build the lab and run ../manage.sh with the relevant playbook / inventory
 
-sudo docker network create ixp-net 
 sudo containerlab deploy
 echo "Sleeping for 10 seconds..."
 sleep 10 # Give a little bit of time for everything to come up
