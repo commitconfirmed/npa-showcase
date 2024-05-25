@@ -45,7 +45,7 @@ case "${action}" in
     if [[ -z "${hostname}" || -z "${inventory}" || -z "${playbook}" ]]; then
       err "-i "${hostname}" or -i "${inventory}" or -p "${playbook}" flags are not defined in deploy script"
     else
-      sudo docker exec -tu ansible -w /app cc-server-ansible ansible-playbook -i inventory/"${inventory}" "${playbook}" 
+      sudo docker exec -tu ansible -w /app "${hostname}" ansible-playbook -i inventory/"${inventory}" "${playbook}" 
     fi
     ;;
   *) 
