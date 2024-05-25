@@ -1,0 +1,45 @@
+# A Basic IXP peering lab
+name: ceos-ixp
+
+mgmt:
+  network: management
+  ipv4-subnet: 172.20.0.0/24
+
+topology:
+  nodes:
+    ceos-peer1:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+      mgmt-ipv4: 172.20.0.201
+    ceos-peer2:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+      mgmt-ipv4: 172.20.0.202
+    ceos-peer3:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+      mgmt-ipv4: 172.20.0.203
+    bird-rs1:
+      kind: linux
+      image: cc-bird:latest
+      mgmt-ipv4: 172.20.0.251
+      exec:
+        - "ip addr add 192.168.0.251/24 brd 192.168.0.255 dev eth2"
+        - "ip link set dev eth2 up"
+    bird-rs2:
+      kind: linux
+      image: cc-bird:latest
+      mgmt-ipv4: 172.20.0.252
+      exec:
+        - "ip addr add 192.168.0.252/24 brd 192.168.0.255 dev eth2"
+        - "ip link set dev eth2 up"
+    ixp-net:
+      kind: bridge
+
+  links:
+    - endpoints: ["ceos-peer1:eth1", "ixp-net:port1"]
+    - endpoints: ["ceos-peer2:eth1", "ixp-net:port2"]
+    - endpoints: ["ceos-peer3:eth1", "ixp-net:port3"]
+    - endpoints: ["bird-rs1:eth2", "ixp-net:port4"]
+    - endpoints: ["bird-rs2:eth2", "ixp-net:port5"]
+    - endpoints: ["ceos-peer1:eth2", "ceos-peer2:eth2"]

@@ -2,17 +2,18 @@ FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install SSH, bonding and basic network verification tools
+# Install SSH, BIRD and basic network verification tools
 RUN apt-get update -y; \
-apt-get install -y kmod ifenslave iproute2; \
+apt-get install -y iproute2 bird tcpdump; \
 apt-get install -y iputils-ping openssh-server; \
 apt-get install -y vim; \
 apt-get clean all
 
-# Configure SSH server (TODO: secure user/pass creation)
+# Configure a non root user
 RUN groupadd -r admin && useradd -rm -d /home/admin -s /bin/bash -g admin -G sudo -u 1000 admin && \
 echo 'admin:admin' | chpasswd
 
+# Configure SSH server (TODO: secure user/pass creation)
 RUN mkdir /var/run/sshd && \
 sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
 sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
@@ -27,4 +28,5 @@ EXPOSE 22
 
 USER root
 
+# We will use ansible to configure and then run BIRD depending on the lab topology
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]

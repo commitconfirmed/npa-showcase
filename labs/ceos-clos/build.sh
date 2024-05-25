@@ -9,7 +9,7 @@ bash ../manage.sh -a build
 bash ../manage.sh -a deploy -i clos.ini -p pb-import-ssh.yml
 bash ../manage.sh -a deploy -i clos.ini -p pb-config-2clos.yml
 
-# Build host networking
+# Build host networking (I should move this to the clab file)
 sudo docker exec -d clab-ceos-clos-host1 ip link add dev bond0 type bond miimon 100 mode 802.3ad
 sudo docker exec -d clab-ceos-clos-host1 ip link set dev eth1 down
 sudo docker exec -d clab-ceos-clos-host1 ip link set dev eth2 down
