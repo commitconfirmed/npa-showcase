@@ -28,5 +28,11 @@ EXPOSE 22
 
 USER root
 
+# For some reason this directory and file aren't created on bird install which
+# Prevents bird from starting
+# bird: Cannot create control socket /run/bird/bird.ctl: No such file or directory
+RUN mkdir /run/bird
+RUN touch /run/bird/bird.ctl
+
 # We will use ansible to configure and then run BIRD depending on the lab topology
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]

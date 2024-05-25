@@ -1,0 +1,23 @@
+# Configure a small IX peering network
+---
+- hosts: rrs
+  gather_facts: false
+  roles:
+    - role: eos_system
+      tags: [ rrs, system ]
+
+- hosts: peers
+  gather_facts: false
+  roles:
+    - role: eos_system
+      tags: [ peers, system ] 
+    - role: eos_interfaces
+      tags: [ peers, interfaces ] 
+
+- hosts: ixp
+  gather_facts: false
+  roles:
+    - role: eos_system
+      tags: [ ixp, system ]
+    - role: eos_interfaces
+      tags: [ ixp, interfaces ] 

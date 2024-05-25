@@ -1,0 +1,12 @@
+# Create the /etc/bird/bird.conf file relevant to the lab deployment
+# and then run bird
+---
+
+- name: Remove ipv4-unicast
+  arista.eos.eos_config:
+    lines:
+      - "no bgp default ipv4-unicast"
+    parents:
+      - "router bgp {{bgp['local_as']}}"
+  when:
+    - bgp.overlay_pg_id is defined
