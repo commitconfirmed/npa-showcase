@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# Remove the containerlab devices and the ansible container
-# Make sure you run this before deploying a different lab
+# Pretty pointless now that the ansible container is handled by containerlab
+# May do other things in the future though and it saves some keystrokes :)
 
 sudo containerlab destroy
-bash ../manage.sh -a cleanup
+#bash ../manage.sh -a cleanup
