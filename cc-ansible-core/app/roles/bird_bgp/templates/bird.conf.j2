@@ -3,13 +3,41 @@
 router id {{ router_id }};
 define my_as = {{ as_number }};
 
-protocol device { }
+# Restrict network interfaces BIRD works with
+protocol direct {
+  interface "eth2";
+}
+
+# The Kernel protocol is not a real routing protocol. Instead of communicating
+# with other routers in the network, it performs synchronization of BIRD's
+# routing tables with the OS kernel.
+protocol kernel {
+        persist;
+        scan time 60;
+        import all;
+        export all;
+}
+
+# The Device protocol is not a real routing protocol. It doesn't generate any
+# routes and it only serves as a module for getting information about network
+# interfaces from the kernel.
+protocol device {
+        scan time 60;
+}
+
+# BGP Filter configuration
+
+filter default_accept {
+  accept;
+}
 
 # BGP Template configuration
 
 template bgp IXP {
   local as my_as;
   rs client;
+  multihop;
+  export filter default_accept;
 }
 
 # BGP Peer configuration
@@ -19,9 +47,5 @@ template bgp IXP {
 protocol bgp AS{{ peer.as_number }} from IXP {
   description "{{ peer.desc }}";
   neighbor {{ peer.ip }} as {{ peer.as_number }};
-  ipv4 {
-    import all;
-    export all;
-  }
 }
 {% endfor %}
