@@ -2,11 +2,19 @@
 # and then run bird
 ---
 
-- name: Remove ipv4-unicast
-  arista.eos.eos_config:
-    lines:
-      - "no bgp default ipv4-unicast"
-    parents:
-      - "router bgp {{bgp['local_as']}}"
-  when:
-    - bgp.overlay_pg_id is defined
+- name: Create bird.conf
+  ansible.builtin.copy:
+    src: "../templates/bird.conf.j2"
+    dest: /etc/bird/bird.conf
+    owner: bird
+    group: bird
+    become: yes
+    mode: u=rw,g=r,o=r
+
+- name: Stop BIRD
+  ansible.builtin.command: service bird stop
+  become: yes
+
+- name: Run BIRD
+  ansible.builtin.command: /usr/sbin/bird -u bird -g bird -c /etc/bird/bird.conf 
+  become: yes

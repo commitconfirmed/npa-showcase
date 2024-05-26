@@ -1,10 +1,10 @@
 # Configure a small IX peering network
 ---
-- hosts: rrs
+- hosts: rservers
   gather_facts: false
   roles:
-    - role: eos_system
-      tags: [ rrs, system ]
+    - role: bird_bgp
+      tags: [ rservers ]
 
 - hosts: peers
   gather_facts: false
