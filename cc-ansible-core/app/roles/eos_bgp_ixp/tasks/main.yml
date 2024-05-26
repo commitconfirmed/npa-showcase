@@ -1,0 +1,4 @@
+---
+- name: Apply BGP IXP configuration via J2
+  arista.eos.eos_config:
+    src: "../templates/eos_bgp_ixp.conf.j2"

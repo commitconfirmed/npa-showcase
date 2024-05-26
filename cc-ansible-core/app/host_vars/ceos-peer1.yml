@@ -1,0 +1,17 @@
+# Interfaces (Management already done by Containerlab)
+interfaces:
+  - if: "Loopback0"
+    desc: "BGP Loopback"
+    enabled: true
+    ipv4: "10.0.0.1/32"
+  - if: "Ethernet1"
+    desc: "ceos-peer1:Ethernet1 --> ceos-ixp:Ethernet3"
+    enabled: true
+    routed: true
+    ipv4: "192.168.0.11/24"
+
+router_id: 10.0.0.1
+bgp:
+  type: "ixp"
+  local_as: 201
+  remote_as: 100

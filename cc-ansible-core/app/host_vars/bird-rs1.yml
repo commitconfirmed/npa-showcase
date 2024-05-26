@@ -2,17 +2,17 @@
 # Route Server configuration
 
 router_id: 192.168.0.251
-as_number: 64500
+as_number: 100
 peers:
   - name: "CEOS-PEER1"
     desc: "To ceos-peer1"
     ip: "192.168.0.11"
-    as_number: 64501
+    as_number: 201
   - name: "CEOS-PEER2"
     desc: "To ceos-peer2"
     ip: "192.168.0.12"
-    as_number: 64502
+    as_number: 202
   - name: "CEOS-PEER3"
     desc: "To ceos-peer3"
     ip: "192.168.0.13"
-    as_number: 64503
+    as_number: 203

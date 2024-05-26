@@ -13,6 +13,8 @@
       tags: [ peers, system ] 
     - role: eos_interfaces
       tags: [ peers, interfaces ] 
+    - role: eos_bgp_ixp
+      tags: [ peers, bgp ]
 
 - hosts: ixp
   gather_facts: false
