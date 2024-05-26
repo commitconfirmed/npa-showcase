@@ -15,12 +15,13 @@ template bgp IXP {
 # BGP Peer configuration
 
 {% for peer in peers %}
-protocol bgp {{ peer.name }} from IXP {
+# {{ peer.name }} configuration
+protocol bgp AS{{ peer.as_number }} from IXP {
   description "{{ peer.desc }}";
   neighbor {{ peer.ip }} as {{ peer.as_number }};
   ipv4 {
     import all;
     export all;
-  };
+  }
 }
 {% endfor %}
