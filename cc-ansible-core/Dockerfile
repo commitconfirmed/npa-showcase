@@ -13,7 +13,8 @@ apt-get clean all
 # Install Ansible and SSH library (not included by default??)
 RUN pip3 install -upgrade pip3; \
 pip3 install ansible; \
-pip3 install ansible-pylibssh
+pip3 install ansible-pylibssh; \
+pip3 install paramiko
 
 # Configure SSH server (TBD from Volume / secured)
 RUN groupadd -r ansible && useradd -rm -d /home/ansible -s /bin/bash -g ansible -G sudo -u 1000 ansible && \

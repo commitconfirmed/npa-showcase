@@ -1,5 +1,5 @@
 # Connection details for linux hosts - TBD Move passwords to Vault
-ansible_connection: ssh
+ansible_connection: paramiko
 ansible_user: admin
 ansible_password: admin
 ansible_become_method: sudo

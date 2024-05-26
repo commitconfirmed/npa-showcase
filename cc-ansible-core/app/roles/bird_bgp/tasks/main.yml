@@ -8,8 +8,8 @@
     dest: /etc/bird/bird.conf
     owner: bird
     group: bird
-    become: yes
     mode: u=rw,g=r,o=r
+  become: yes
 
 - name: Stop BIRD
   ansible.builtin.command: service bird stop
