@@ -3,7 +3,7 @@
 ---
 
 - name: Create bird.conf
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: "../templates/bird.conf.j2"
     dest: /etc/bird/bird.conf
     owner: bird
