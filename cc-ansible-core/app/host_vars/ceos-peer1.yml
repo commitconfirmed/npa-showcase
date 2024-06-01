@@ -15,3 +15,4 @@ bgp:
   type: "ixp"
   local_as: 201
   remote_as: 100
+  network: "10.0.0.1/32"

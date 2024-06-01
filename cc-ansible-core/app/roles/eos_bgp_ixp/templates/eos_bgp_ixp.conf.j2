@@ -8,17 +8,13 @@ ip routing
 router bgp {{ bgp.local_as }}
    router-id {{ router_id }}
    no bgp default ipv4-unicast
-   maximum-paths 2
    neighbor IXP peer group
    neighbor IXP remote-as {{ bgp.remote_as }}
    neighbor IXP remove-private-as all
-   neighbor IXP enforce-first-as
-   neighbor IXP password {{ bgp.password }}
-   neighbor IXP maximum-routes 1000
    neighbor 192.168.0.251 peer group IXP
    neighbor 192.168.0.251 description RS1
-   neighbor 192.168.0.252 peer group IXP
-   neighbor 192.168.0.252 description RS2
+   neighbor 192.168.0.251 maximum-routes 1000
+   no neighbor 192.168.0.251 enforce-first-as
    !
    address-family ipv4
       bgp additional-paths install
