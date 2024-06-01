@@ -5,18 +5,80 @@ spanning-tree mode none
 service routing protocols model multi-agent
 ip routing
 
+{# Excluding 10.0.0.0/8 as this is a lab #} 
+ip prefix-list PL-BOGONS seq 20 permit 100.64.0.0/10 le 32
+ip prefix-list PL-BOGONS seq 30 permit 127.0.0.0/8 le 32
+ip prefix-list PL-BOGONS seq 40 permit 169.254.0.0/16 le 32
+ip prefix-list PL-BOGONS seq 50 permit 172.16.0.0/12 le 32
+ip prefix-list PL-BOGONS seq 60 permit 192.0.0.0/24 le 32
+ip prefix-list PL-BOGONS seq 70 permit 192.0.2.0/24 le 32
+ip prefix-list PL-BOGONS seq 80 permit 192.168.0.0/16 le 32
+ip prefix-list PL-BOGONS seq 90 permit 198.18.0.0/15 le 32
+ip prefix-list PL-BOGONS seq 100 permit 198.51.100.0/24 le 32
+ip prefix-list PL-BOGONS seq 110 permit 203.0.113.0/24 le 32
+ip prefix-list PL-BOGONS seq 120 permit 224.0.0.0/3 le 32
+
+{# Excluding 2001:db8::/32 as this is a lab #}
+ipv6 prefix-list PL-BOGONS-V6 deny ::/8 le 128
+ipv6 prefix-list PL-BOGONS-V6 deny 100::/64 le 128
+ipv6 prefix-list PL-BOGONS-V6 deny 2001:2::/48 le 128
+ipv6 prefix-list PL-BOGONS-V6 deny 2001:10::/28 le 128
+ipv6 prefix-list PL-BOGONS-V6 deny 2002::/16 le 128
+ipv6 prefix-list PL-BOGONS-V6 deny 3ffe::/16 le 128
+ipv6 prefix-list PL-BOGONS-V6 deny fc00::/7 le 128
+ipv6 prefix-list PL-BOGONS-V6 deny fe80::/10 le 128
+ipv6 prefix-list PL-BOGONS-V6 deny fec0::/10 le 128
+ipv6 prefix-list PL-BOGONS-V6 deny ff00::/8 le 128
+
+ip prefix-list PL-DEFAULT seq 10 permit 0.0.0.0/0
+ip prefix-list PL-DEFAULT-V6 seq 10 permit ::/0
+
+ip prefix-list PL-IXP-INBOUND seq 10 permit 0.0.0.0/0 le 24
+ip prefix-list PL-IXP-INBOUND-V6 seq 10 permit ::/0 le 64
+
+{%- for prefix in bgp.ipv4_prefixes %}
+ip prefix-list PL-IXP-OUTBOUND seq {{ loop.index * 10 }} permit {{ prefix }} 
+{%- endfor %}
+
+{%- for prefix in bgp.ipv6_prefixes %}
+ip prefix-list PL-IXP-OUTBOUND-V6 seq {{ loop.index * 10 }} permit {{ prefix }} 
+{%- endfor %}
+
+route-map IXP-RM-IPV4-IN deny 10
+   match ip address prefix-list PL-BOGONS
+route-map IXP-RM-IPV4-IN permit 20
+   match ip address prefix-list PL-IXP-INBOUND
+
+route-map IXP-RM-IPV4-OUT deny 10
+   match ip address prefix-list PL-BOGONS
+route-map IXP-RM-IPV4-OUT permit 20
+   match ip address prefix-list PL-IXP-OUTBOUND
+
+route-map IXP-RM-IPV6-IN deny 10
+   match ip address prefix-list PL-BOGONS-V6
+route-map IXP-RM-IPV6-IN permit 20
+   match ip address prefix-list PL-IXP-INBOUND-V6
+
+route-map IXP-RM-IPV6-OUT deny 10
+   match ip address prefix-list PL-BOGONS-V6
+route-map IXP-RM-IPV6-OUT permit 20
+   match ip address prefix-list PL-IXP-OUTBOUND-V6
+
 router bgp {{ bgp.local_as }}
    router-id {{ router_id }}
    no bgp default ipv4-unicast
-   neighbor IXP peer group
-   neighbor IXP remote-as {{ bgp.remote_as }}
-   neighbor IXP remove-private-as all
+{%- for family in (ipv6, ipv4) %}
+   neighbor IXP-{{ family }} peer group
+   neighbor IXP-{{ family }} next-hop-self
+   neighbor IXP-{{ family }} remote-as {{ bgp.remote_as }}
+   neighbor IXP-{{ family }} remove-private-as all
+   address-family {{ family }}
+      neighbor IXP-{{ family }} activate
+      neighbor IXP-{{ family }} route-map IXP-RM-{{ family }}-IN in
+      neighbor IXP-{{ family }} route-map IXP-RM-{{ family }}-OUT out
+{%- endfor %}
    neighbor 192.168.0.251 peer group IXP
    neighbor 192.168.0.251 description RS1
    neighbor 192.168.0.251 maximum-routes 1000
    no neighbor 192.168.0.251 enforce-first-as
-   !
-   address-family ipv4
-      bgp additional-paths install
-      neighbor IXP activate
-      network {{ bgp.network }}
+   
