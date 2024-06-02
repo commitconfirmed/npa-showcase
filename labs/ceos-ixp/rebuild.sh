@@ -4,5 +4,5 @@
 # rebuild the ansible container, use the rebuild.sh script in the
 # npa-showcase/cc-ansible-core directory
 
-bash ./cleaup.sh
+bash ./cleanup.sh
 bash ./build.sh
