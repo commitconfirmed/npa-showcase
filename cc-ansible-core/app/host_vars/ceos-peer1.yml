@@ -17,12 +17,15 @@ bgp:
   type: "IXP"
   local_as: 201
   remote_as: 100
-  neighbors_v4:
+  neighbors:
     - ip: "192.168.0.251"
+      desc: "Route Server 1 - v4"
     - ip: "192.168.0.252"
-  neighbors_v6:
+      desc: "Route Server 2 - v4"
     - ip: "2001:db8:ffff::1"
+      desc: "Route Server 1 - v6"
     - ip: "2001:db8:ffff::2"
+      desc: "Route Server 2 - v6"
   prefixes_v4_out:
     - prefix: "10.1.0.0/24"
     - prefix: "10.1.1.0/24"

@@ -7,15 +7,15 @@ peers:
   - name: "CEOS-PEER1"
     desc: "To ceos-peer1"
     ip: "192.168.0.11"
-    ipv6: "2001:db8:ffff::b1/64"
+    ipv6: "2001:db8:ffff::b1"
     as_number: 201
   - name: "CEOS-PEER2"
     desc: "To ceos-peer2"
     ip: "192.168.0.12"
-    ipv6: "2001:db8:ffff::b2/64"
+    ipv6: "2001:db8:ffff::b2"
     as_number: 202
   - name: "CEOS-PEER3"
     desc: "To ceos-peer3"
     ip: "192.168.0.13"
-    ipv6: "2001:db8:ffff::b3/64"
+    ipv6: "2001:db8:ffff::b3"
     as_number: 203
