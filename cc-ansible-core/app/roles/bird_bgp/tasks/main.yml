@@ -2,19 +2,38 @@
 # and then run bird
 ---
 
-- name: Create bird.conf
+- name: Create ipv4 bird.conf
   ansible.builtin.template:
     src: "../templates/bird.conf.j2"
     dest: /etc/bird/bird.conf
     owner: bird
     group: bird
     mode: u=rw,g=r,o=r
+  vars:
+    family: "ipv4"
+  become: yes
+
+- name: Create ipv6 bird.conf
+  ansible.builtin.template:
+    src: "../templates/bird.conf.j2"
+    dest: /etc/bird/bird6.conf
+    owner: bird
+    group: bird
+    mode: u=rw,g=r,o=r
+  vars:
+    family: "ipv6"
   become: yes
 
 - name: Stop BIRD
-  ansible.builtin.command: service bird stop
+  ansible.builtin.command:
+    cmd: | 
+      service bird stop
+      service bird6 stop
   become: yes
 
 - name: Run BIRD
-  ansible.builtin.command: /usr/sbin/bird -u bird -g bird -c /etc/bird/bird.conf 
+  ansible.builtin.command: 
+    cmd: |
+      /usr/sbin/bird -u bird -g bird -c /etc/bird/bird.conf 
+      /usr/sbin/bird6 -u bird -g bird -c /etc/bird/bird6.conf
   become: yes
