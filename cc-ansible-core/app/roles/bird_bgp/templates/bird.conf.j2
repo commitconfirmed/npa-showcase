@@ -1,11 +1,11 @@
 #jinja2: trim_blocks:True
 
-{%- if family == "ipv4" %}
+{% if family == "ipv4" %}
 router id {{ router_id }};
-{%- endif %}
-{%- if family == "ipv6" %}
+{% endif %}
+{% if family == "ipv6" %}
 router id {{ router_id_ipv6 }};
-{%- endif %}
+{% endif %}
 define my_as = {{ as_number }};
 
 # Restrict network interfaces BIRD works with
@@ -51,11 +51,11 @@ template bgp IXP {
 # {{ peer.name }} configuration
 protocol bgp AS{{ peer.as_number }} from IXP {
   description "{{ peer.desc }}";
-{%- if family == "ipv4" %}
+{% if family == "ipv4" %}
   neighbor {{ peer.ip }} as {{ peer.as_number }};
-{%- endif %}
-{%- if family == "ipv6" %}
+{% endif %}
+{% if family == "ipv6" %}
   neighbor {{ peer.ipv6 }} as {{ peer.as_number }};
-{%- endif %}
+{% endif %}
 }
 {% endfor %}
