@@ -2,7 +2,6 @@
 # Route Server configuration
 
 router_id: "192.168.0.252"
-router_id_ipv6: "2001:db8:ffff::2"
 as_number: 100
 peers:
   - name: "CEOS-PEER1"

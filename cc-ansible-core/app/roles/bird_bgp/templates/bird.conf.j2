@@ -1,11 +1,6 @@
 #jinja2: trim_blocks:True
 
-{% if family == "ipv4" %}
 router id {{ router_id }};
-{% endif %}
-{% if family == "ipv6" %}
-router id {{ router_id_ipv6 }};
-{% endif %}
 define my_as = {{ as_number }};
 
 # Restrict network interfaces BIRD works with
