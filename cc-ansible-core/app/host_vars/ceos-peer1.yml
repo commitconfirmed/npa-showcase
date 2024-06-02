@@ -4,15 +4,30 @@ interfaces:
     desc: "BGP Loopback"
     enabled: true
     ipv4: "10.0.0.1/32"
+    ipv6: "2001:db8:b1::1/128"
   - if: "Ethernet1"
     desc: "ceos-peer1:Ethernet1 --> ceos-ixp:Ethernet3"
     enabled: true
     routed: true
     ipv4: "192.168.0.11/24"
+    ipv6: "2001:db8:ffff::b1/64"
 
 router_id: 10.0.0.1
 bgp:
-  type: "ixp"
+  type: "IXP"
   local_as: 201
   remote_as: 100
-  network: "10.0.0.1/32"
+  neighbors_v4:
+    - ip: "192.168.0.251"
+    - ip: "192.168.0.252"
+  neighbors_v6:
+    - ip: "2001:db8:ffff::1"
+    - ip: "2001:db8:ffff::2"
+  prefixes_v4_out:
+    - prefix: "10.1.0.0/24"
+    - prefix: "10.1.1.0/24"
+    - prefix: "10.1.2.0/24"
+  prefixes_v6_out:
+    - prefix: "2001:db8:b11::/48"
+    - prefix: "2001:db8:b12::/48"
+    - prefix: "2001:db8:b13::/48"

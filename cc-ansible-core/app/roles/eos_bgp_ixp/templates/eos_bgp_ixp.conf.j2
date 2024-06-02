@@ -72,6 +72,7 @@ router bgp {{ bgp.local_as }}
    neighbor IXP-{{ family }} next-hop-self
    neighbor IXP-{{ family }} remote-as {{ bgp.remote_as }}
    neighbor IXP-{{ family }} remove-private-as all
+   no neighbor IXP-{{ family }} enforce-first-as
    address-family {{ family }}
       neighbor IXP-{{ family }} activate
       neighbor IXP-{{ family }} route-map IXP-RM-{{ family }}-IN in
@@ -80,5 +81,4 @@ router bgp {{ bgp.local_as }}
    neighbor 192.168.0.251 peer group IXP
    neighbor 192.168.0.251 description RS1
    neighbor 192.168.0.251 maximum-routes 1000
-   no neighbor 192.168.0.251 enforce-first-as
    
