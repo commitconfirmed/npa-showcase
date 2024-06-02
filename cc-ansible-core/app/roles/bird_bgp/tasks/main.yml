@@ -25,15 +25,15 @@
   become: yes
 
 - name: Stop BIRD
-  ansible.builtin.command:
-    cmd: | 
-      service bird stop;
-      service bird6 stop
+  ansible.builtin.command: "{{ item }}"
+  with_items:
+    - "service bird stop"
+    - "service bird6 stop"
   become: yes
 
 - name: Run BIRD
-  ansible.builtin.command: 
-    cmd: |
-      /usr/sbin/bird -u bird -g bird -c /etc/bird/bird.conf;
-      /usr/sbin/bird6 -u bird -g bird -c /etc/bird/bird6.conf
+  ansible.builtin.command: "{{ item }}"
+  with_items:
+    - "/usr/sbin/bird -u bird -g bird -c /etc/bird/bird.conf"
+    - "/usr/sbin/bird6 -u bird -g bird -c /etc/bird/bird6.conf"
   become: yes
