@@ -19,12 +19,16 @@ bgp:
   remote_as: 100
   neighbors:
     - ip: "192.168.0.251"
+      pg: "IXP-IPV4"
       desc: "Route Server 1 - v4"
     - ip: "192.168.0.252"
+      pg: "IXP-IPV4"
       desc: "Route Server 2 - v4"
     - ip: "2001:db8:ffff::1"
+      pg: "IXP-IPV6"
       desc: "Route Server 1 - v6"
     - ip: "2001:db8:ffff::2"
+      pg: "IXP-IPV6"
       desc: "Route Server 2 - v6"
   prefixes_v4_out:
     - prefix: "10.1.0.0/24"
