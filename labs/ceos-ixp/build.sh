@@ -7,3 +7,4 @@ sudo containerlab deploy
 echo "Sleeping for 10 seconds..."
 sleep 10 
 bash ../manage.sh -a deploy -h clab-ceos-ixp-serv-ansible -i ceos-ixp.ini -p pb-import-ssh.yml
+bash ../manage.sh -a deploy -h clab-ceos-ixp-serv-ansible -i ceos-ixp.ini -p pb-cfg-ceos-ixp.yml
