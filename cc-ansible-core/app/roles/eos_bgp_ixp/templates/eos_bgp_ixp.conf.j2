@@ -4,6 +4,7 @@ switchport default mode routed
 spanning-tree mode none
 service routing protocols model multi-agent
 ip routing
+ipv6 unicast-routing
 
 {# Excluding 10.0.0.0/8 as this is a lab #} 
 ip prefix-list PL-BOGONS

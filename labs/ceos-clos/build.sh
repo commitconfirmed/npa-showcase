@@ -4,10 +4,9 @@
 
 sudo containerlab deploy
 echo "Sleeping for 10 seconds..."
-sleep 10 # Give a little bit of time for everything to come up
-bash ../manage.sh -a build 
-bash ../manage.sh -a deploy -i clos.ini -p pb-import-ssh.yml
-bash ../manage.sh -a deploy -i clos.ini -p pb-config-2clos.yml
+sleep 10 # Give a little bit of time for everything to come up 
+bash ../manage.sh -a deploy -h clab-ceos-clos-serv-ansible -i clos.ini -p pb-import-ssh.yml
+bash ../manage.sh -a deploy -h clab-ceos-clos-serv-ansible -i clos.ini -p pb-config-2clos.yml
 
 # Build host networking (I should move this to the clab file)
 sudo docker exec -d clab-ceos-clos-host1 ip link add dev bond0 type bond miimon 100 mode 802.3ad

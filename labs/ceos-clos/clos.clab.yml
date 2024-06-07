@@ -7,6 +7,10 @@ mgmt:
 
 topology:
   nodes:
+    serv-ansible:
+      kind: linux
+      image: cc-ansible:latest
+      mgmt-ipv4: 172.20.0.20
     ceos-spine1:
       kind: arista_ceos
       image: ceos:4.28.10.1M
