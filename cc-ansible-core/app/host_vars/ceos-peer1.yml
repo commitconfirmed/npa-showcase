@@ -9,22 +9,22 @@ interfaces:
     desc: "Bogon Network"
     enabled: true
     ipv4: "172.16.1.1/24"
-    ipv6: "2001:2:b11::1/128"
+    ipv6: "2001:2:b11::1/48"
   - if: "Loopback101"
     desc: "Network 101"
     enabled: true
-    ipv4: "10.1.1.1/32"
-    ipv6: "2001:db8:b11::1/128"
+    ipv4: "10.1.1.1/24"
+    ipv6: "2001:db8:b11::1/48"
   - if: "Loopback102"
     desc: "Network 102"
     enabled: true
-    ipv4: "10.1.2.1/32"
-    ipv6: "2001:db8:b12::1/128"
+    ipv4: "10.1.2.1/24"
+    ipv6: "2001:db8:b12::1/48"
   - if: "Loopback103"
     desc: "Network 103"
     enabled: true
-    ipv4: "10.1.3.1/32"
-    ipv6: "2001:db8:b13::1/128"
+    ipv4: "10.1.3.1/24"
+    ipv6: "2001:db8:b13::1/48"
   - if: "Ethernet1"
     desc: "ceos-peer1:Ethernet1 --> ceos-ixp:Ethernet3"
     enabled: true

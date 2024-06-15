@@ -94,6 +94,7 @@ router bgp {{ bgp.local_as }}
       neighbor IXP-{{ family }} activate
       neighbor IXP-{{ family }} route-map IXP-RM-{{ family }}-IN in
       neighbor IXP-{{ family }} route-map IXP-RM-{{ family }}-OUT out
+      redistribute connected
 {% endfor %}
 {% for neighbor in bgp.neighbors %}
    neighbor {{ neighbor.ip }} peer group {{ neighbor.pg }}
