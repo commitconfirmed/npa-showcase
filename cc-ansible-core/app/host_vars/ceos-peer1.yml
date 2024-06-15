@@ -5,6 +5,26 @@ interfaces:
     enabled: true
     ipv4: "10.0.0.1/32"
     ipv6: "2001:db8:b1::1/128"
+  - if: "Loopback99"
+    desc: "Bogon Network"
+    enabled: true
+    ipv4: "172.16.1.1/24"
+    ipv6: "2001:2:b11::1/128"
+  - if: "Loopback101"
+    desc: "Network 101"
+    enabled: true
+    ipv4: "10.1.1.1/32"
+    ipv6: "2001:db8:b11::1/128"
+  - if: "Loopback102"
+    desc: "Network 102"
+    enabled: true
+    ipv4: "10.1.2.1/32"
+    ipv6: "2001:db8:b12::1/128"
+  - if: "Loopback103"
+    desc: "Network 103"
+    enabled: true
+    ipv4: "10.1.3.1/32"
+    ipv6: "2001:db8:b13::1/128"
   - if: "Ethernet1"
     desc: "ceos-peer1:Ethernet1 --> ceos-ixp:Ethernet3"
     enabled: true
@@ -31,9 +51,9 @@ bgp:
       pg: "IXP-IPV6"
       desc: "Route Server 2 - v6"
   prefixes_v4_out:
-    - prefix: "10.1.0.0/24"
     - prefix: "10.1.1.0/24"
     - prefix: "10.1.2.0/24"
+    - prefix: "10.1.3.0/24"
   prefixes_v6_out:
     - prefix: "2001:db8:b11::/48"
     - prefix: "2001:db8:b12::/48"
