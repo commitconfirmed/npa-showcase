@@ -51,9 +51,9 @@ bgp:
       pg: "IXP-IPV6"
       desc: "Route Server 2 - v6"
   prefixes_v4_out:
-    - prefix: "10.3.0.0/24"
     - prefix: "10.3.1.0/24"
     - prefix: "10.3.2.0/24"
+    - prefix: "10.3.3.0/24"
   prefixes_v6_out:
     - prefix: "2001:db8:b31::/48"
     - prefix: "2001:db8:b32::/48"

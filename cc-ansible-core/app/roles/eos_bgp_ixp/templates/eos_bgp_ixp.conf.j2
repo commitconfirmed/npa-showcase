@@ -43,7 +43,7 @@ ipv6 prefix-list PL-DEFAULT-V6
 ip prefix-list PL-IXP-INBOUND
    permit 0.0.0.0/0 le 24
 ipv6 prefix-list PL-IXP-INBOUND-V6
-   permit ::/0 le 64
+   permit ::/0 le 48
 
 ip prefix-list PL-IXP-OUTBOUND
 {% for pfx in bgp.prefixes_v4_out %}
