@@ -10,21 +10,16 @@ interfaces:
     enabled: true
     ipv4: "172.16.3.1/24"
     ipv6: "2001:2:b31::1/48"
-  - if: "Loopback101"
-    desc: "Network 101"
+  - if: "Loopback1"
+    desc: "Network 1"
     enabled: true
     ipv4: "10.3.1.1/24"
     ipv6: "2001:db8:b31::1/48"
-  - if: "Loopback102"
-    desc: "Network 102"
+  - if: "Loopback2"
+    desc: "Network 2"
     enabled: true
     ipv4: "10.3.2.1/24"
     ipv6: "2001:db8:b32::1/48"
-  - if: "Loopback103"
-    desc: "Network 103"
-    enabled: true
-    ipv4: "10.3.3.1/24"
-    ipv6: "2001:db8:b33::1/48"
   - if: "Ethernet1"
     desc: "ceos-peer3:Ethernet1 --> ceos-ixp:Ethernet5"
     enabled: true
@@ -53,8 +48,6 @@ bgp:
   prefixes_v4_out:
     - prefix: "10.3.1.0/24"
     - prefix: "10.3.2.0/24"
-    - prefix: "10.3.3.0/24"
   prefixes_v6_out:
     - prefix: "2001:db8:b31::/48"
     - prefix: "2001:db8:b32::/48"
-    - prefix: "2001:db8:b33::/48"

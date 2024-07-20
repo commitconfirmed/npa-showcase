@@ -36,7 +36,6 @@ filter default_accept {
 template bgp IXP {
   local as my_as;
   rs client;
-  multihop;
   export filter default_accept;
 }
 
