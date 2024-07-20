@@ -5,8 +5,8 @@ Concepts: Arista, BIRD, Peering, eBGP, IXP, Transit, Prepending, Localpref
 
 ### Diagram
 
-![Alt text](./ceos-ixp-drawio.svg)
-<img src="./ceos-ixp-drawio.svg">
+![Alt text](./ceos-ixp.drawio.svg)
+<img src="./ceos-ixp.drawio.svg">
 
 ### Requirements
 
