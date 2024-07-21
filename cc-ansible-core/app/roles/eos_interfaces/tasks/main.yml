@@ -1,47 +1,12 @@
-# Configure interfaces
 ---
-- name: Set L3 interfaces to routed mode
-  eos_config:
-    lines:
-      - "no switchport"
-    parents:
-      - interface {{ item.if }}
-  when:
-    - item.routed is defined
-  loop: "{{ interfaces }}"
+- name: J2 Config to be applied
+  vars:
+    output: "{{ lookup('template', '../templates/eos_interfaces.conf.j2') }}"
+  tasks:
+    - name: Print J2
+      debug:
+        msg: "{{ output }}"
 
-- name: Enable IPv6
-  eos_config:
-    lines:
-      - "ipv6 enable"
-    parents:
-      - interface {{ item.if }}
-  when:
-    - item.v6 is defined
-  loop: "{{ interfaces }}"
-
-- name: Interfaces - Status & Desc
-  eos_interfaces:
-    config:
-      - name: "{{ item.if }}"
-        description: "{{ item.desc }}"
-        enabled: "{{ item.enabled }}"
-  loop: "{{ interfaces }}"
-
-- name: Interfaces - IPv4
-  eos_l3_interfaces:
-    config:
-      - name: "{{ item.if }}"
-        ipv4:
-        - address: "{{ item.ipv4 }}"
-  when: item.ipv4 is defined
-  loop: "{{ interfaces }}"
-
-- name: Interfaces - IPv6
-  eos_l3_interfaces:
-    config:
-      - name: "{{ item.if }}"
-        ipv6:
-        - address: "{{ item.ipv6 }}"
-  when: item.ipv6 is defined
-  loop: "{{ interfaces }}"
+- name: Apply Interface configuration via J2
+  arista.eos.eos_config:
+    src: "../templates/eos_interfaces.conf.j2"

@@ -11,11 +11,15 @@ topology:
       kind: linux
       image: cc-ansible:latest
       mgmt-ipv4: 172.20.0.20
-    ceos-ixp:
+    ceos-ixp-sw1:
       kind: arista_ceos
       image: ceos:4.28.10.1M
       mgmt-ipv4: 172.20.0.200
-    ceos-peer1:
+    ceos-isp1:
+      kind: arista_ceos
+      image: ceos:4.28.10.1M
+      mgmt-ipv4: 172.20.0.210
+    ceos-r1:
       kind: arista_ceos
       image: ceos:4.28.10.1M
       mgmt-ipv4: 172.20.0.201
@@ -43,11 +47,24 @@ topology:
         - "ip addr add 192.168.0.252/24 brd 192.168.0.255 dev eth2"
         - "ip -6 addr add 2001:db8:ffff::2/64 dev eth2"
         - "ip link set dev eth2 up"
+    ubu-host1:
+      kind: linux
+      image: cc-host:latest
+      mgmt-ipv4: 172.20.0.100
+      exec:
+        - "ip addr add 10.1.0.2/24 brd 10.1.0.255 dev eth1"
+        - "ip -6 addr add 2001:db8:b10::2/48 dev eth1"
+        - "ip link set dev eth1 up"
+        - "ip route add default via 10.1.0.1 dev eth1"
+        - "ip -6 route add default via 2001:db8:b10::2/48 dev eth1"
 
   links:
-    - endpoints: ["bird-rs1:eth2", "ceos-ixp:eth1"]
-    - endpoints: ["bird-rs2:eth2", "ceos-ixp:eth2"]
-    - endpoints: ["ceos-peer1:eth1", "ceos-ixp:eth3"]
-    - endpoints: ["ceos-peer2:eth1", "ceos-ixp:eth4"]
-    - endpoints: ["ceos-peer3:eth1", "ceos-ixp:eth5"]
-    - endpoints: ["ceos-peer1:eth2", "ceos-peer2:eth2"]
+    - endpoints: ["bird-rs1:eth2", "ceos-ixp-sw1:eth1"]
+    - endpoints: ["bird-rs2:eth2", "ceos-ixp-sw1:eth2"]
+    - endpoints: ["ceos-r1:eth1", "ceos-ixp-sw1:eth3"]
+    - endpoints: ["ceos-peer2:eth1", "ceos-ixp-sw1:eth4"]
+    - endpoints: ["ceos-peer3:eth1", "ceos-ixp-sw1:eth5"]
+    - endpoints: ["ceos-r1:eth2", "ceos-peer2:eth2"]
+    - endpoints: ["ceos-r1:eth3", "ceos-isp1:eth1"]
+    - endpoints: ["ceos-r1:eth4", "ubu-host1:eth1"]
+    - endpoints: ["ceos-isp1:eth2", "ceos-peer2:eth2"]
