@@ -19,7 +19,7 @@ topology:
       kind: arista_ceos
       image: ceos:4.28.10.1M
       mgmt-ipv4: 172.20.0.210
-    ceos-r1:
+    ceos-peer1:
       kind: arista_ceos
       image: ceos:4.28.10.1M
       mgmt-ipv4: 172.20.0.201
@@ -61,10 +61,10 @@ topology:
   links:
     - endpoints: ["bird-rs1:eth2", "ceos-ixp-sw1:eth1"]
     - endpoints: ["bird-rs2:eth2", "ceos-ixp-sw1:eth2"]
-    - endpoints: ["ceos-r1:eth1", "ceos-ixp-sw1:eth3"]
+    - endpoints: ["ceos-peer1:eth1", "ceos-ixp-sw1:eth3"]
     - endpoints: ["ceos-peer2:eth1", "ceos-ixp-sw1:eth4"]
     - endpoints: ["ceos-peer3:eth1", "ceos-ixp-sw1:eth5"]
-    - endpoints: ["ceos-r1:eth2", "ceos-peer2:eth2"]
-    - endpoints: ["ceos-r1:eth3", "ceos-isp1:eth1"]
-    - endpoints: ["ceos-r1:eth4", "ubu-host1:eth1"]
+    - endpoints: ["ceos-peer1:eth2", "ceos-peer2:eth2"]
+    - endpoints: ["ceos-peer1:eth3", "ceos-isp1:eth1"]
+    - endpoints: ["ceos-peer1:eth4", "ubu-host1:eth1"]
     - endpoints: ["ceos-isp1:eth2", "ceos-peer3:eth2"]
