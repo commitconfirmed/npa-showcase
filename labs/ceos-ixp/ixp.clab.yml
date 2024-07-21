@@ -67,4 +67,4 @@ topology:
     - endpoints: ["ceos-r1:eth2", "ceos-peer2:eth2"]
     - endpoints: ["ceos-r1:eth3", "ceos-isp1:eth1"]
     - endpoints: ["ceos-r1:eth4", "ubu-host1:eth1"]
-    - endpoints: ["ceos-isp1:eth2", "ceos-peer2:eth2"]
+    - endpoints: ["ceos-isp1:eth2", "ceos-peer3:eth2"]
