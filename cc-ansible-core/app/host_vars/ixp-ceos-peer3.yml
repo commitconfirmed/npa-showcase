@@ -26,6 +26,11 @@ interfaces:
     routed: true
     ipv4: "192.168.0.13/24"
     ipv6: "2001:db8:ffff::b3/64"
+  - if: "Ethernet2"
+    desc: "ceos-peer3:Ethernet2 --> ceos-isp1:Ethernet2"
+    routed: true
+    ipv4: "172.16.0.4/31"
+    ipv6: "2001:2:fff2::1/64"
 
 router_id: 10.0.0.3
 bgp:

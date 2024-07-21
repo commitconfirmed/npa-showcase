@@ -2,30 +2,40 @@
 interfaces:
   - if: "Loopback0"
     desc: "BGP Loopback"
-    enabled: true
     ipv4: "10.0.0.1/32"
     ipv6: "2001:db8:b1::1/128"
   - if: "Loopback99"
     desc: "Bogon Network"
-    enabled: true
     ipv4: "172.16.1.1/24"
     ipv6: "2001:2:b11::1/48"
   - if: "Loopback1"
     desc: "Network 1"
-    enabled: true
     ipv4: "10.1.1.1/24"
     ipv6: "2001:db8:b11::1/48"
   - if: "Loopback2"
     desc: "Network 2"
-    enabled: true
     ipv4: "10.1.2.1/24"
     ipv6: "2001:db8:b12::1/48"
   - if: "Ethernet1"
     desc: "ceos-peer1:Ethernet1 --> ceos-ixp:Ethernet3"
-    enabled: true
     routed: true
     ipv4: "192.168.0.11/24"
     ipv6: "2001:db8:ffff::b1/64"
+  - if: "Ethernet2"
+    desc: "ceos-peer1:Ethernet2 --> ceos-peer2:Ethernet2"
+    routed: true
+    ipv4: "172.16.0.0/31"
+    ipv6: "2001:2:fff0::1/64"
+  - if: "Ethernet3"
+    desc: "ceos-peer1:Ethernet1 --> ceos-isp1:Ethernet1"
+    routed: true
+    ipv4: "172.16.0.2/31"
+    ipv6: "2001:2:fff1::1/64"
+  - if: "Ethernet4"
+    desc: "ceos-peer1:Ethernet1 --> ubu-host1:Ethernet1"
+    routed: true
+    ipv4: "10.1.0.1/24"
+    ipv6: "2001:db8:b10::1/64"
 
 router_id: 10.0.0.1
 bgp:
