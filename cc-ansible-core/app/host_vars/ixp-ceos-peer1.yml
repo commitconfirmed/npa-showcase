@@ -37,27 +37,56 @@ interfaces:
     ipv4: "10.1.0.1/24"
     ipv6: "2001:db8:b10::1/64"
 
-router_id: 10.0.0.1
+
 bgp:
-  type: "IXP"
+  router_id: 10.0.0.1
   local_as: 201
-  remote_as: 100
-  neighbors:
-    - ip: "192.168.0.251"
-      pg: "IXP-IPV4"
-      desc: "Route Server 1 - v4"
-    - ip: "192.168.0.252"
-      pg: "IXP-IPV4"
-      desc: "Route Server 2 - v4"
-    - ip: "2001:db8:ffff::1"
-      pg: "IXP-IPV6"
-      desc: "Route Server 1 - v6"
-    - ip: "2001:db8:ffff::2"
-      pg: "IXP-IPV6"
-      desc: "Route Server 2 - v6"
-  prefixes_v4_out:
-    - prefix: "10.1.1.0/24"
-    - prefix: "10.1.2.0/24"
-  prefixes_v6_out:
-    - prefix: "2001:db8:b11::/48"
-    - prefix: "2001:db8:b12::/48"
+  sessions:
+    - name: "IXP"
+      remote_as: 100
+      neighbors:
+        - ip: "192.168.0.251"
+          pg: "IXP-IPV4"
+          desc: "Route Server 1 - v4"
+        - ip: "192.168.0.252"
+          pg: "IXP-IPV4"
+          desc: "Route Server 2 - v4"
+        - ip: "2001:db8:ffff::1"
+          pg: "IXP-IPV6"
+          desc: "Route Server 1 - v6"
+        - ip: "2001:db8:ffff::2"
+          pg: "IXP-IPV6"
+          desc: "Route Server 2 - v6"
+      prefixes_v4_out:
+        - prefix: "10.1.1.0/24"
+          action: "permit"
+        - prefix: "10.1.2.0/24"
+          action: "permit"
+      prefixes_v6_out:
+        - prefix: "2001:db8:b11::/48"
+          action: "permit"
+        - prefix: "2001:db8:b12::/48"
+          action: "permit"
+      routemaps_v4_in:
+        - action: "deny"
+          pfl: "PL-BOGONS"
+        - action: "permit"
+          pfl: "PL-ANY-INBOUND"
+        - action: "deny"
+          
+
+    - name: "ISP"
+      remote_as: 300
+      neighbors:
+        - ip: "192.168.0.251"
+          pg: "IXP-IPV4"
+          desc: "ISP 1 - v4"
+        - ip: "2001:db8:ffff::1"
+          pg: "IXP-IPV6"
+          desc: "ISP 2 - v6"
+      prefixes_v4_out:
+        - prefix: "10.1.1.0/24"
+        - prefix: "10.1.2.0/24"
+      prefixes_v6_out:
+        - prefix: "2001:db8:b11::/48"
+        - prefix: "2001:db8:b12::/48"
