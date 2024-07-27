@@ -32,10 +32,10 @@ bgp:
       neighbors:
         - ip: "172.16.0.2"
           pg: "CUST1-IPV4"
-          desc: "ISP 1 - v4"
+          desc: "CUST 1 - v4"
         - ip: "2001:2:fff1::1"
           pg: "CUST1-IPV6"
-          desc: "ISP 2 - v6"
+          desc: "CUST 1 - v6"
       prefixes_v4_out:
         - prefix: "0.0.0.0/0"
           action: "permit"
@@ -70,11 +70,11 @@ bgp:
       remote_as: 203
       neighbors:
         - ip: "172.16.0.4"
-          pg: "CUST1-IPV4"
-          desc: "ISP 1 - v4"
+          pg: "CUST3-IPV4"
+          desc: "CUST 3 - v4"
         - ip: "2001:2:fff2::1"
-          pg: "CUST1-IPV6"
-          desc: "ISP 2 - v6"
+          pg: "CUST3-IPV6"
+          desc: "CUST 3 - v6"
       prefixes_v4_out:
         - prefix: "0.0.0.0/0"
           action: "permit"

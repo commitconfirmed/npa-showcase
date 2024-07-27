@@ -99,7 +99,7 @@ bgp:
           desc: "ISP 1 - v4"
         - ip: "2001:2:fff1::2"
           pg: "ISP-IPV6"
-          desc: "ISP 2 - v6"
+          desc: "ISP 1 - v6"
       prefixes_v4_out:
         - prefix: "10.1.1.0/24"
           action: "permit"
