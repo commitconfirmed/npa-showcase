@@ -10,7 +10,99 @@ interfaces:
     ipv4: "172.16.0.3/31"
     ipv6: "2001:2:fff1::2/64"
   - if: "Ethernet2"
-    desc: "ceos-isp1:Ethernet2 --> ceos-peer2:Ethernet2"
+    desc: "ceos-isp1:Ethernet2 --> ceos-peer3:Ethernet2"
     routed: true
     ipv4: "172.16.0.5/31"
     ipv6: "2001:2:fff2::2/64"
+
+static:
+  ipv4:
+    - prefix: "0.0.0.0/0"
+      dest: "10.255.1.1"
+  ipv6:
+    - prefix: "::/0"
+      dest: "2001:db8:f11::1/128"
+
+bgp:
+  router_id: 10.255.1.1
+  local_as: 300
+  sessions:
+    - name: "CUST1"
+      remote_as: 201
+      neighbors:
+        - ip: "172.16.0.2"
+          pg: "CUST1-IPV4"
+          desc: "ISP 1 - v4"
+        - ip: "2001:2:fff1::1"
+          pg: "CUST1-IPV6"
+          desc: "ISP 2 - v6"
+      prefixes_v4_out:
+        - prefix: "0.0.0.0/0"
+          action: "permit"
+      prefixes_v6_out:
+        - prefix: "::/0"
+          action: "permit"
+      routemaps_v4_in:
+        - action: "deny"
+          pfl: "PL-BOGONS"
+        - action: "permit"
+          pfl: "PL-ANY-INBOUND"
+        - action: "deny"
+      routemaps_v4_out:
+        - action: "deny"
+          pfl: "PL-BOGONS"
+        - action: "permit"
+          pfl: "PL-DEFAULT"
+        - action: "deny"
+      routemaps_v6_in:
+        - action: "deny"
+          pfl: "PL-BOGONS-V6"
+        - action: "permit"
+          pfl: "PL-ANY-INBOUND-V6"
+        - action: "deny"
+      routemaps_v6_out:
+        - action: "deny"
+          pfl: "PL-BOGONS-V6"
+        - action: "permit"
+          pfl: "PL-DEFAULT-V6"
+        - action: "deny"
+    - name: "CUST3"
+      remote_as: 203
+      neighbors:
+        - ip: "172.16.0.4"
+          pg: "CUST1-IPV4"
+          desc: "ISP 1 - v4"
+        - ip: "2001:2:fff2::1"
+          pg: "CUST1-IPV6"
+          desc: "ISP 2 - v6"
+      prefixes_v4_out:
+        - prefix: "0.0.0.0/0"
+          action: "permit"
+      prefixes_v6_out:
+        - prefix: "::/0"
+          action: "permit"
+      routemaps_v4_in:
+        - action: "deny"
+          pfl: "PL-BOGONS"
+        - action: "permit"
+          pfl: "PL-ANY-INBOUND"
+        - action: "deny"
+      routemaps_v4_out:
+        - action: "deny"
+          pfl: "PL-BOGONS"
+        - action: "permit"
+          pfl: "PL-DEFAULT"
+        - action: "deny"
+      routemaps_v6_in:
+        - action: "deny"
+          pfl: "PL-BOGONS-V6"
+        - action: "permit"
+          pfl: "PL-ANY-INBOUND-V6"
+        - action: "deny"
+      routemaps_v6_out:
+        - action: "deny"
+          pfl: "PL-BOGONS-V6"
+        - action: "permit"
+          pfl: "PL-DEFAULT-V6"
+        - action: "deny"
+    

@@ -118,6 +118,7 @@ router bgp {{ bgp.local_as }}
       neighbor {{ session.name }}-{{ family }} route-map IXP-RM-{{ family }}-IN in
       neighbor {{ session.name }}-{{ family }} route-map IXP-RM-{{ family }}-OUT out
       redistribute connected
+      redistribute static
 {%     endfor %}
 {%     for neighbor in session.neighbors %}
    neighbor {{ neighbor.ip }} peer group {{ neighbor.pg }}

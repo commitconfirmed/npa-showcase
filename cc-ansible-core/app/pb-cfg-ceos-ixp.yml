@@ -6,20 +6,24 @@
     - role: bird_bgp
       tags: [ rservers ]
 
-- hosts: peers
+- hosts: routers
   gather_facts: false
   roles:
     - role: eos_system
-      tags: [ peers, system ] 
+      tags: [ routers, system ] 
     - role: eos_interfaces
-      tags: [ peers, interfaces ] 
+      tags: [ routers, interfaces ] 
     - role: eos_bgp_ixp
-      tags: [ peers, bgp ]
+      tags: [ routers, bgp ]
 
 - hosts: ixp
   gather_facts: false
   roles:
     - role: eos_system
       tags: [ ixp, system ]
-#    - role: eos_interfaces
-#      tags: [ ixp, interfaces ] 
+
+- hosts: isp
+  gather_facts: false
+  roles:
+    - role: eos_static
+      tags: [ isp, static ]
