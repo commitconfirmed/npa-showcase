@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Build the cc-ansible container. As the container tags are different per lab
-# you will need to run the rebuild ansible script in the particular lab as well
+# you will need to run the rebuild script in the particular lab as well
 #
 # Use rebuild if you are editing the configuration in git.
 # Otherwise just ssh/exec in and edit the files locally remembering

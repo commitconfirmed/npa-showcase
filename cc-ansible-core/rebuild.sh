@@ -11,7 +11,7 @@ Example to rebuild ansible on the ceos-ixp lab - ./$(basename "$0") ceos-ixp"
 if [[ -z $1 ]]; then
   echo $usage
 else
-  git pull # Comment this out if working locally
+  # git pull # Comment this out if working locally
   sudo docker stop $(sudo docker ps -qaf name=clab-$1-serv-ansible)
   sudo docker rm $(sudo docker ps -qaf name=clab-$1-serv-ansible)
   sudo docker build -t cc-ansible .
