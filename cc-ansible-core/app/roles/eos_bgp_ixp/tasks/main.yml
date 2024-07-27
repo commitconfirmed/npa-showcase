@@ -1,8 +1,8 @@
 ---
 - name: BGP J2 Config to be applied
   ansible.builtin.debug:
-    msg: "{{ lookup('template', '../templates/eos_bgp_ixp.conf.j2') }}"
+    msg: "{{ lookup('template', '../templates/eos_bgp_external.conf.j2') }}"
 
 - name: Apply BGP IXP configuration via J2
   arista.eos.eos_config:
-    src: "../templates/eos_bgp_ixp.conf.j2"
+    src: "../templates/eos_bgp_external.conf.j2"

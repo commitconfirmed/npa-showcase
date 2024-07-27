@@ -2,27 +2,22 @@
 interfaces:
   - if: "Loopback0"
     desc: "BGP Loopback"
-    enabled: true
     ipv4: "10.0.0.2/32"
     ipv6: "2001:db8:b2::1/128"
   - if: "Loopback99"
     desc: "Bogon Network"
-    enabled: true
     ipv4: "172.16.2.1/24"
     ipv6: "2001:2:b21::1/48"
   - if: "Loopback1"
     desc: "Network 1"
-    enabled: true
     ipv4: "10.2.1.1/24"
     ipv6: "2001:db8:b21::1/48"
   - if: "Loopback2"
     desc: "Network 2"
-    enabled: true
     ipv4: "10.2.2.1/24"
     ipv6: "2001:db8:b22::1/48"
   - if: "Ethernet1"
     desc: "ceos-peer2:Ethernet1 --> ceos-ixp:Ethernet4"
-    enabled: true
     routed: true
     ipv4: "192.168.0.12/24"
     ipv6: "2001:db8:ffff::b2/64"
@@ -32,43 +27,56 @@ interfaces:
     ipv4: "172.16.0.1/31"
     ipv6: "2001:2:fff0::2/64"
 
-
 bgp:
   router_id: 10.0.0.2
   local_as: 202
-  - type: "IXP"
-    remote_as: 100
-    neighbors:
-      - ip: "192.168.0.251"
-        pg: "IXP-IPV4"
-        desc: "Route Server 1 - v4"
-      - ip: "192.168.0.252"
-        pg: "IXP-IPV4"
-        desc: "Route Server 2 - v4"
-      - ip: "2001:db8:ffff::1"
-        pg: "IXP-IPV6"
-        desc: "Route Server 1 - v6"
-      - ip: "2001:db8:ffff::2"
-        pg: "IXP-IPV6"
-        desc: "Route Server 2 - v6"
-    prefixes_v4_out:
-      - prefix: "10.2.1.0/24"
-      - prefix: "10.2.2.0/24"
-    prefixes_v6_out:
-      - prefix: "2001:db8:b21::/48"
-      - prefix: "2001:db8:b22::/48"
-  - type: "ISP"
-    remote_as: 300
-    neighbors:
-      - ip: "192.168.0.251"
-        pg: "ISP-IPV4"
-        desc: "ISP 1 - v4"
-      - ip: "2001:db8:ffff::2"
-        pg: "ISP-IPV6"
-        desc: "ISP 1 - v6"
-    prefixes_v4_out:
-      - prefix: "10.2.1.0/24"
-      - prefix: "10.2.2.0/24"
-    prefixes_v6_out:
-      - prefix: "2001:db8:b21::/48"
-      - prefix: "2001:db8:b22::/48"
+  sessions:
+    - name: "IXP"
+      remote_as: 100
+      neighbors:
+        - ip: "192.168.0.251"
+          pg: "IXP-IPV4"
+          desc: "Route Server 1 - v4"
+        - ip: "192.168.0.252"
+          pg: "IXP-IPV4"
+          desc: "Route Server 2 - v4"
+        - ip: "2001:db8:ffff::1"
+          pg: "IXP-IPV6"
+          desc: "Route Server 1 - v6"
+        - ip: "2001:db8:ffff::2"
+          pg: "IXP-IPV6"
+          desc: "Route Server 2 - v6"
+      prefixes_v4_out:
+        - prefix: "10.2.1.0/24"
+          action: "permit"
+        - prefix: "10.2.2.0/24"
+          action: "permit"
+      prefixes_v6_out:
+        - prefix: "2001:db8:b21::/48"
+          action: "permit"
+        - prefix: "2001:db8:b22::/48"
+          action: "permit"
+      routemaps_v4_in:
+        - action: "deny"
+          pfl: "PL-BOGONS"
+        - action: "permit"
+          pfl: "PL-ANY-INBOUND"
+        - action: "deny"
+      routemaps_v4_out:
+        - action: "deny"
+          pfl: "PL-BOGONS"
+        - action: "permit"
+          pfl: "PL-IXP-OUTBOUND"
+        - action: "deny"
+      routemaps_v6_in:
+        - action: "deny"
+          pfl: "PL-BOGONS-V6"
+        - action: "permit"
+          pfl: "PL-ANY-INBOUND-V6"
+        - action: "deny"
+      routemaps_v6_out:
+        - action: "deny"
+          pfl: "PL-BOGONS-V6"
+        - action: "permit"
+          pfl: "PL-IXP-OUTBOUND-V6"
+        - action: "deny"

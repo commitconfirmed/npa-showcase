@@ -102,6 +102,7 @@ route-map {{ session.name | upper }}-RM-IPV6-OUT {{ entry.action }} {{ loop.inde
 {%     endif %}
 {% endfor %}
 
+{# BGP Configuration #}
 router bgp {{ bgp.local_as }}
    router-id {{ bgp.router_id }}
    no bgp default ipv4-unicast
