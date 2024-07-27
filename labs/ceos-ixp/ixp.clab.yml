@@ -63,8 +63,8 @@ topology:
         - "ip addr add 10.1.0.2/24 brd 10.1.0.255 dev eth1"
         - "ip -6 addr add 2001:db8:b10::2/48 dev eth1"
         - "ip link set dev eth1 up"
-        - "ip route add 10.0.0.0/0 via 10.1.0.1 dev eth1"
-        - "ip -6 route add default via 2001:db8:b10::2 dev eth1"
+        - "ip route add 10.0.0.0/8 via 10.1.0.1 dev eth1"
+        - "ip -6 route add default via 2001:db8:b10::1 dev eth1"
 
   links:
     - endpoints: ["bird-rs1:eth2", "ceos-ixp-sw1:eth1"]

@@ -84,10 +84,10 @@ bgp:
       remote_as: 201
       neighbors:
         - ip: "172.16.0.0"
-          pg: "ISP-IPV4"
+          pg: "TRANSIT-IPV4"
           desc: "TRANSIT to PEER 1 - v4"
         - ip: "2001:2:fff0::1"
-          pg: "ISP-IPV6"
+          pg: "TRANSIT-IPV6"
           desc: "TRANSIT to PEER 1 - v6"
       prefixes_v4_out:
         - prefix: "10.2.1.0/24"

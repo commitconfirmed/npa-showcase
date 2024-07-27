@@ -138,10 +138,10 @@ bgp:
       remote_as: 202
       neighbors:
         - ip: "172.16.0.1"
-          pg: "ISP-IPV4"
+          pg: "TRANSIT-IPV4"
           desc: "TRANSIT to PEER 2 - v4"
         - ip: "2001:2:fff0::2"
-          pg: "ISP-IPV6"
+          pg: "TRANSIT-IPV6"
           desc: "TRANSIT to PEER 2 - v6"
       prefixes_v4_out:
         - prefix: "10.1.1.0/24"
