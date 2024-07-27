@@ -115,8 +115,8 @@ router bgp {{ bgp.local_as }}
    no neighbor {{ session.name }}-{{ family }} enforce-first-as
    address-family {{ family | lower }}
       neighbor {{ session.name }}-{{ family }} activate
-      neighbor {{ session.name }}-{{ family }} route-map IXP-RM-{{ family }}-IN in
-      neighbor {{ session.name }}-{{ family }} route-map IXP-RM-{{ family }}-OUT out
+      neighbor {{ session.name }}-{{ family }} route-map {{ session.name }}-RM-{{ family }}-IN in
+      neighbor {{ session.name }}-{{ family }} route-map {{ session.name }}-RM-{{ family }}-OUT out
       redistribute connected
       redistribute static
 {%     endfor %}
