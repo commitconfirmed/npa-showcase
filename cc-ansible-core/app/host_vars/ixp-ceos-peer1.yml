@@ -157,7 +157,7 @@ bgp:
         - action: "deny"
           pfl: "PL-BOGONS"
         - action: "permit"
-          pfl: "PL-DEFAULT"
+          pfl: "PL-ANY-INBOUND"
           localpref: 200
         - action: "deny"
       routemaps_v4_out:
@@ -170,7 +170,7 @@ bgp:
         - action: "deny"
           pfl: "PL-BOGONS-V6"
         - action: "permit"
-          pfl: "PL-DEFAULT-V6"
+          pfl: "PL-ANY-INBOUND-V6"
           localpref: 200
         - action: "deny"
       routemaps_v6_out:
