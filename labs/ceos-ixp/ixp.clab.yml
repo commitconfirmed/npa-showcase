@@ -12,29 +12,29 @@ topology:
       image: cc-ansible:latest
       mgmt-ipv4: 172.20.0.20
     ceos-ixp-sw1:
-      kind: arista_ceos
+      kind: ceos
       image: ceos:4.28.10.1M
       mgmt-ipv4: 172.20.0.200
     ceos-isp1:
-      kind: arista_ceos
+      kind: ceos
       image: ceos:4.28.10.1M
       mgmt-ipv4: 172.20.0.210
       env:
         CLAB_MGMT_VRF: MGMT
     ceos-peer1:
-      kind: arista_ceos
+      kind: ceos
       image: ceos:4.28.10.1M
       mgmt-ipv4: 172.20.0.201
       env:
         CLAB_MGMT_VRF: MGMT
     ceos-peer2:
-      kind: arista_ceos
+      kind: ceos
       image: ceos:4.28.10.1M
       mgmt-ipv4: 172.20.0.202
       env:
         CLAB_MGMT_VRF: MGMT
     ceos-peer3:
-      kind: arista_ceos
+      kind: ceos
       image: ceos:4.28.10.1M
       mgmt-ipv4: 172.20.0.203
       env:
