@@ -2,8 +2,8 @@
 interfaces:
   - if: "Loopback0"
     desc: "BGP Loopback"
-    ipv4: "10.255.1.1/32"
-    ipv6: "2001:db8:f11::1/128"
+    ipv4: "10.255.1.1/24"
+    ipv6: "2001:db8:f11::1/48"
   - if: "Ethernet1"
     desc: "ceos-isp1:Ethernet1 --> ceos-peer1:Ethernet3"
     routed: true
@@ -18,10 +18,10 @@ interfaces:
 static:
   ipv4:
     - prefix: "0.0.0.0/0"
-      dest: "10.255.1.1"
+      dest: "Loopback0"
   ipv6:
     - prefix: "::/0"
-      dest: "2001:db8:f11::1/128"
+      dest: "Loopback0"
 
 bgp:
   router_id: 10.255.1.1
