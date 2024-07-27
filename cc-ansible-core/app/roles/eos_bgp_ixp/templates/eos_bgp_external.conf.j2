@@ -72,7 +72,7 @@ ipv6 prefix-list PL-{{ session.name }}-OUTBOUND-V6
 {%         for entry in session.routemaps_v4_in %}
 route-map {{ session.name | upper }}-RM-IPV4-IN {{ entry.action }} {{ loop.index }}0
 {%             if entry.pfl is defined %}
-   match ip address prefix-list {{ entry.pfl }}
+   match ip address prefix-list {{ entry.pfl | upper }}
 {%             endif %}
 {%         endfor %}
 {%     endif %}
@@ -80,7 +80,7 @@ route-map {{ session.name | upper }}-RM-IPV4-IN {{ entry.action }} {{ loop.index
 {%         for entry in session.routemaps_v4_out %}
 route-map {{ session.name | upper }}-RM-IPV4-OUT {{ entry.action }} {{ loop.index }}0
 {%             if entry.pfl is defined %}
-   match ip address prefix-list {{ entry.pfl }}
+   match ip address prefix-list {{ entry.pfl | upper }}
 {%             endif %}
 {%         endfor %}
 {%     endif %}
@@ -88,7 +88,7 @@ route-map {{ session.name | upper }}-RM-IPV4-OUT {{ entry.action }} {{ loop.inde
 {%         for entry in session.routemaps_v6_in %}
 route-map {{ session.name | upper }}-RM-IPV6-IN {{ entry.action }} {{ loop.index }}0
 {%             if entry.pfl is defined %}
-   match ipv6 address prefix-list {{ entry.pfl }}
+   match ipv6 address prefix-list {{ entry.pfl | upper }}
 {%             endif %}
 {%         endfor %}
 {%     endif %}
@@ -96,55 +96,33 @@ route-map {{ session.name | upper }}-RM-IPV6-IN {{ entry.action }} {{ loop.index
 {%         for entry in session.routemaps_v6_out %}
 route-map {{ session.name | upper }}-RM-IPV6-OUT {{ entry.action }} {{ loop.index }}0
 {%             if entry.pfl is defined %}
-   match ipv6 address prefix-list {{ entry.pfl }}
+   match ipv6 address prefix-list {{ entry.pfl | upper }}
 {%             endif %}
 {%         endfor %}
 {%     endif %}
 {% endfor %}
 
-route-map IXP-RM-IPV4-IN deny 10
-   match ip address prefix-list PL-BOGONS
-route-map IXP-RM-IPV4-IN permit 20
-   match ip address prefix-list PL-IXP-INBOUND
-route-map IXP-RM-IPV4-IN deny 30
-
-route-map IXP-RM-IPV4-OUT deny 10
-   match ip address prefix-list PL-BOGONS
-route-map IXP-RM-IPV4-OUT permit 20
-   match ip address prefix-list PL-IXP-OUTBOUND
-route-map IXP-RM-IPV4-OUT deny 30
-
-route-map IXP-RM-IPV6-IN deny 10
-   match ipv6 address prefix-list PL-BOGONS-V6
-route-map IXP-RM-IPV6-IN permit 20
-   match ipv6 address prefix-list PL-IXP-INBOUND-V6
-route-map IXP-RM-IPV6-IN deny 30
-
-route-map IXP-RM-IPV6-OUT deny 10
-   match ipv6 address prefix-list PL-BOGONS-V6
-route-map IXP-RM-IPV6-OUT permit 20
-   match ipv6 address prefix-list PL-IXP-OUTBOUND-V6
-route-map IXP-RM-IPV6-OUT deny 30
-
 router bgp {{ bgp.local_as }}
-   router-id {{ router_id }}
+   router-id {{ bgp.router_id }}
    no bgp default ipv4-unicast
-{% for family in ("IPV4", "IPV6") %}
-   neighbor IXP-{{ family }} peer group
-   neighbor IXP-{{ family }} next-hop-self
-   neighbor IXP-{{ family }} remote-as {{ bgp.remote_as }}
-   neighbor IXP-{{ family }} remove-private-as all
-   no neighbor IXP-{{ family }} enforce-first-as
+{% for session in bgp.sessions %}
+{%     for family in ("IPV4", "IPV6") %}
+   neighbor {{ session.name }}-{{ family }} peer group
+   neighbor {{ session.name }}-{{ family }} next-hop-self
+   neighbor {{ session.name }}-{{ family }} remote-as {{ session.remote_as }}
+   neighbor {{ session.name }}-{{ family }} remove-private-as all
+   no neighbor {{ session.name }}-{{ family }} enforce-first-as
    address-family {{ family | lower }}
-      neighbor IXP-{{ family }} activate
-      neighbor IXP-{{ family }} route-map IXP-RM-{{ family }}-IN in
-      neighbor IXP-{{ family }} route-map IXP-RM-{{ family }}-OUT out
+      neighbor {{ session.name }}-{{ family }} activate
+      neighbor {{ session.name }}-{{ family }} route-map IXP-RM-{{ family }}-IN in
+      neighbor {{ session.name }}-{{ family }} route-map IXP-RM-{{ family }}-OUT out
       redistribute connected
-{% endfor %}
-{% for neighbor in bgp.neighbors %}
+{%     endfor %}
+{%     for neighbor in session.neighbors %}
    neighbor {{ neighbor.ip }} peer group {{ neighbor.pg }}
    neighbor {{ neighbor.ip }} description  {{ neighbor.desc }}
    neighbor {{ neighbor.ip }} maximum-routes 1000
+{%     endfor %}
 {% endfor %}
 
    
