@@ -80,3 +80,48 @@ bgp:
         - action: "permit"
           pfl: "PL-IXP-OUTBOUND-V6"
         - action: "deny"
+    - name: "TRANSIT"
+      remote_as: 201
+      neighbors:
+        - ip: "172.16.0.0"
+          pg: "ISP-IPV4"
+          desc: "TRANSIT to PEER 1 - v4"
+        - ip: "2001:2:fff0::1"
+          pg: "ISP-IPV6"
+          desc: "TRANSIT to PEER 1 - v6"
+      prefixes_v4_out:
+        - prefix: "10.2.1.0/24"
+          action: "permit"
+        - prefix: "10.2.2.0/24"
+          action: "permit"
+      prefixes_v6_out:
+        - prefix: "2001:db8:b21::/48"
+          action: "permit"
+        - prefix: "2001:db8:b22::/48"
+          action: "permit"
+      routemaps_v4_in:
+        - action: "deny"
+          pfl: "PL-BOGONS"
+        - action: "permit"
+          pfl: "PL-DEFAULT"
+          localpref: 200
+        - action: "deny"
+      routemaps_v4_out:
+        - action: "deny"
+          pfl: "PL-BOGONS"
+        - action: "permit"
+          pfl: "PL-TRANSIT-OUTBOUND"
+        - action: "deny"
+      routemaps_v6_in:
+        - action: "deny"
+          pfl: "PL-BOGONS-V6"
+        - action: "permit"
+          pfl: "PL-DEFAULT-V6"
+          localpref: 200
+        - action: "deny"
+      routemaps_v6_out:
+        - action: "deny"
+          pfl: "PL-BOGONS-V6"
+        - action: "permit"
+          pfl: "PL-TRANSIT-OUTBOUND-V6"
+        - action: "deny"

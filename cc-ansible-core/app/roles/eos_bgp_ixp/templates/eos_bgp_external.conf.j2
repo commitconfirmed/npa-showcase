@@ -74,6 +74,12 @@ route-map {{ session.name | upper }}-RM-IPV4-IN {{ entry.action }} {{ loop.index
 {%             if entry.pfl is defined %}
    match ip address prefix-list {{ entry.pfl | upper }}
 {%             endif %}
+{%             if entry.localpref is defined %}
+   set local-preference {{ entry.localpref }}
+{%             endif %}
+{%             if entry.prepend is defined %}
+   set as-path prepend auto repeat {{ entry.prepend }}
+{%             endif %}
 {%         endfor %}
 {%     endif %}
 {%     if session.routemaps_v4_out is defined %}
@@ -81,6 +87,12 @@ route-map {{ session.name | upper }}-RM-IPV4-IN {{ entry.action }} {{ loop.index
 route-map {{ session.name | upper }}-RM-IPV4-OUT {{ entry.action }} {{ loop.index }}0
 {%             if entry.pfl is defined %}
    match ip address prefix-list {{ entry.pfl | upper }}
+{%             endif %}
+{%             if entry.localpref is defined %}
+   set local-preference {{ entry.localpref }}
+{%             endif %}
+{%             if entry.prepend is defined %}
+   set as-path prepend auto repeat {{ entry.prepend }}
 {%             endif %}
 {%         endfor %}
 {%     endif %}
@@ -90,6 +102,12 @@ route-map {{ session.name | upper }}-RM-IPV6-IN {{ entry.action }} {{ loop.index
 {%             if entry.pfl is defined %}
    match ipv6 address prefix-list {{ entry.pfl | upper }}
 {%             endif %}
+{%             if entry.localpref is defined %}
+   set local-preference {{ entry.localpref }}
+{%             endif %}
+{%             if entry.prepend is defined %}
+   set as-path prepend auto repeat {{ entry.prepend }}
+{%             endif %}
 {%         endfor %}
 {%     endif %}
 {%     if session.routemaps_v6_out is defined %}
@@ -97,6 +115,12 @@ route-map {{ session.name | upper }}-RM-IPV6-IN {{ entry.action }} {{ loop.index
 route-map {{ session.name | upper }}-RM-IPV6-OUT {{ entry.action }} {{ loop.index }}0
 {%             if entry.pfl is defined %}
    match ipv6 address prefix-list {{ entry.pfl | upper }}
+{%             endif %}
+{%             if entry.localpref is defined %}
+   set local-preference {{ entry.localpref }}
+{%             endif %}
+{%             if entry.prepend is defined %}
+   set as-path prepend auto repeat {{ entry.prepend }}
 {%             endif %}
 {%         endfor %}
 {%     endif %}
