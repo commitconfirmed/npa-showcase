@@ -1,5 +1,4 @@
-#jinja2: trim_blocks:True
-
+{# Static route config #}
 {% if static.ipv4 is defined %}
 {%     for route in static.ipv4 %}
 ip route {{ route.prefix }} {{ route.dest }}
