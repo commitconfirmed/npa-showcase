@@ -1,8 +1,0 @@
----
-- name: J2 Config to be applied
-  ansible.builtin.debug:
-    msg: "{{ lookup('template', '../templates/eos_interfaces.conf.j2') }}"
-
-- name: Apply Interface configuration via J2
-  arista.eos.eos_config:
-    src: "../templates/eos_interfaces.conf.j2"
