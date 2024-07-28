@@ -6,4 +6,5 @@
 - name: Apply device configuration
   arista.eos.eos_config:
     src: "../templates/conf_eos_device.j2"
-    timeout: 60
+  vars:
+    ansible_command_timeout: 60  
