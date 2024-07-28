@@ -10,9 +10,10 @@ banner login
 EOF
 
 {# Generic routing configuration #}
-{% if device.type == "router" %}
+{% if system.type == "router" %}
 switchport default mode routed
 spanning-tree mode none
 service routing protocols model multi-agent
 ip routing
 ipv6 unicast-routing
+{% endif %}

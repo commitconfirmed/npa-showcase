@@ -1,4 +1,4 @@
-device:
+system:
   type: "router"
 
 # Interfaces (Management already done by Containerlab)
