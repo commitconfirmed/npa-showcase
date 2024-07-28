@@ -1,0 +1,12 @@
+#jinja2: trim_blocks:True
+
+{% if static.ipv4 is defined %}
+{%     for route in static.ipv4 %}
+ip route {{ route.prefix }} {{ route.dest }}
+{%     endfor %}
+{% endif %}
+{% if static.ipv6 is defined %}
+{%     for route in static.ipv6 %}
+ipv6 route {{ route.prefix }} {{ route.dest }}
+{%     endfor %}
+{% endif %}

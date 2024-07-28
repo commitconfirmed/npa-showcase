@@ -9,21 +9,11 @@
 - hosts: routers
   gather_facts: false
   roles:
-    - role: eos_system
-      tags: [ routers, system ] 
-    - role: eos_interfaces
-      tags: [ routers, interfaces ] 
-    - role: eos_bgp_ixp
-      tags: [ routers, bgp ]
+    - role: eos_device
+      tags: [ routers ] 
 
-- hosts: ixp
+- hosts: switches
   gather_facts: false
   roles:
-    - role: eos_system
-      tags: [ ixp, system ]
-
-- hosts: isp
-  gather_facts: false
-  roles:
-    - role: eos_static
-      tags: [ isp, static ]
+    - role: eos_device
+      tags: [ switches ]
