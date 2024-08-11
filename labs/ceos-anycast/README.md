@@ -1,11 +1,15 @@
 # Arista + BIRD BGP Anycast lab
-A 2 spine, 4 leaf & 3 server (using BIRD) lab demonstration on how you can use BGP in an anycast fashion to load balance and dynamically route traffic towards 3 servers sharing the same IP address and how re-routing occurs in certain failure scenarios
+
+> [!CAUTION]
+> Currently a work in progress 
+
+A 2 spine, 4 leaf & 4 server (using BIRD) lab demonstration on how you can use BGP in an anycast fashion to load balance and dynamically route traffic towards 3 servers sharing the same IP address and how re-routing occurs in certain failure scenarios
 
 Concepts: Arista, BIRD, BGP, Anycast, Route Reflector, Load Balancing, Hashing, Unnumbered BGP
 
 ### Diagram
 
-TBD
+![Network Diagram](./ceos-anycast.drawio.svg)
 
 ### Requirements
 

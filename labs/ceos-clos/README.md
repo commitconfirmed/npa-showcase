@@ -1,11 +1,15 @@
 # Arista cEOS 2 tier CLOS Lab
+
+> [!CAUTION]
+> Currently broken until I re-do the Ansible configuration into Jinja2
+
 A 4 leaf, 2 spine, 2 host lab showing EVPN-VXLAN functionality with Arista cEOS
 
 Concepts: VXLAN, EVPN, BGP Unnumbered, Arista, EOS, Leaf, Spine, MLAG, ECMP
 
 ### Diagram
 
-[Diagram TBD]
+TBD
 
 ### Requirements
 
