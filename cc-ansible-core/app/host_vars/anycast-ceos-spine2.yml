@@ -2,7 +2,9 @@
 # Specific Device configuration
 #
 # Interfaces, IPs, Routing, etc.
-
+system:
+  type: "router"
+  
 # Interfaces (Management already done by Containerlab)
 interfaces:
   - if: "Loopback0"
