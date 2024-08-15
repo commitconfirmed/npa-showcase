@@ -29,6 +29,7 @@ static:
 bgp:
   router_id: 10.255.1.1
   local_as: 300
+  type: "external"
   sessions:
     - name: "CUST1"
       remote_as: 201

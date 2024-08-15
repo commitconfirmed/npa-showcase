@@ -1,0 +1,32 @@
+---
+# Specific Device configuration
+#
+# Interfaces, IPs, Routing, etc.
+
+# Interfaces (Management already done by Containerlab)
+interfaces:
+  - if: "Loopback0"
+    desc: "Underlay Loopback"
+    ipv4: "10.0.0.102/32"
+    ipv6: "2001:2:a2::1/128"
+  - if: "Ethernet1"
+    desc: "ceos-spine2:Ethernet1 --> ceos-leaf1:Ethernet2"
+    ipv6: "LLA"
+  - if: "Ethernet2"
+    desc: "ceos-spine2:Ethernet2 --> ceos-leaf2:Ethernet2"
+    ipv6: "LLA"
+  - if: "Ethernet3"
+    desc: "ceos-spine2:Ethernet3 --> ceos-leaf3:Ethernet2"
+    ipv6: "LLA"
+  - if: "Ethernet4"
+    desc: "ceos-spine2:Ethernet4 --> ceos-leaf4:Ethernet2"
+    ipv6: "LLA"
+
+# Routing
+bgp:
+  router_id: 10.0.0.102
+  local_as: 65000
+  type: "spine"
+  underlay_name: "PG_UNDERLAY"
+        
+

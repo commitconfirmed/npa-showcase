@@ -15,6 +15,8 @@ topology:
       kind: ceos
       image: ceos:4.28.10.1M
       mgmt-ipv4: 172.20.0.100
+      env:
+        CLAB_MGMT_VRF: MGMT
     ceos-spine2:
       kind: ceos
       image: ceos:4.28.10.1M
@@ -50,35 +52,38 @@ topology:
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.121
       exec:
-        - "ip addr add 192.168.0.251/24 brd 192.168.0.255 dev eth2"
-        - "ip -6 addr add 2001:db8:ffff::1/64 dev eth2"
+        - "ip addr add 172.16.1.1/24 brd 172.16.1.255 dev eth1"
         - "ip link set dev eth2 up"
     bird-serv2:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.122
       exec:
-        - "ip addr add 192.168.0.252/24 brd 192.168.0.255 dev eth2"
-        - "ip -6 addr add 2001:db8:ffff::2/64 dev eth2"
+        - "ip addr add 172.16.1.1/24 brd 172.16.1.255 dev eth1"
         - "ip link set dev eth2 up"
     bird-serv3:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.124
       exec:
-        - "ip addr add 192.168.0.252/24 brd 192.168.0.255 dev eth2"
-        - "ip -6 addr add 2001:db8:ffff::2/64 dev eth2"
+        - "ip addr add 172.16.1.1/24 brd 172.16.1.255 dev eth1"
         - "ip link set dev eth2 up"
+    ceos-bdr1:
+      kind: ceos
+      image: ceos:4.28.10.1M
+      mgmt-ipv4: 172.20.0.201
+      env:
+        CLAB_MGMT_VRF: MGMT
     ubu-host1:
       kind: linux
       image: cc-host:latest
-      mgmt-ipv4: 172.20.0.100
+      mgmt-ipv4: 172.20.0.202
       exec:
-        - "ip addr add 10.1.0.2/24 brd 10.1.0.255 dev eth1"
-        - "ip -6 addr add 2001:db8:b10::2/48 dev eth1"
+        - "ip addr add 172.16.10.2/24 brd 172.16.10.255 dev eth1"
+        - "ip -6 addr add 2001:db8:a10::2/48 dev eth1"
         - "ip link set dev eth1 up"
-        - "ip route add 10.0.0.0/8 via 10.1.0.1 dev eth1"
-        - "ip -6 route add default via 2001:db8:b10::1 dev eth1"
+        - "ip route add 172.16.0.0/16 via 172.16.10.1 dev eth1"
+        - "ip -6 route add default via 2001:db8:a10::1 dev eth1"
 
   links:
     - endpoints: ["ceos-spine1:eth1", "ceos-leaf1:eth1"]
@@ -92,6 +97,7 @@ topology:
     - endpoints: ["bird-serv1:eth1", "ceos-leaf1:eth5"]
     - endpoints: ["bird-serv2:eth1", "ceos-leaf2:eth5"]
     - endpoints: ["bird-serv3:eth1", "ceos-leaf3:eth5"]
-    - endpoints: ["bird-serv4:eth1", "ceos-leaf3:eth5"]
-    - endpoints: ["ceos-serv4:eth1", "ceos-leaf3:eth5"]
-    - endpoints: ["bird-serv4:eth1", "ceos-leaf3:eth5"]
+    - endpoints: ["bird-serv4:eth1", "ceos-leaf4:eth5"]
+    - endpoints: ["ceos-bdr1:eth1", "ceos-spine1:eth5"]
+    - endpoints: ["ceos-bdr1:eth2", "ceos-spine2:eth5"]
+    - endpoints: ["ubu-host1:eth1", "ceos-bdr1:eth5"]

@@ -33,6 +33,7 @@ interfaces:
 bgp:
   router_id: 10.0.0.3
   local_as: 203
+  type: "external"
   sessions:
     - name: "IXP"
       remote_as: 100

@@ -17,7 +17,12 @@
 {% endif %}
 
 {% if bgp is defined %}
-{%     include 'eos_bgp_external.j2' %}
+{%     if bgp.type == "external" %}
+{%         include 'eos_bgp_external.j2' %}
+{%    endif %}
+{%     if bgp.type in ["leaf", "spine"] %}
+{%         include 'eos_bgp_underlay.j2' %}
+{%    endif %}
 {% endif %}
 
 {% if static is defined %}
