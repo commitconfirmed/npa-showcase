@@ -3,7 +3,7 @@
 ---
 - name: Apply ipv4 bird.conf
   ansible.builtin.template:
-    src: "../templates/bird.conf.j2"
+    src: "../templates/conf_bird_server.j2"
     dest: /etc/bird/bird.conf
     owner: bird
     group: bird
@@ -14,7 +14,7 @@
 
 - name: Create ipv6 bird.conf
   ansible.builtin.template:
-    src: "../templates/bird.conf.j2"
+    src: "../templates/conf_bird_server.j2"
     dest: /etc/bird/bird6.conf
     owner: bird
     group: bird

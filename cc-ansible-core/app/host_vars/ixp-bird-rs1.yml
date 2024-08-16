@@ -1,21 +1,24 @@
 ---
 # Route Server configuration
 
-router_id: "192.168.0.251"
-as_number: 100
-peers:
-  - name: "CEOS-PEER1"
-    desc: "To ceos-peer1"
-    ip: "192.168.0.11"
-    ipv6: "2001:db8:ffff::b1"
-    as_number: 201
-  - name: "CEOS-PEER2"
-    desc: "To ceos-peer2"
-    ip: "192.168.0.12"
-    ipv6: "2001:db8:ffff::b2"
-    as_number: 202
-  - name: "CEOS-PEER3"
-    desc: "To ceos-peer3"
-    ip: "192.168.0.13"
-    ipv6: "2001:db8:ffff::b3"
-    as_number: 203
+bgp:
+  type: "route_server"
+  router_id: "192.168.0.251"
+  local_as: 100
+  sessions:
+    - name: "CEOS-PEER1"
+      remote_as: 201
+      neighbors:
+        - ip: "192.168.0.11"
+          ipv6: "2001:db8:ffff::b1"
+          desc: "To CEOS-PEER1"
+    - name: "CEOS-PEER2"
+      desc: "To ceos-peer2"
+      ip: "192.168.0.12"
+      ipv6: "2001:db8:ffff::b2"
+      remote_as: 202
+    - name: "CEOS-PEER3"
+      desc: "To ceos-peer3"
+      ip: "192.168.0.13"
+      ipv6: "2001:db8:ffff::b3"
+      remote_as: 203

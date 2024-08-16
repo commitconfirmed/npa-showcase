@@ -74,6 +74,7 @@ topology:
       mgmt-ipv4: 172.20.0.124
       exec:
         - "ip addr add 172.16.1.1/24 brd 172.16.1.255 dev eth1"
+        - "ip addr add 10.0.0.124/32 dev lo"
         - "ip link set dev eth1 up"
     ceos-bdr1:
       kind: ceos

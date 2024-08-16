@@ -25,6 +25,7 @@ bgp:
   type: "leaf"
   underlay_name: "PG_UNDERLAY"
   underlay_as: 65000
+  underlay_listen: true # Enable listening for anycast servers
   underlay_interfaces:
     - if: "Ethernet1"
     - if: "Ethernet2"

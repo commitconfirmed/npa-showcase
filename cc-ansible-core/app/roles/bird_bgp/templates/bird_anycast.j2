@@ -1,0 +1,26 @@
+{# Used by conf_bird_server.j2 #}
+
+# BGP Configuration
+protocol bgp {
+  description "{{ bgp.sessions.neighbors.desc }}";
+  local {{ bgp.router_id }} as {{ bgp.local_as }};
+{% if family == "ipv4" %}
+  neighbor {{ bgp.sessions.neighbors.ip }} as {{ bgp.sessions.remote_as }};
+{% endif %}
+{% if family == "ipv6" %}
+  neighbor {{ bgp.sessions.neighbors.ipv6 }} as {{ bgp.sessions.remote_as }};
+{% endif %}
+  ipv4 {
+  	import all;
+  	export where source ~ [ RTS_DIRECT ];
+    extended next hop on;
+  };
+}
+
+
+{% if family == "ipv4" %}
+  neighbor {{ peer.ip }} as {{ peer.as_number }};
+{% endif %}
+{% if family == "ipv6" %}
+  neighbor {{ peer.ipv6 }} as {{ peer.as_number }};
+{% endif %}
