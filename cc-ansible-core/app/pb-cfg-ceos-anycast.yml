@@ -5,3 +5,9 @@
   roles:
     - role: eos_device
       tags: [ routers ] 
+
+- hosts: servers
+  gather_facts: false
+  roles:
+    - role: bird_bgp
+      tags: [ servers ]
