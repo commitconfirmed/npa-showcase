@@ -24,6 +24,7 @@ bgp:
   local_as: 65102
   type: "leaf"
   underlay_name: "PG_UNDERLAY"
+  underlay_as: 65000
   underlay_interfaces:
     - if: "Ethernet1"
     - if: "Ethernet2"

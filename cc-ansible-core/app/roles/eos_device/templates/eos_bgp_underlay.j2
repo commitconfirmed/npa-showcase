@@ -21,7 +21,7 @@ router bgp {{ bgp.local_as }}
 {% endif %}
 {% if bgp.type == "leaf" %}
 {%     for item in bgp.underlay_interfaces %}
-   neighbor interface {{ item }} peer-group {{ bgp.underlay_name}} remote-as {{ bgp.remote_as }}
+   neighbor interface {{ item }} peer-group {{ bgp.underlay_name}} remote-as {{ bgp.underlay_as }}
 {%     endfor %}
 {% endif %}
    neighbor {{ bgp.underlay_name }} peer group
