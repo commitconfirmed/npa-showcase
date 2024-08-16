@@ -20,7 +20,7 @@ router bgp {{ bgp.local_as }}
    router-id {{ bgp.router_id }}
    no bgp default ipv4-unicast
    maximum-paths 4 ecmp 4
-{% if (bgp.type == "spine") OR (bgp.underlay_listen is defined) %}
+{% if (bgp.type == "spine") or (bgp.underlay_listen is defined) %}
    bgp listen range fe80::/10 peer-group {{ bgp.underlay_name }} peer-filter PF-UNDERLAY
 {% endif %}
 {% if bgp.type == "leaf" %}
