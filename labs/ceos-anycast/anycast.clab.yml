@@ -14,13 +14,13 @@ topology:
     ceos-spine1:
       kind: ceos
       image: ceos:4.28.10.1M
-      mgmt-ipv4: 172.20.0.100
+      mgmt-ipv4: 172.20.0.101
       env:
         CLAB_MGMT_VRF: MGMT
     ceos-spine2:
       kind: ceos
       image: ceos:4.28.10.1M
-      mgmt-ipv4: 172.20.0.101
+      mgmt-ipv4: 172.20.0.102
       env:
         CLAB_MGMT_VRF: MGMT
     ceos-leaf1:
@@ -53,28 +53,28 @@ topology:
       mgmt-ipv4: 172.20.0.121
       exec:
         - "ip addr add 172.16.1.1/24 brd 172.16.1.255 dev eth1"
-        - "ip link set dev eth2 up"
+        - "ip link set dev eth1 up"
     bird-serv2:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.122
       exec:
         - "ip addr add 172.16.1.1/24 brd 172.16.1.255 dev eth1"
-        - "ip link set dev eth2 up"
+        - "ip link set dev eth1 up"
     bird-serv3:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.123
       exec:
         - "ip addr add 172.16.1.1/24 brd 172.16.1.255 dev eth1"
-        - "ip link set dev eth2 up"
+        - "ip link set dev eth1 up"
     bird-serv4:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.124
       exec:
         - "ip addr add 172.16.1.1/24 brd 172.16.1.255 dev eth1"
-        - "ip link set dev eth2 up"
+        - "ip link set dev eth1 up"
     ceos-bdr1:
       kind: ceos
       image: ceos:4.28.10.1M
