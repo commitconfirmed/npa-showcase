@@ -19,7 +19,7 @@ interfaces:
     ipv6: "LLA"
   - if: "Ethernet5"
     desc: "ceos-leaf1:Ethernet5 --> bird-serv1:eth1"
-    ipv4: "10.254.0.0/31"
+    ipv4: "10.254.1.1/24"
     ipv6: "LLA"
 
 # Routing
