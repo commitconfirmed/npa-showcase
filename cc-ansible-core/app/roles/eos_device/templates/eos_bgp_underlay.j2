@@ -39,4 +39,4 @@ router bgp {{ bgp.local_as }}
    address-family ipv4
       neighbor {{ bgp.underlay_name }} activate
       neighbor {{ bgp.underlay_name }} next-hop address-family ipv6 originate
-      redistribute connected route-map RM-LOOPBACK
+      redistribute connected route-map RM-UNDERLAY
