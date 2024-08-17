@@ -1,26 +1,25 @@
 {# Used by conf_bird_server.j2 #}
 
+{# Overkill for just 1 session/neighbor, but want to keep the BGP YAML syntax consistent #}
 # BGP Configuration
 protocol bgp {
-  description "{{ bgp.sessions.neighbors.desc }}";
+{% for session in bgp.sessions %}
+  description "{{ session.name }}";
   local {{ bgp.router_id }} as {{ bgp.local_as }};
-{% if family == "ipv4" %}
-  neighbor {{ bgp.sessions.neighbors.ip }} as {{ bgp.sessions.remote_as }};
-{% endif %}
-{% if family == "ipv6" %}
-  neighbor {{ bgp.sessions.neighbors.ipv6 }} as {{ bgp.sessions.remote_as }};
-{% endif %}
+{%     for neighbor in session.neighbors %}
+{%         if family == "ipv4" %}
+  neighbor {{ neighbor.ip }} as {{ session.remote_as }};
+{%         endif %}
+{%         if family == "ipv6" %}
+  neighbor {{ neighbor.ipv6 }} as {{ session.remote_as }};
+{%         endif %}
+{%     endfor %}
+{%     if family == "ipv4" %}
   ipv4 {
   	import all;
   	export where source ~ [ RTS_DIRECT ];
     extended next hop on;
   };
+{%     endif %}
+{% endfor %}
 }
-
-
-{% if family == "ipv4" %}
-  neighbor {{ peer.ip }} as {{ peer.as_number }};
-{% endif %}
-{% if family == "ipv6" %}
-  neighbor {{ peer.ipv6 }} as {{ peer.as_number }};
-{% endif %}
