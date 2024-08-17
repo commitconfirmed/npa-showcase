@@ -1,3 +1,6 @@
+{# Required for IPV4 forwarding over IPV6 #}
+ip routing ipv6 interfaces
+
 {# Underlay Loopback PFL #}
 ip prefix-list PL-LOOPBACK
    permit 10.0.0.0/24 eq 32

@@ -19,7 +19,7 @@ protocol bgp {
 {%     endfor %}
   ipv4 {
   	import all;
-  	export ipv4_export;
+  	export filter ipv4_export;
   };
 #  ipv6 {
 #  	import all;
