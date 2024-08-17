@@ -10,9 +10,9 @@ route-map RM-UNDERLAY deny 20
 {# Underlay Peer AS Filter #}
 peer-filter PF-UNDERLAY
 {% if bgp.leaf_listen_range is defined %}
-   match as-range 65100-65200 result accept
-{% else %}
    match as-range 65200-65300 result accept
+{% else %}
+   match as-range 65100-65200 result accept
 {% endif %}
 
 {# Underlay BGP Configuration #}
@@ -23,7 +23,7 @@ router bgp {{ bgp.local_as }}
 {% if bgp.type == "spine" %}
    bgp listen range fe80::/10 peer-group {{ bgp.underlay_name }} peer-filter PF-UNDERLAY
 {% endif %}
-{% if bgp.leaf_listen is defined %}
+{% if bgp.leaf_listen_range is defined %}
    bgp listen range {{ bgp.leaf_listen_range }} peer-group {{ bgp.underlay_name }} peer-filter PF-UNDERLAY
 {% endif %}
 {% if bgp.type == "leaf" %}
