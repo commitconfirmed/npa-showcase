@@ -1,4 +1,8 @@
 # Arista + BIRD IXP lab
+
+> [!CAUTION]
+> Currently not working as I'm working on moving from BIRD 1.6 to BIRD 2.0
+
 A 3 peer, 2 route server & 1 ISP eBGP lab demonstrating peering and Internet routing functionality with Arista cEOS and BIRD, and how manipulation of local preference, AS prepending and communities influences routing decisions.
 
 Concepts: Arista, BIRD, Peering, eBGP, IXP, Transit, Prepending, Localpref, Communities

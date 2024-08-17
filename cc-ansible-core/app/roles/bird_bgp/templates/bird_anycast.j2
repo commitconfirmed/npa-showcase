@@ -6,20 +6,20 @@ protocol bgp {
 {% for session in bgp.sessions %}
   description "{{ session.name }}";
   local {{ bgp.router_id }} as {{ bgp.local_as }};
-{%     for neighbor in session.neighbors %}
-{%         if family == "ipv4" %}
-  neighbor {{ neighbor.ip }} as {{ session.remote_as }};
-{%         endif %}
-{%         if family == "ipv6" %}
-  neighbor {{ neighbor.ipv6 }} as {{ session.remote_as }};
-{%         endif %}
-{%     endfor %}
-{%     if family == "ipv4" %}
+{%     if session.type == "unnumbered" %}
+  neighbor as {{ session.remote_as }};
+{%         for neighbor in session.neighbors %}
+  interface {{ neighbor.int }};
+{%         endfor %}
+{%     endif %}
   ipv4 {
   	import all;
   	export where source ~ [ RTS_DIRECT ];
     extended next hop on;
   };
-{%     endif %}
+  ipv6 {
+  	import all;
+  	export where source ~ [ RTS_DIRECT ];
+  };
 {% endfor %}
 }

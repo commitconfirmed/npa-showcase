@@ -1,38 +1,27 @@
 # Create the /etc/bird/bird.conf file relevant to the lab deployment
 # and then run bird
 ---
-- name: Apply ipv4 bird.conf
+- name: Device configuration to be applied
+  ansible.builtin.debug:
+    msg: "{{ lookup('template', '../templates/conf_bird_server.j2') }}"
+
+- name: Apply bird.conf
   ansible.builtin.template:
     src: "../templates/conf_bird_server.j2"
     dest: /etc/bird/bird.conf
     owner: bird
     group: bird
     mode: u=rw,g=r,o=r
-  vars:
-    family: "ipv4"
-  become: yes
-
-- name: Create ipv6 bird.conf
-  ansible.builtin.template:
-    src: "../templates/conf_bird_server.j2"
-    dest: /etc/bird/bird6.conf
-    owner: bird
-    group: bird
-    mode: u=rw,g=r,o=r
-  vars:
-    family: "ipv6"
   become: yes
 
 - name: Stop BIRD
   ansible.builtin.command: "{{ item }}"
   with_items:
     - "service bird stop"
-    - "service bird6 stop"
   become: yes
 
 - name: Run BIRD
   ansible.builtin.command: "{{ item }}"
   with_items:
     - "/usr/sbin/bird -u bird -g bird -c /etc/bird/bird.conf"
-    - "/usr/sbin/bird6 -u bird -g bird -c /etc/bird/bird6.conf"
   become: yes

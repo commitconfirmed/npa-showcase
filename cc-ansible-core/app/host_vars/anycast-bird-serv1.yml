@@ -6,9 +6,8 @@ bgp:
   router_id: "10.0.0.121"
   local_as: 65201
   sessions:
-    - name: "CEOS-LEAF1"
+    - name: "To CEOS-LEAF1"
+      type: "unnumbered"
       remote_as: 65101
       neighbors:
-        - ip: "10.0.0.111"
-          ipv6: "2001:2:b1::1"
-          desc: "To CEOS-LEAF1"
+        - int: "Eth1"

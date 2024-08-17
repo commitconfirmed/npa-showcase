@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install SSH, BIRD and basic network verification tools
 RUN apt-get update -y; \
-apt-get install -y iproute2 bird tcpdump; \
+apt-get install -y iproute2 bird2 tcpdump; \
 apt-get install -y iputils-ping openssh-server; \
 apt-get install -y sudo vim; \
 apt-get clean all
