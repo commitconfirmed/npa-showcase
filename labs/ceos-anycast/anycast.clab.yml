@@ -52,32 +52,32 @@ topology:
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.121
       exec:
-        - "ip addr add 172.16.1.1/24 brd 172.16.1.255 dev eth1"
-        - "ip addr add 10.0.0.121/32 dev lo"
+        - "ip addr add 10.254.0.1/31 dev eth1"
+        - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
     bird-serv2:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.122
       exec:
-        - "ip addr add 172.16.1.1/24 brd 172.16.1.255 dev eth1"
-        - "ip addr add 10.0.0.122/32 dev lo"
+        - "ip addr add 10.254.0.3/31 dev eth1"
+        - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
     bird-serv3:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.123
       exec:
-        - "ip addr add 172.16.1.1/24 brd 172.16.1.255 dev eth1"
-        - "ip addr add 10.0.0.123/32 dev lo"
+        - "ip addr add 10.254.0.5/31 dev eth1"
+        - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
     bird-serv4:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.124
       exec:
-        - "ip addr add 172.16.1.1/24 brd 172.16.1.255 dev eth1"
-        - "ip addr add 10.0.0.124/32 dev lo"
+        - "ip addr add 10.254.0.7/31 dev eth1"
+        - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
     ceos-bdr1:
       kind: ceos

@@ -17,6 +17,10 @@ interfaces:
   - if: "Ethernet2"
     desc: "ceos-leaf2:Ethernet2 --> ceos-spine2:Ethernet2"
     ipv6: "LLA"
+  - if: "Ethernet5"
+    desc: "ceos-leaf2:Ethernet5 --> bird-serv2:eth1"
+    ipv4: "10.254.0.2/31"
+    ipv6: "LLA"
 
 # Routing
 bgp:
@@ -25,7 +29,7 @@ bgp:
   type: "leaf"
   underlay_name: "PG_UNDERLAY"
   underlay_as: 65000
-  underlay_listen: true # Enable listening for anycast servers
+  leaf_listen_range: "10.254.2.0/24" # Enable listening for anycast servers
   underlay_interfaces:
     - if: "Ethernet1"
     - if: "Ethernet2"

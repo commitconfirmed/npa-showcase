@@ -3,11 +3,10 @@
 
 bgp:
   type: "anycast_server"
-  router_id: "10.0.0.121"
+  router_id: "10.254.1.2"
   local_as: 65201
   sessions:
     - name: "To CEOS-LEAF1"
-      type: "unnumbered"
       remote_as: 65101
       neighbors:
-        - int: "Eth1"
+        - ip: "10.254.1.1"
