@@ -1,5 +1,13 @@
 {# Used by conf_bird_server.j2 #}
 
+# Filter configuration
+filter ipv4_export {     
+    if (net ~ [172.16.1.1/32]) then { 
+        accept;
+    }
+    reject;
+}
+
 {# Overkill for just 1 session/neighbor, but want to keep the BGP YAML syntax consistent #}
 # BGP Configuration
 protocol bgp {
@@ -11,7 +19,7 @@ protocol bgp {
 {%     endfor %}
   ipv4 {
   	import all;
-  	export all;
+  	export ipv4_export;
   };
 #  ipv6 {
 #  	import all;

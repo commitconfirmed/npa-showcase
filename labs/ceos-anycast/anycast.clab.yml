@@ -60,7 +60,7 @@ topology:
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.122
       exec:
-        - "ip addr add 110.254.2.2/24 brd 10.254.2.255 dev eth1"
+        - "ip addr add 10.254.2.2/24 brd 10.254.2.255 dev eth1"
         - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
     bird-serv3:
