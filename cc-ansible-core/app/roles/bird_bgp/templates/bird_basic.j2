@@ -1,7 +1,7 @@
 {# Used by conf_bird_server.j2 #}
 # Configure logging
 log syslog all;
-log "/var/log/bird.log" { info, remote, warning, error, auth, fatal, bug };
+# log "/var/log/bird.log" { debug, trace, info, remote, warning, error, auth, fatal, bug };
 
 # Set router ID. It is a unique identification of your router, usually one of
 # IPv4 addresses of the router. It is recommended to configure it explicitly.
