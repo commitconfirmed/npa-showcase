@@ -32,7 +32,7 @@
             "color": {
               "mode": "thresholds"
             },
-            "displayName": "eos1",
+            "displayName": "ceos-spine1",
             "mappings": [],
             "thresholds": {
               "mode": "absolute",
@@ -108,7 +108,7 @@
                   "horizontal": "left",
                   "vertical": "top"
                 },
-                "name": "eos1-router-circle",
+                "name": "ceos-spine1-router-circle",
                 "placement": {
                   "height": 101,
                   "left": 284,
@@ -141,7 +141,7 @@
                   "horizontal": "left",
                   "vertical": "top"
                 },
-                "name": "eos2-router-circle",
+                "name": "ceos-spine2-router-circle",
                 "placement": {
                   "height": 101,
                   "left": 856,
@@ -153,7 +153,7 @@
               {
                 "background": {
                   "color": {
-                    "field": "eos1-mgmt",
+                    "field": "ceos-spine1-mgmt",
                     "fixed": "#D9D9D9"
                   }
                 },
@@ -169,7 +169,7 @@
                   },
                   "size": 20,
                   "text": {
-                    "field": "eos1-mgmt",
+                    "field": "ceos-spine1-mgmt",
                     "fixed": "",
                     "mode": "field"
                   },
@@ -179,7 +179,7 @@
                   "horizontal": "left",
                   "vertical": "top"
                 },
-                "name": "eos1-mgmt-total",
+                "name": "ceos-spine1-mgmt-total",
                 "placement": {
                   "height": 51,
                   "left": 188,
@@ -191,7 +191,7 @@
               {
                 "background": {
                   "color": {
-                    "field": "eos2-mgmt",
+                    "field": "ceos-spine2-mgmt",
                     "fixed": "#D9D9D9"
                   }
                 },
@@ -207,7 +207,7 @@
                   },
                   "size": 20,
                   "text": {
-                    "field": "eos2-mgmt",
+                    "field": "ceos-spine2-mgmt",
                     "fixed": "",
                     "mode": "field"
                   },
@@ -217,7 +217,7 @@
                   "horizontal": "left",
                   "vertical": "top"
                 },
-                "name": "eos2-mgmt-total",
+                "name": "ceos-spine2-mgmt-total",
                 "placement": {
                   "height": 56,
                   "left": 955,
@@ -251,7 +251,7 @@
                   "horizontal": "left",
                   "vertical": "top"
                 },
-                "name": "eos1-router",
+                "name": "ceos-spine1-router",
                 "placement": {
                   "height": 70,
                   "left": 307,
@@ -285,7 +285,7 @@
                   "horizontal": "left",
                   "vertical": "top"
                 },
-                "name": "eos2-router",
+                "name": "ceos-spine2-router",
                 "placement": {
                   "height": 70,
                   "left": 880,
@@ -320,7 +320,7 @@
                   "horizontal": "left",
                   "vertical": "top"
                 },
-                "name": "eos1-mgmt-text",
+                "name": "ceos-spine1-mgmt-text",
                 "placement": {
                   "height": 50,
                   "left": 182,
@@ -355,7 +355,7 @@
                   "horizontal": "left",
                   "vertical": "top"
                 },
-                "name": "eos2-mgmt-text",
+                "name": "ceos-spine2-mgmt-text",
                 "placement": {
                   "height": 50,
                   "left": 958,
@@ -382,7 +382,7 @@
                   },
                   "size": 28,
                   "text": {
-                    "fixed": "eos1"
+                    "fixed": "ceos-spine1"
                   },
                   "valign": "middle"
                 },
@@ -390,7 +390,7 @@
                   "horizontal": "left",
                   "vertical": "top"
                 },
-                "name": "eos1-header",
+                "name": "ceos-spine1-header",
                 "placement": {
                   "height": 50,
                   "left": 287,
@@ -417,7 +417,7 @@
                   },
                   "size": 28,
                   "text": {
-                    "fixed": "eos2"
+                    "fixed": "ceos-spine2"
                   },
                   "valign": "middle"
                 },
@@ -425,7 +425,7 @@
                   "horizontal": "left",
                   "vertical": "top"
                 },
-                "name": "eos2-header",
+                "name": "ceos-spine2-header",
                 "placement": {
                   "height": 50,
                   "left": 857,
@@ -455,11 +455,11 @@
             },
             "editorMode": "builder",
             "exemplar": false,
-            "expr": "sum by (interface_name) (rate(gnmic_eos_interface_stats_out_octets{source=\"eos1\"}[$__rate_interval]) + rate(gnmic_eos_interface_stats_in_octets{source=\"eos1\"}[$__rate_interval]))",
+            "expr": "sum by (interface_name) (rate(gnmic_eos_interface_stats_out_octets{source=\"ceos-spine1\"}[$__rate_interval]) + rate(gnmic_eos_interface_stats_in_octets{source=\"ceos-spine1\"}[$__rate_interval]))",
             "instant": false,
-            "legendFormat": "eos1/{{interface_name}}-total",
+            "legendFormat": "ceos-spine1/{{interface_name}}-total",
             "range": true,
-            "refId": "eos1-total"
+            "refId": "ceos-spine1-total"
           },
           {
             "datasource": {
@@ -467,11 +467,11 @@
               "uid": "PBFA97CFB590B2093"
             },
             "editorMode": "code",
-            "expr": "rate(gnmic_eos_interface_stats_out_octets{source=\"eos2\"}[$__rate_interval]) + rate(gnmic_eos_interface_stats_in_octets{source=\"eos2\"}[$__rate_interval])",
+            "expr": "rate(gnmic_eos_interface_stats_out_octets{source=\"ceos-spine2\"}[$__rate_interval]) + rate(gnmic_eos_interface_stats_in_octets{source=\"ceos-spine2\"}[$__rate_interval])",
             "hide": false,
             "legendFormat": "{{source}}/{{interface_name}}-total",
             "range": true,
-            "refId": "eos2-total"
+            "refId": "ceos-spine2-total"
           }
         ],
         "title": "eos diagram",
@@ -479,10 +479,10 @@
           {
             "id": "calculateField",
             "options": {
-              "alias": "eos1-mgmt",
+              "alias": "ceos-spine1-mgmt",
               "mode": "reduceRow",
               "reduce": {
-                "include": ["eos1/Management0-total"],
+                "include": ["ceos-spine1/Management0-total"],
                 "reducer": "lastNotNull"
               }
             }
@@ -490,10 +490,10 @@
           {
             "id": "calculateField",
             "options": {
-              "alias": "eos2-mgmt",
+              "alias": "ceos-spine2-mgmt",
               "mode": "reduceRow",
               "reduce": {
-                "include": ["eos2/Management0-total"],
+                "include": ["ceos-spine2/Management0-total"],
                 "reducer": "lastNotNull"
               }
             }
