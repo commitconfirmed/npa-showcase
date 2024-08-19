@@ -30,7 +30,7 @@ topology:
         - 9090:9090
     serv-grafana:
       kind: linux
-      image: grafana/grafana:latest
+      image: grafana/grafana:main-ubuntu
       mgmt-ipv4: 172.20.0.23
       binds:
         - configs/serv-grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
