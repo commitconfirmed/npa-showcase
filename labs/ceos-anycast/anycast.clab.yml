@@ -7,10 +7,45 @@ mgmt:
 
 topology:
   nodes:
+  ### Management and Telemetry servers ###
     serv-ansible:
       kind: linux
       image: cc-ansible:latest
       mgmt-ipv4: 172.20.0.20
+    serv-gnmic:
+      kind: linux
+      image: gnmic/gnmic:latest
+      mgmt-ipv4: 172.20.0.21
+      binds:
+        - configs/serv-gnmic/gnmic-config.yml:/gnmic-config.yml:ro
+      cmd: --config /gnmic-config.yml --log subscribe
+    serv-prometheus:
+      kind: linux
+      image: prom/prometheus:latest
+      mgmt-ipv4: 172.20.0.22
+      binds:
+        - configs/serv-prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      cmd: --config.file=/etc/prometheus/prometheus.yml
+      ports:
+        - 9090:9090
+    serv-grafana:
+      kind: linux
+      image: grafana/grafana:latest
+      mgmt-ipv4: 172.20.0.23
+      binds:
+        - configs/serv-grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
+        - configs/serv-grafana/dashboards.yml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
+        - configs/serv-grafana/dashboards:/var/lib/grafana/dashboards
+      ports:
+        - 3000:3000
+      env:
+        #GF_INSTALL_PLUGINS: https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-1.0.0d.220606199-SNAPSHOT.zip;agenty-flowcharting-panel
+        GF_ORG_ROLE: "Admin"
+        GF_ORG_NAME: "Commit Confirmed"
+        GF_AUTH_ANONYMOUS_ENABLED: "true"
+        GF_AUTH_ANONYMOUS: "true"
+
+  ### Spines ###
     ceos-spine1:
       kind: ceos
       image: ceos:4.28.10.1M
@@ -23,6 +58,8 @@ topology:
       mgmt-ipv4: 172.20.0.102
       env:
         CLAB_MGMT_VRF: MGMT
+    
+    ### Leafs ###
     ceos-leaf1:
       kind: ceos
       image: ceos:4.28.10.1M
@@ -47,6 +84,8 @@ topology:
       mgmt-ipv4: 172.20.0.114
       env:
         CLAB_MGMT_VRF: MGMT
+
+    ### Anycast Servers ###
     bird-serv1:
       kind: linux
       image: cc-bird:latest
@@ -79,6 +118,8 @@ topology:
         - "ip addr add 10.254.4.2/24 brd 10.254.4.255 dev eth1"
         - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
+
+    ### Border and Host to generate traffic ###
     ceos-bdr1:
       kind: ceos
       image: ceos:4.28.10.1M
