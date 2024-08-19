@@ -53,8 +53,8 @@ subscriptions:
     sample-interval: 5s
 
 outputs:
-  prom:
-    type: serv-prometheus
+  serv-prometheus:
+    type: prometheus
     listen: :9273
     path: /metrics
     metric-prefix: gnmic
