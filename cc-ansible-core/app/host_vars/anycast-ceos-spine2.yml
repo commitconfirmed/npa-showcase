@@ -26,9 +26,17 @@ interfaces:
   - if: "Ethernet5"
     desc: "ceos-spine2:Ethernet5 --> ceos-bdr1:Ethernet2"
     ipv4: "10.255.0.4/31"
-    ipv6: "2002::10.255.0.4/96"
+    ipv6: "2002::10:255:0:4/96"
 
 # Routing
+static:
+  ipv4:
+    - prefix: "172.16.1.0/24"
+      dest: "Null0"
+  ipv6:
+    - prefix: "2002::/48"
+      dest: "Null0"
+
 bgp:
   router_id: 10.0.0.102
   local_as: 65000
@@ -36,19 +44,20 @@ bgp:
   underlay_name: "PG_UNDERLAY"
   sessions:
     - name: "BDR"
-      remote_as: 65301
+      local_as: 100
+      remote_as: 300
       neighbors:
         - ip: "10.255.0.5"
           pg: "BDR-IPV4"
           desc: "To ceos-bdr1 - v4"
-        - ip: "2002::10.255.0.5"
+        - ip: "2002::10:255:0:5"
           pg: "BDR-IPV6"
           desc: "To ceos-bdr1 - v6"
       prefixes_v4_out:
         - prefix: "172.16.1.0/24"
           action: "permit"
       prefixes_v6_out:
-        - prefix: "2002::172.16.1.1/96"
+        - prefix: "2002::/48"
           action: "permit"
       routemaps_v4_in:
         - action: "permit"

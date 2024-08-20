@@ -127,6 +127,9 @@ router bgp {{ bgp.local_as }}
 {%     for family in ("IPV4", "IPV6") %}
    neighbor {{ session.name }}-{{ family }} peer group
    neighbor {{ session.name }}-{{ family }} next-hop-self
+{%     if session.local_as is defined %}
+   neighbor {{ session.name }}-{{ family }} local-as {{ session.local_as }}
+{%     endif %}
    neighbor {{ session.name }}-{{ family }} remote-as {{ session.remote_as }}
    neighbor {{ session.name }}-{{ family }} remove-private-as all
    no neighbor {{ session.name }}-{{ family }} enforce-first-as
