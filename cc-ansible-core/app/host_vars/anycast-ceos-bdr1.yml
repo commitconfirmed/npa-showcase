@@ -22,7 +22,7 @@ interfaces:
   - if: "Ethernet5"
     desc: "ceos-bdr1:Ethernet5 --> ceos-host1:Eth0"
     ipv4: "172.16.10.1/24"
-    ipv6: "2002::172:16:10:1/96"
+    ipv6: "LLA"
 
 bgp:
   router_id: 172.16.0.1
