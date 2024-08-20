@@ -23,12 +23,49 @@ interfaces:
   - if: "Ethernet4"
     desc: "ceos-spine1:Ethernet4 --> ceos-leaf4:Ethernet1"
     ipv6: "LLA"
+  - if: "Ethernet5"
+    desc: "ceos-spine1:Ethernet5 --> ceos-bdr1:Ethernet1"
+    ipv4: "10.255.0.2/31"
+    ipv6: "2002::10.255.0.2/96"
 
 # Routing
 bgp:
   router_id: 10.0.0.101
   local_as: 65000
-  type: "spine"
-  underlay_name: "PG_UNDERLAY"
+  type: [ "spine", "external" ]
+  underlay_name: "PG_UNDERLAY"    
+  sessions:
+    - name: "BDR"
+      remote_as: 65301
+      neighbors:
+        - ip: "10.255.0.3"
+          pg: "BDR-IPV4"
+          desc: "To ceos-bdr1 - v4"
+        - ip: "2002::10.255.0.3"
+          pg: "BDR-IPV6"
+          desc: "To ceos-bdr1 - v6"
+      prefixes_v4_out:
+        - prefix: "172.16.1.0/24"
+          action: "permit"
+      prefixes_v6_out:
+        - prefix: "2002::172.16.1.1/96"
+          action: "permit"
+      routemaps_v4_in:
+        - action: "permit"
+          pfl: "PL-DEFAULT"
+        - action: "deny"
+      routemaps_v4_out:
+        - action: "permit"
+          pfl: "PL-BDR-OUTBOUND"
+        - action: "deny"
+      routemaps_v6_in:
+        - action: "permit"
+          pfl: "PL-DEFAULT-V6"
+        - action: "deny"
+      routemaps_v6_out:
+        - action: "permit"
+          pfl: "PL-BDR-OUTBOUND-V6"
+        - action: "deny"
+
         
 

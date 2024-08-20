@@ -23,13 +23,13 @@ router bgp {{ bgp.local_as }}
    router-id {{ bgp.router_id }}
    no bgp default ipv4-unicast
    maximum-paths 4 ecmp 4
-{% if bgp.type == "spine" %}
+{% if "spine" in bgp.type %}
    bgp listen range fe80::/10 peer-group {{ bgp.underlay_name }} peer-filter PF-UNDERLAY
 {% endif %}
 {% if bgp.leaf_listen_range is defined %}
    bgp listen range {{ bgp.leaf_listen_range }} peer-group {{ bgp.underlay_name }} peer-filter PF-UNDERLAY
 {% endif %}
-{% if bgp.type == "leaf" %}
+{% if "leaf" in bgp.type %}
 {%     for item in bgp.underlay_interfaces %}
    neighbor interface {{ item.if }} peer-group {{ bgp.underlay_name }} remote-as {{ bgp.underlay_as }}
 {%     endfor %}

@@ -1,4 +1,3 @@
-
 {
     "annotations": {
       "list": [
@@ -16,29 +15,43 @@
         }
       ]
     },
+    "description": "Dashboard for the CEOS Anycast lab",
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
+    "id": 3,
     "links": [],
-    "liveNow": false,
     "panels": [
       {
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 2,
+        "title": "Spines",
+        "type": "row"
+      },
+      {
         "datasource": {
+          "default": true,
           "type": "prometheus",
           "uid": "PBFA97CFB590B2093"
         },
-        "description": "",
         "fieldConfig": {
           "defaults": {
             "color": {
               "mode": "palette-classic"
             },
             "custom": {
+              "axisBorderShow": false,
               "axisCenteredZero": false,
               "axisColorMode": "text",
               "axisLabel": "",
               "axisPlacement": "auto",
               "barAlignment": 0,
+              "barWidthFactor": 0.6,
               "drawStyle": "line",
               "fillOpacity": 0,
               "gradientMode": "none",
@@ -47,6 +60,7 @@
                 "tooltip": false,
                 "viz": false
               },
+              "insertNulls": false,
               "lineInterpolation": "linear",
               "lineWidth": 1,
               "pointSize": 5,
@@ -77,7 +91,7 @@
                 }
               ]
             },
-            "unit": "bytes"
+            "unit": "Bps"
           },
           "overrides": []
         },
@@ -85,9 +99,9 @@
           "h": 8,
           "w": 12,
           "x": 0,
-          "y": 0
+          "y": 1
         },
-        "id": 5,
+        "id": 1,
         "options": {
           "legend": {
             "calcs": [],
@@ -106,98 +120,41 @@
               "type": "prometheus",
               "uid": "PBFA97CFB590B2093"
             },
+            "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "rate(gnmic_eos_interface_stats_in_octets[$__rate_interval])",
-            "format": "time_series",
-            "legendFormat": "{{source}}/{{interface_name}} - in bytes",
+            "expr": "rate(gnmic_eos_interface_stats_in_octets{source=\"ceos-spine1\", interface_name!=\"Management0\"}[$__rate_interval])",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{interface_name}} - IN",
             "range": true,
-            "refId": "A"
+            "refId": "A",
+            "useBackend": false
           },
           {
             "datasource": {
               "type": "prometheus",
               "uid": "PBFA97CFB590B2093"
             },
+            "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "rate(gnmic_eos_interface_stats_out_octets[$__rate_interval])",
+            "expr": "rate(gnmic_eos_interface_stats_out_octets{source=\"ceos-spine1\", interface_name!=\"Management0\"}[$__rate_interval])",
+            "fullMetaSearch": false,
             "hide": false,
-            "legendFormat": "{{source}}/{{interface_name}} - out bytes",
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{interface_name}} - OUT",
             "range": true,
-            "refId": "B"
+            "refId": "B",
+            "useBackend": false
           }
         ],
-        "title": "Interface traffic stats (bytes/sec)",
-        "transformations": [],
+        "title": "ceos-spine1 - Interface traffic stats (bytes/sec)",
         "type": "timeseries"
       },
       {
         "datasource": {
-          "type": "prometheus",
-          "uid": "PBFA97CFB590B2093"
-        },
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            },
-            "unit": "none"
-          },
-          "overrides": []
-        },
-        "gridPos": {
-          "h": 8,
-          "w": 12,
-          "x": 12,
-          "y": 0
-        },
-        "id": 1,
-        "options": {
-          "colorMode": "value",
-          "graphMode": "none",
-          "justifyMode": "center",
-          "orientation": "auto",
-          "reduceOptions": {
-            "calcs": ["lastNotNull"],
-            "fields": "",
-            "values": false
-          },
-          "textMode": "auto"
-        },
-        "pluginVersion": "9.5.2",
-        "targets": [
-          {
-            "datasource": {
-              "type": "prometheus",
-              "uid": "PBFA97CFB590B2093"
-            },
-            "editorMode": "builder",
-            "exemplar": false,
-            "expr": "gnmic_eos_bgp_neighbors_installed{afi_safi_afi_safi_name=\"IPV4_UNICAST\"}",
-            "instant": false,
-            "legendFormat": "{{ source }}",
-            "range": true,
-            "refId": "A"
-          }
-        ],
-        "title": "Number of received BGP routes",
-        "type": "stat"
-      },
-      {
-        "datasource": {
+          "default": true,
           "type": "prometheus",
           "uid": "PBFA97CFB590B2093"
         },
@@ -207,11 +164,13 @@
               "mode": "palette-classic"
             },
             "custom": {
+              "axisBorderShow": false,
               "axisCenteredZero": false,
               "axisColorMode": "text",
               "axisLabel": "",
               "axisPlacement": "auto",
               "barAlignment": 0,
+              "barWidthFactor": 0.6,
               "drawStyle": "line",
               "fillOpacity": 0,
               "gradientMode": "none",
@@ -220,6 +179,7 @@
                 "tooltip": false,
                 "viz": false
               },
+              "insertNulls": false,
               "lineInterpolation": "linear",
               "lineWidth": 1,
               "pointSize": 5,
@@ -227,7 +187,7 @@
                 "type": "linear"
               },
               "showPoints": "auto",
-              "spanNulls": false,
+              "spanNulls": true,
               "stacking": {
                 "group": "A",
                 "mode": "none"
@@ -249,15 +209,16 @@
                   "value": 80
                 }
               ]
-            }
+            },
+            "unit": "Bps"
           },
           "overrides": []
         },
         "gridPos": {
           "h": 8,
           "w": 12,
-          "x": 0,
-          "y": 8
+          "x": 12,
+          "y": 1
         },
         "id": 3,
         "options": {
@@ -278,18 +239,54 @@
               "type": "prometheus",
               "uid": "PBFA97CFB590B2093"
             },
+            "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "gnmic_eos_cpu_avg{job=\"gnmic\"}",
-            "legendFormat": "{{source}}/{{component_name}}",
+            "expr": "rate(gnmic_eos_interface_stats_in_octets{source=\"ceos-spine2\", interface_name!=\"Management0\"}[$__rate_interval])",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{interface_name}} - IN",
             "range": true,
-            "refId": "A"
+            "refId": "A",
+            "useBackend": false
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "PBFA97CFB590B2093"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "rate(gnmic_eos_interface_stats_out_octets{source=\"ceos-spine2\", interface_name!=\"Management0\"}[$__rate_interval])",
+            "fullMetaSearch": false,
+            "hide": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{interface_name}} - OUT",
+            "range": true,
+            "refId": "B",
+            "useBackend": false
           }
         ],
-        "title": "CPU Utilization",
+        "title": "ceos-spine2 - Interface traffic stats (bytes/sec)",
         "type": "timeseries"
       },
       {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 9
+        },
+        "id": 4,
+        "panels": [],
+        "title": "Leafs",
+        "type": "row"
+      },
+      {
         "datasource": {
+          "default": true,
           "type": "prometheus",
           "uid": "PBFA97CFB590B2093"
         },
@@ -299,11 +296,13 @@
               "mode": "palette-classic"
             },
             "custom": {
+              "axisBorderShow": false,
               "axisCenteredZero": false,
               "axisColorMode": "text",
               "axisLabel": "",
               "axisPlacement": "auto",
               "barAlignment": 0,
+              "barWidthFactor": 0.6,
               "drawStyle": "line",
               "fillOpacity": 0,
               "gradientMode": "none",
@@ -312,6 +311,7 @@
                 "tooltip": false,
                 "viz": false
               },
+              "insertNulls": false,
               "lineInterpolation": "linear",
               "lineWidth": 1,
               "pointSize": 5,
@@ -319,7 +319,7 @@
                 "type": "linear"
               },
               "showPoints": "auto",
-              "spanNulls": false,
+              "spanNulls": true,
               "stacking": {
                 "group": "A",
                 "mode": "none"
@@ -342,17 +342,17 @@
                 }
               ]
             },
-            "unit": "bytes"
+            "unit": "Bps"
           },
           "overrides": []
         },
         "gridPos": {
           "h": 8,
           "w": 12,
-          "x": 12,
-          "y": 8
+          "x": 0,
+          "y": 10
         },
-        "id": 2,
+        "id": 5,
         "options": {
           "legend": {
             "calcs": [],
@@ -371,32 +371,410 @@
               "type": "prometheus",
               "uid": "PBFA97CFB590B2093"
             },
+            "disableTextWrap": false,
             "editorMode": "builder",
-            "expr": "gnmic_eos_mem_utilized{component_name=\"Chassis\"}",
-            "legendFormat": "{{source}}",
+            "expr": "rate(gnmic_eos_interface_stats_in_octets{source=\"ceos-leaf1\", interface_name!=\"Management0\"}[$__rate_interval])",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{interface_name}} - IN",
             "range": true,
-            "refId": "A"
+            "refId": "A",
+            "useBackend": false
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "PBFA97CFB590B2093"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "rate(gnmic_eos_interface_stats_out_octets{source=\"ceos-leaf1\", interface_name!=\"Management0\"}[$__rate_interval])",
+            "fullMetaSearch": false,
+            "hide": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{interface_name}} - OUT",
+            "range": true,
+            "refId": "B",
+            "useBackend": false
           }
         ],
-        "title": "Memory Utilization",
+        "title": "ceos-leaf1 - Interface traffic stats (bytes/sec)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "default": true,
+          "type": "prometheus",
+          "uid": "PBFA97CFB590B2093"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "Bps"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 10
+        },
+        "id": 6,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "PBFA97CFB590B2093"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "rate(gnmic_eos_interface_stats_in_octets{source=\"ceos-leaf2\", interface_name!=\"Management0\"}[$__rate_interval])",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{interface_name}} - IN",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "PBFA97CFB590B2093"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "rate(gnmic_eos_interface_stats_out_octets{source=\"ceos-leaf2\", interface_name!=\"Management0\"}[$__rate_interval])",
+            "fullMetaSearch": false,
+            "hide": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{interface_name}} - OUT",
+            "range": true,
+            "refId": "B",
+            "useBackend": false
+          }
+        ],
+        "title": "ceos-leaf2 - Interface traffic stats (bytes/sec)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "default": true,
+          "type": "prometheus",
+          "uid": "PBFA97CFB590B2093"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "Bps"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 18
+        },
+        "id": 7,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "PBFA97CFB590B2093"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "rate(gnmic_eos_interface_stats_in_octets{source=\"ceos-leaf3\", interface_name!=\"Management0\"}[$__rate_interval])",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{interface_name}} - IN",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "PBFA97CFB590B2093"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "rate(gnmic_eos_interface_stats_out_octets{source=\"ceos-leaf3\", interface_name!=\"Management0\"}[$__rate_interval])",
+            "fullMetaSearch": false,
+            "hide": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{interface_name}} - OUT",
+            "range": true,
+            "refId": "B",
+            "useBackend": false
+          }
+        ],
+        "title": "ceos-leaf3 - Interface traffic stats (bytes/sec)",
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "default": true,
+          "type": "prometheus",
+          "uid": "PBFA97CFB590B2093"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisBorderShow": false,
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "barWidthFactor": 0.6,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "insertNulls": false,
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "Bps"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 18
+        },
+        "id": 8,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "PBFA97CFB590B2093"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "rate(gnmic_eos_interface_stats_in_octets{source=\"ceos-leaf4\", interface_name!=\"Management0\"}[$__rate_interval])",
+            "fullMetaSearch": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{interface_name}} - IN",
+            "range": true,
+            "refId": "A",
+            "useBackend": false
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "PBFA97CFB590B2093"
+            },
+            "disableTextWrap": false,
+            "editorMode": "builder",
+            "expr": "rate(gnmic_eos_interface_stats_out_octets{source=\"ceos-leaf4\", interface_name!=\"Management0\"}[$__rate_interval])",
+            "fullMetaSearch": false,
+            "hide": false,
+            "includeNullMetadata": true,
+            "instant": false,
+            "legendFormat": "{{interface_name}} - OUT",
+            "range": true,
+            "refId": "B",
+            "useBackend": false
+          }
+        ],
+        "title": "ceos-leaf4 - Interface traffic stats (bytes/sec)",
         "type": "timeseries"
       }
     ],
     "refresh": "5s",
-    "schemaVersion": 38,
-    "style": "dark",
+    "schemaVersion": 39,
     "tags": [],
     "templating": {
       "list": []
     },
     "time": {
-      "from": "now-15m",
+      "from": "now-30m",
       "to": "now"
     },
     "timepicker": {},
-    "timezone": "",
-    "title": "Arista Telemetry",
-    "uid": "ed537a9f-a7c5-4cf9-8abe-9a48833e7696",
-    "version": 1,
+    "timezone": "browser",
+    "title": "CEOS Anycast Lab",
+    "uid": "cdvdiprdvzjeoa",
+    "version": 2,
     "weekStart": ""
   }
