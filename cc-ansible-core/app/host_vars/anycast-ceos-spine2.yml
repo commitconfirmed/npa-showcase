@@ -26,7 +26,7 @@ interfaces:
   - if: "Ethernet5"
     desc: "ceos-spine2:Ethernet5 --> ceos-bdr1:Ethernet2"
     ipv4: "10.255.0.4/31"
-    ipv6: "2002::10:255:0:4/96"
+    ipv6: "LLA"
 
 # Routing
 static:

@@ -128,7 +128,7 @@ router bgp {{ bgp.local_as }}
    neighbor {{ session.name }}-{{ family }} peer group
    neighbor {{ session.name }}-{{ family }} next-hop-self
 {%     if session.local_as is defined %}
-   neighbor {{ session.name }}-{{ family }} local-as {{ session.local_as }}
+   neighbor {{ session.name }}-{{ family }} local-as {{ session.local_as }} no-prepend replace-as
 {%     endif %}
    neighbor {{ session.name }}-{{ family }} remote-as {{ session.remote_as }}
    neighbor {{ session.name }}-{{ family }} remove-private-as all

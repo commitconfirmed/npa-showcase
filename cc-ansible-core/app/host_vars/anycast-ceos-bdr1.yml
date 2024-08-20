@@ -14,15 +14,15 @@ interfaces:
   - if: "Ethernet1"
     desc: "ceos-bdr1:Ethernet1 --> ceos-spine1:Ethernet5"
     ipv4: "10.255.0.3/31"
-    ipv6: "2002::10:255:0:3/96"
+    ipv6: "LLA"
   - if: "Ethernet2"
     desc: "ceos-bdr1:Ethernet2 --> ceos-spine2:Ethernet5"
     ipv4: "10.255.0.5/31"
-    ipv6: "2002::10:255:0:5/96"
+    ipv6: "LLA"
   - if: "Ethernet5"
     desc: "ceos-bdr1:Ethernet5 --> ceos-host1:Eth0"
     ipv4: "172.16.10.1/24"
-    ipv6: "2002::172:16:0:1/96"
+    ipv6: "2002::172:16:10:1/96"
 
 bgp:
   router_id: 172.16.0.1
