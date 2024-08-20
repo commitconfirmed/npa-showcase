@@ -32,7 +32,7 @@ interfaces:
 bgp:
   router_id: 10.0.0.102
   local_as: 65000
-  type: "spine"
+  type: [ "spine", "external" ]
   underlay_name: "PG_UNDERLAY"
   sessions:
     - name: "BDR"
