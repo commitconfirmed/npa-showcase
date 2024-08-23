@@ -52,7 +52,7 @@ bgp:
           action: "permit"
       routemaps_v4_in:
         - action: "permit"
-          pfl: "PL-DEFAULT"
+          pfl: "PL-ANY-INBOUND"
         - action: "deny"
       routemaps_v4_out:
         - action: "permit"
@@ -60,7 +60,7 @@ bgp:
         - action: "deny"
       routemaps_v6_in:
         - action: "permit"
-          pfl: "PL-DEFAULT-V6"
+          pfl: "PL-ANY-INBOUND-V6"
         - action: "deny"
       routemaps_v6_out:
         - action: "permit"
