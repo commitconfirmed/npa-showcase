@@ -48,13 +48,13 @@ topology:
   ### Spines ###
     ceos-spine1:
       kind: ceos
-      image: ceos:4.28.10.1M
+      image: ceos:4.31.2F
       mgmt-ipv4: 172.20.0.101
       env:
         CLAB_MGMT_VRF: MGMT
     ceos-spine2:
       kind: ceos
-      image: ceos:4.28.10.1M
+      image: ceos:4.31.2F
       mgmt-ipv4: 172.20.0.102
       env:
         CLAB_MGMT_VRF: MGMT
@@ -62,25 +62,25 @@ topology:
     ### Leafs ###
     ceos-leaf1:
       kind: ceos
-      image: ceos:4.28.10.1M
+      image: ceos:4.31.2F
       mgmt-ipv4: 172.20.0.111
       env:
         CLAB_MGMT_VRF: MGMT
     ceos-leaf2:
       kind: ceos
-      image: ceos:4.28.10.1M
+      image: ceos:4.31.2F
       mgmt-ipv4: 172.20.0.112
       env:
         CLAB_MGMT_VRF: MGMT
     ceos-leaf3:
       kind: ceos
-      image: ceos:4.28.10.1M
+      image: ceos:4.31.2F
       mgmt-ipv4: 172.20.0.113
       env:
         CLAB_MGMT_VRF: MGMT
     ceos-leaf4:
       kind: ceos
-      image: ceos:4.28.10.1M
+      image: ceos:4.31.2F
       mgmt-ipv4: 172.20.0.114
       env:
         CLAB_MGMT_VRF: MGMT
@@ -126,7 +126,7 @@ topology:
     ### Border and Host to generate traffic ###
     ceos-bdr1:
       kind: ceos
-      image: ceos:4.28.10.1M
+      image: ceos:4.31.2F
       mgmt-ipv4: 172.20.0.201
       env:
         CLAB_MGMT_VRF: MGMT
