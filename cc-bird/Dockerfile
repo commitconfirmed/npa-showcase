@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update -y; \
 apt-get install -y iproute2 bird2 tcpdump; \
 apt-get install -y iputils-ping openssh-server; \
-apt-get install -y sudo vim; \
+apt-get install -y sudo vim iperf3; \
 apt-get clean all
 
 # Configure a non root user with sudo access for ansible playbook execution
