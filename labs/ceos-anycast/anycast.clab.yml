@@ -90,38 +90,46 @@ topology:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.121
+      binds:
+        - configs/bird-serv/iperf-serv.sh:/iperf-serv.sh:ro
       exec:
         - "ip addr add 10.254.1.2/24 brd 10.254.1.255 dev eth1"
         - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
-        - "iperf3 -sB 172.16.1.1 -p 5555 -D"
+        - "bash /iperf-serv.sh"
     bird-serv2:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.122
+      binds:
+        - configs/bird-serv/iperf-serv.sh:/iperf-serv.sh:ro
       exec:
         - "ip addr add 10.254.2.2/24 brd 10.254.2.255 dev eth1"
         - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
-        - "iperf3 -sB 172.16.1.1 -p 5555 -D"
+        - "bash /iperf-serv.sh"
     bird-serv3:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.123
+      binds:
+        - configs/bird-serv/iperf-serv.sh:/iperf-serv.sh:ro
       exec:
         - "ip addr add 10.254.3.2/24 brd 10.254.3.255 dev eth1"
         - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
-        - "iperf3 -sB 172.16.1.1 -p 5555 -D"
+        - "bash /iperf-serv.sh"
     bird-serv4:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.124
+      binds:
+        - configs/bird-serv/iperf-serv.sh:/iperf-serv.sh:ro
       exec:
         - "ip addr add 10.254.4.2/24 brd 10.254.4.255 dev eth1"
         - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
-        - "iperf3 -sB 172.16.1.1 -p 5555 -D"
+        - "bash /iperf-serv.sh"
 
     ### Border and Host to generate traffic ###
     ceos-bdr1:
@@ -134,12 +142,16 @@ topology:
       kind: linux
       image: cc-host:latest
       mgmt-ipv4: 172.20.0.202
+      binds:
+        - configs/ubu-host/iperf-client.sh:/iperf-client.sh:ro
       exec:
         - "ip addr add 172.16.10.2/24 brd 172.16.10.255 dev eth1"
         - "ip -6 addr add 2001:db8:a10::2/48 dev eth1"
-        - "ip link set dev eth1 up"
         - "ip route add 172.16.0.0/16 via 172.16.10.1 dev eth1"
         - "ip -6 route add default via 2001:db8:a10::1 dev eth1"
+        - "ip link set eth1 mtu 1500"
+        - "ip link set dev eth1 up"
+        - "bash /iperf-client.sh"
 
   links:
     - endpoints: ["ceos-spine1:eth1", "ceos-leaf1:eth1"]
