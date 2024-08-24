@@ -152,7 +152,7 @@ topology:
         - "ip -6 route add default via 2001:db8:a10::1 dev eth1"
         - "ip link set eth1 mtu 1500"
         - "ip link set dev eth1 up"
-        - "bash /iperf-ineterfaces.sh"
+        - "bash /iperf-interfaces.sh"
 
   links:
     - endpoints: ["ceos-spine1:eth1", "ceos-leaf1:eth1"]
