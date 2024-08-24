@@ -144,7 +144,7 @@ topology:
       mgmt-ipv4: 172.20.0.202
       binds:
         - configs/ubu-host/iperf-interfaces.sh:/iperf-interfaces.sh:ro
-        - configs/ubu-host/iperf-client.sh:~/iperf-client.sh:ro
+        - configs/ubu-host/iperf-client.sh:/home/admin/iperf-client.sh:ro
       exec:
         - "ip addr add 172.16.10.2/24 brd 172.16.10.255 dev eth1"
         - "ip -6 addr add 2001:db8:a10::2/48 dev eth1"
