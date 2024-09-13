@@ -1,6 +1,6 @@
 #!/bin/bash
-# Add multiple IP's to eth1 to better use the ECMP hashing
-# available on the cEOS container
+# Add multiple IP's to eth1 to better use the 3-tuple 
+# ECMP hashing available on the cEOS container
 
 ip addr add 172.16.10.100/24 brd 172.16.10.255 dev eth1
 ip addr add 172.16.10.101/24 brd 172.16.10.255 dev eth1

@@ -19,7 +19,6 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 3,
     "links": [],
     "panels": [
       {
@@ -68,7 +67,7 @@
                 "type": "linear"
               },
               "showPoints": "auto",
-              "spanNulls": true,
+              "spanNulls": false,
               "stacking": {
                 "group": "A",
                 "mode": "none"
@@ -78,6 +77,7 @@
               }
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -187,7 +187,7 @@
                 "type": "linear"
               },
               "showPoints": "auto",
-              "spanNulls": true,
+              "spanNulls": false,
               "stacking": {
                 "group": "A",
                 "mode": "none"
@@ -197,6 +197,7 @@
               }
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -319,7 +320,7 @@
                 "type": "linear"
               },
               "showPoints": "auto",
-              "spanNulls": true,
+              "spanNulls": false,
               "stacking": {
                 "group": "A",
                 "mode": "none"
@@ -329,6 +330,7 @@
               }
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -438,7 +440,7 @@
                 "type": "linear"
               },
               "showPoints": "auto",
-              "spanNulls": true,
+              "spanNulls": false,
               "stacking": {
                 "group": "A",
                 "mode": "none"
@@ -448,6 +450,7 @@
               }
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -557,7 +560,7 @@
                 "type": "linear"
               },
               "showPoints": "auto",
-              "spanNulls": true,
+              "spanNulls": false,
               "stacking": {
                 "group": "A",
                 "mode": "none"
@@ -567,6 +570,7 @@
               }
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -670,13 +674,16 @@
               },
               "insertNulls": false,
               "lineInterpolation": "linear",
+              "lineStyle": {
+                "fill": "solid"
+              },
               "lineWidth": 1,
               "pointSize": 5,
               "scaleDistribution": {
                 "type": "linear"
               },
               "showPoints": "auto",
-              "spanNulls": true,
+              "spanNulls": false,
               "stacking": {
                 "group": "A",
                 "mode": "none"
@@ -686,6 +693,7 @@
               }
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -768,13 +776,13 @@
       "list": []
     },
     "time": {
-      "from": "now-30m",
+      "from": "now-15m",
       "to": "now"
     },
     "timepicker": {},
     "timezone": "browser",
     "title": "CEOS Anycast Lab",
     "uid": "cdvdiprdvzjeoa",
-    "version": 2,
+    "version": 1,
     "weekStart": ""
   }
