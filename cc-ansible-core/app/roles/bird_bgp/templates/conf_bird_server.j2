@@ -12,4 +12,7 @@
 {%     if bgp.type == "anycast_server" %}
 {%         include 'bird_anycast.j2' %}
 {%     endif %}
+{%     if bgp.type == "route_server" %}
+{%         include 'bird_rserver.j2' %}
+{%     endif %}
 {% endif %}

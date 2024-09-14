@@ -156,7 +156,7 @@ topology:
         - "ip link set eth1 mtu 1500"
         - "ip link set dev eth1 up"
         - "bash /iperf-interfaces.sh"
-        - "bash /iperf-client.sh"
+        - "bash /home/admin/iperf-client.sh"
 
   links:
     - endpoints: ["ceos-spine1:eth1", "ceos-leaf1:eth1"]
