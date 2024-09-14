@@ -1,0 +1,50 @@
+eos:
+  hosts:
+    ceos-spine1: 
+      ansible_host: 172.20.0.101
+    ceos-spine2: 
+      ansible_host: 172.20.0.102
+    ceos-leaf1: 
+      ansible_host: 172.20.0.111
+    ceos-leaf2: 
+      ansible_host: 172.20.0.112
+    ceos-leaf3: 
+      ansible_host: 172.20.0.113
+    ceos-leaf4: 
+      ansible_host: 172.20.0.114
+    ceos-bdr1: 
+      ansible_host: 172.20.0.201
+
+linux:
+  hosts:
+    bird-serv1: 
+      ansible_host: 172.20.0.121
+    bird-serv2: 
+      ansible_host: 172.20.0.122
+    bird-serv3: 
+      ansible_host: 172.20.0.123
+    bird-serv4: 
+      ansible_host: 172.20.0.124
+    ubu-host1: 
+      ansible_host: 172.20.0.202
+
+routers:
+  hosts:
+    ceos-spine1:
+    ceos-spine2:
+    ceos-leaf1:
+    ceos-leaf2:
+    ceos-leaf3:
+    ceos-leaf4:
+    ceos-bdr1:
+
+servers:
+  hosts:
+    bird-serv1:
+    bird-serv2:
+    bird-serv3:
+    bird-serv4:
+
+clients:
+  hosts:
+    ubu-host1:
