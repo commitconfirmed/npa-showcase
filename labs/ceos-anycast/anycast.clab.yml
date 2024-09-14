@@ -12,6 +12,10 @@ topology:
       kind: linux
       image: cc-ansible:latest
       mgmt-ipv4: 172.20.0.20
+      binds:
+        - configs/serv-ansible/inventory/inventory.yml:/app/inventory/inventory.yml:ro
+        - configs/serv-ansible/host_vars:/app/host_vars:ro
+        - configs/serv-ansible/playbooks/pb-cfg-lab.yml:/app/pb-cfg-lab.yml:ro
     serv-gnmic:
       kind: linux
       image: gnmic/gnmic:latest
@@ -39,7 +43,6 @@ topology:
       ports:
         - 3000:3000
       env:
-        #GF_INSTALL_PLUGINS: https://algenty.github.io/flowcharting-repository/archives/agenty-flowcharting-panel-1.0.0d.220606199-SNAPSHOT.zip;agenty-flowcharting-panel
         GF_ORG_ROLE: "Admin"
         GF_ORG_NAME: "Commit Confirmed"
         GF_AUTH_ANONYMOUS_ENABLED: "true"
@@ -59,7 +62,7 @@ topology:
       env:
         CLAB_MGMT_VRF: MGMT
     
-    ### Leafs ###
+  ### Leafs ###
     ceos-leaf1:
       kind: ceos
       image: ceos:4.31.2F
@@ -86,45 +89,45 @@ topology:
         CLAB_MGMT_VRF: MGMT
 
     ### Anycast Servers ###
-    bird-serv1:
+    serv-bird1:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.121
       binds:
-        - configs/bird-serv/iperf-serv.sh:/iperf-serv.sh:ro
+        - configs/serv-bird/iperf-serv.sh:/iperf-serv.sh:ro
       exec:
         - "ip addr add 10.254.1.2/24 brd 10.254.1.255 dev eth1"
         - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
         - "bash /iperf-serv.sh"
-    bird-serv2:
+    serv-bird2:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.122
       binds:
-        - configs/bird-serv/iperf-serv.sh:/iperf-serv.sh:ro
+        - configs/serv-bird/iperf-serv.sh:/iperf-serv.sh:ro
       exec:
         - "ip addr add 10.254.2.2/24 brd 10.254.2.255 dev eth1"
         - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
         - "bash /iperf-serv.sh"
-    bird-serv3:
+    serv-bird3:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.123
       binds:
-        - configs/bird-serv/iperf-serv.sh:/iperf-serv.sh:ro
+        - configs/serv-bird/iperf-serv.sh:/iperf-serv.sh:ro
       exec:
         - "ip addr add 10.254.3.2/24 brd 10.254.3.255 dev eth1"
         - "ip addr add 172.16.1.1/32 dev lo"
         - "ip link set dev eth1 up"
         - "bash /iperf-serv.sh"
-    bird-serv4:
+    serv-bird4:
       kind: linux
       image: cc-bird:latest
       mgmt-ipv4: 172.20.0.124
       binds:
-        - configs/bird-serv/iperf-serv.sh:/iperf-serv.sh:ro
+        - configs/serv-bird/iperf-serv.sh:/iperf-serv.sh:ro
       exec:
         - "ip addr add 10.254.4.2/24 brd 10.254.4.255 dev eth1"
         - "ip addr add 172.16.1.1/32 dev lo"
@@ -163,10 +166,10 @@ topology:
     - endpoints: ["ceos-spine2:eth2", "ceos-leaf2:eth2"]
     - endpoints: ["ceos-spine2:eth3", "ceos-leaf3:eth2"]
     - endpoints: ["ceos-spine2:eth4", "ceos-leaf4:eth2"]
-    - endpoints: ["bird-serv1:eth1", "ceos-leaf1:eth5"]
-    - endpoints: ["bird-serv2:eth1", "ceos-leaf2:eth5"]
-    - endpoints: ["bird-serv3:eth1", "ceos-leaf3:eth5"]
-    - endpoints: ["bird-serv4:eth1", "ceos-leaf4:eth5"]
+    - endpoints: ["serv-bird1:eth1", "ceos-leaf1:eth5"]
+    - endpoints: ["serv-bird2:eth1", "ceos-leaf2:eth5"]
+    - endpoints: ["serv-bird3:eth1", "ceos-leaf3:eth5"]
+    - endpoints: ["serv-bird4:eth1", "ceos-leaf4:eth5"]
     - endpoints: ["ceos-bdr1:eth1", "ceos-spine1:eth5"]
     - endpoints: ["ceos-bdr1:eth2", "ceos-spine2:eth5"]
     - endpoints: ["ubu-host1:eth1", "ceos-bdr1:eth5"]
