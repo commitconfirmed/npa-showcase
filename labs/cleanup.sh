@@ -10,6 +10,6 @@ if [[ -z $1 ]]; then
 else
   # We go into the clab directory to remove the clab folder created during deployment
   cd $1
-  sudo containerlab destory --cleanup
+  sudo containerlab destroy --cleanup
   cd ..
 fi
