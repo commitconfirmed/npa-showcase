@@ -1,0 +1,8 @@
+# Backup CLAB Files #
+#####################
+*.bak
+
+# Directory created by CLAB during deploys #
+############################################
+
+labs/*/clab-*

@@ -1,13 +1,25 @@
 # npa-showcase
-Network Programmability and Automation labs, built on WSL2
 
-### Design
+Welcome! 
 
-I've used containerlab only the build the Network containers with basic management config and connecting relevant interfaces. The rest of the device configuration will be done with Ansible playbooks to more closely mimic what you would actually do in a live network with real hardware.
+Here you will find a bunch of ready to go labs based on a wide variety of network topologies and automation concepts using the Containerlab as the orchestration engine. 
 
-This repo is a constant work in progress so things will likely be broken from time to time as I tinker and learn, it is best if you want to play around yourself to clone this repo and change the origin or just browse and copy the bits you want.
+### Design Summary
 
-https://stackoverflow.com/questions/18200248/cloning-a-repo-from-someone-elses-github-and-pushing-it-to-a-repo-on-my-github
+A labs Containerlab file will: 
+- Build the Network device containers, relevant links between them and apply a basic managment configuration
+- Build any Servers or Client containers used for traffic generation
+- Build the Automation & Telemetry stack and apply the relevant labs configuration (Ansible variables, Playbooks, Grafana Dashboards, etc.)
+
+The aim here is to let the Automation & Telemetry stack configure, verify and monitor the particular labs setup to allow you to learn and tinker around with network automation concepts and products against a variety of network setups.
+
+This repo is currently a constant work in progress so things will likely be broken from time to time as I tinker and learn. I will generally create a branch when building new labs or retrofitting existing ones before merging it into the main branch. 
+
+### Design Detail
+
+Refer to the below diagram
+
+TBD
 
 ### Specs
 
@@ -15,50 +27,32 @@ Tested on a Dell XPS 15 9530 with 32Gb of RAM running on Windows 11
 
 ### Setup Instructions
 
-- Prep your windows machine with WSL2 in powershell as admin (just using the default Ubuntu that comes with WSL)
+I've tested these labs on my personal laptop, which is just a Dell XPS 15 9530 with 32Gb of RAM running Windows 11 and WSL2.
+
+These should also work on any Linux server with Docker installed, locally or in the cloud. If Arista comes out with a Docker image you don't need to register to get, I'll eventually try and get this working on Github codespaces as well :) 
+
+- Follow the Containerlab installation instructions at https://containerlab.dev/install/ for your relevant distribution
+- Copy or clone this repo to a directory of your choosing
+- Run the setup.sh script which will build the included containers (cc-ansible-core, cc-bird, etc.) and pull the vendor ones
+  - Note: The Arista image you'll need to download off the Arista website and install yourself (steps below)
+
 ```
-wsl --install
-```
-
-- Install docker-ce (don't use docker desktop as per the containerlab recommendations)
-```
-sudo apt-get remove docker docker-engine docker.io containerd runc
-
-sudo apt-get update
-
-sudo apt-get install -y \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg-agent \
-    software-properties-common
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+Grab cEOS64-lab-4.28.10.1M.tar from https://www.arista.com/en/support/software-download (Signup required)
+Copy file onto your docker-ce host and then run the below command:
+sudo docker import cEOS64-lab-4.28.10.1M.tar ceos:4.28.10.1M
 ```
 
-- Start docker
-```
-sudo service docker start
-```
+### Usage Instructions
 
-- Install Containerlab
-```
-echo "deb [trusted=yes] https://apt.fury.io/netdevops/ /" | \
-sudo tee -a /etc/apt/sources.list.d/netdevops.list
+- Follow the README's in the labs folder to see more details about a specific lab and how to build it
 
-sudo apt update && sudo apt install containerlab
-```
+### Visual Studio Code and WSL2
+
+Added some notes below which I used when working with WSL2. I would also recommend just using the WSL extension in VSCode as well to do development locally on your WSL2 host.
 
 - (optional) Install VSCode and GIT on windows, ensure you include GCM and linux file endings only
 - Setup GIT and GH CLI on your WSL box
+
 ```
 git config --global user.name "user"
 git config --global user.email "user@dev.null"
@@ -69,20 +63,8 @@ gh auth status
 gh auth setup-git
 ```
 
-- Check you can clone / pull this repo, and optionally edit and push changes on your WSL VM machine. If you're using VS code as your IDE to modify files and perform commits then you only need to "git pull" on your WSL VM to get your changes. Would recommend cloning and changing the origin if you want to tinker
+- Check you can clone this (or any other) repo. Would recommend cloning and changing the origin if you want to tinker
 
 ```
-git clone x
-git pull 
+git clone https://github.com/commitconfirmed/npa-showcase/
 ```
-
-- To save a bit of time with deployment, grab and store the container images from the networking vendor(s) you wish to use. 
-
-+Arista+
-```
-- Grab cEOS64-lab-4.28.10.1M.tar from https://www.arista.com/en/support/software-download (Signup required)
-- Copy file onto your WSL2 host
-docker import cEOS64-lab-4.28.10.1M.tar ceos:4.28.10.1M
-```
-
-- Follow the README's in the labs folder to see more details about a specific lab and how to build it
